@@ -39,11 +39,11 @@
 		<div class="box  margin-bottom">
 			<div class="margin">
 				<!-- ASIDE NAV 2 -->
-				<aside class="s-12 l-five">
+				<aside class="s-12 l-3">
 					<jsp:include page="/menu.jsp"/>
 				</aside>
 				<!-- CONTENT -->
-				<section class="s-12 l-7">
+				<section class="s-12 l-6">
 		<!--============================================================================= 글쓰기 시작 -->
 	<div class="_4-u2 mbm">
 	<div class="_119 stat_elem focus_target mtm mbl _5bsm _5t_y" id="u_0_1g">
@@ -270,7 +270,7 @@
 <!-- -----------------------------=========================================================내용끝 ============================================== -->
 				</section>
 				<!-- ASIDE NAV 2 -->
-				<aside class="s-12 l-five">
+				<aside class="s-12 l-3">
 					<jsp:include page="/Friend.jsp"/>
 				</aside>
 			</div>
