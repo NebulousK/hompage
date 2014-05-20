@@ -82,14 +82,18 @@ select {
 }
 
 .inputsearch {
-	background: #fff url(/rsrc.php/v2/yV/r/IJYgcESal33.png) no-repeat left
+	background: #fff url(/homepage/image/IJYgcESal33.png) no-repeat left
 		4px;
 	padding-left: 17px
 }
 
-body {
-	background: #fff;
-	color: #333;
+ body {
+    background:none repeat scroll 0 0 #d3d3d3;
+	font-size:100%;
+	margin:0;
+	color:#444;
+	/* background: #fff;
+	color: #333; */
 	line-height: 1.28;
 	margin: 0;
 	padding: 0;
@@ -97,36 +101,41 @@ body {
 	direction: ltr;
 	unicode-bidi: embed
 }
-
+ 
 body,button,input,label,select,td,textarea {
 	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 	font-size: 11px
-}
+}  
+ 
+/* body,button,input,label,select,td,textarea {
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px
+}  */
 
 h1,h2,h3,h4,h5,h6 {
 	font-size: 13px;
 	color: #333;
 	margin: 0;
 	padding: 0
-}
-
-h1 {
+} 
+/*
+ h1 {
 	font-size: 14px
 }
 
 h4,h5,h6 {
 	font-size: 11px
 }
-
+*/
 p {
 	margin: 1em 0
 }
 
-a {
+/* a {
 	color: #3b5998;
 	cursor: pointer;
 	text-decoration: none
-}
+}  */
 
 button {
 	margin: 0
@@ -393,7 +402,7 @@ img.tracking_pixel {
 }
 
 ._kso:after {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -16px -917px;
@@ -402,7 +411,7 @@ img.tracking_pixel {
 }
 
 ._50kd ._kso:after {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -299px -900px
@@ -910,7 +919,7 @@ a._42g6 {
 }
 
 ._5468 ._42fz .pic_container:after {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -26px -384px;
@@ -924,14 +933,14 @@ a._42g6 {
 
 ._5468 ._42fz a:focus .pic_container:after,._5468 ._42fz a:hover .pic_container:after,._5468 ._42fz.drag a .pic_container:after
 	{
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -55px -384px
 }
 
 ._5bcj ._42fz .pic_container:after {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -33px -351px;
@@ -945,7 +954,7 @@ a._42g6 {
 
 ._5bcj ._42fz a:focus .pic_container:after,._5bcj ._42fz a:hover .pic_container:after,._5bcj ._42fz.drag a .pic_container:after
 	{
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: 0 -351px
@@ -1056,7 +1065,7 @@ a._42g6 {
 }
 
 ._4mq2 ._42fz.active .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -178px -332px;
@@ -1065,7 +1074,7 @@ a._42g6 {
 }
 
 ._4mq2 ._42fz.mobile .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -303px -212px;
@@ -1074,7 +1083,7 @@ a._42g6 {
 }
 
 ._5bcj ._42fz.active .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -267px -239px;
@@ -1083,7 +1092,7 @@ a._42g6 {
 }
 
 ._5bcj ._42fz.mobile .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -304px -200px;
@@ -1092,7 +1101,7 @@ a._42g6 {
 }
 
 ._5pr2 ._42fz.active .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -275px -239px;
@@ -1101,7 +1110,7 @@ a._42g6 {
 }
 
 ._5pr2 ._42fz.mobile .status {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -132px -441px;
@@ -1124,7 +1133,7 @@ a._42g6 {
 }
 
 ._5468 ._550z {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: 0 -456px;
@@ -1132,7 +1141,7 @@ a._42g6 {
 }
 
 ._5468 ._42fz a:hover ._550z {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -17px -456px
@@ -1595,7 +1604,7 @@ a.always_underlined:link,a.always_underlined:hover,a.always_underlined:visited
 }
 
 ._4-o9 {
-	background-image: url(/rsrc.php/v2/yJ/r/lqzO4XSLQSQ.png);
+	background-image: url(/homepage/image/lqzO4XSLQSQ.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: 0 -917px;
@@ -1976,7 +1985,7 @@ html ._54bc .img {
 }
 
 .sp_vBuW_ZlNkZ5 {
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-size: auto;
 	background-repeat: no-repeat;
 	display: inline-block;
@@ -2773,11 +2782,11 @@ html ._54bc .img {
 }
 
 .pop_content h2.loading {
-	background: #6d84b4 url(/rsrc.php/v2/y-/r/AGUNXgX_Wx3.gif) 98% no-repeat
+	background: #6d84b4 url(/homepage/image/AGUNXgX_Wx3.gif) 98% no-repeat
 }
 
 .pop_content h2.dialog_loading {
-	background: #6d84b4 url(/rsrc.php/v2/y-/r/AGUNXgX_Wx3.gif) no-repeat
+	background: #6d84b4 url(/homepage/image/AGUNXgX_Wx3.gif) no-repeat
 		400px 10px;
 	padding-right: 40px
 }
@@ -3477,7 +3486,7 @@ div._4-i2 {
 }
 
 ._5d9-._55yn._55yo {
-	background-image: url(/rsrc.php/v2/yb/r/GsNJNwuI-UM.gif);
+	background-image: url(/homepage/image/GsNJNwuI-UM.gif);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: 0 2px;
@@ -3486,7 +3495,7 @@ div._4-i2 {
 }
 
 ._5d9-._55yn._55yp {
-	background-image: url(/rsrc.php/v2/y-/r/AGUNXgX_Wx3.gif);
+	background-image: url(/homepage/image/AGUNXgX_Wx3.gif);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: 0 2px;
@@ -3910,7 +3919,7 @@ label.uiCloseButton {
 }
 
 .uiCloseButtonHuge {
-	background-image: url(/rsrc.php/v2/yj/r/ubIGOTIgUYc.png)
+	background-image: url(/homepage/image/ubIGOTIgUYc.png)
 }
 
 .uiCloseButtonDark {
@@ -3918,12 +3927,12 @@ label.uiCloseButton {
 }
 
 .uiCloseButtonInverted {
-	background-image: url(/rsrc.php/v2/yo/r/33RpiRygxAr.png);
+	background-image: url(/homepage/image/33RpiRygxAr.png);
 	background-position: left -16px
 }
 
 .uiCloseButtonGray {
-	background-image: url(/rsrc.php/v2/y7/r/gmSNAxiWQKY.png)
+	background-image: url(/homepage/image/gmSNAxiWQKY.png)
 }
 
 .uiCloseButton:hover,.uiCloseButton:focus {
@@ -3939,7 +3948,7 @@ label.uiCloseButton {
 }
 
 .uiCloseButtonSmallGray {
-	background-image: url(/rsrc.php/v2/y0/r/8FA3puZNL-X.png)
+	background-image: url(/homepage/image/8FA3puZNL-X.png)
 }
 
 .uiCloseButtonSmallInverted {
@@ -4002,7 +4011,7 @@ label.uiCloseButton {
 }
 
 .uiPopoverButton.uiPopoverButtonWithChevron._52nd {
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png) !important;
+	background-image: url(/homepage/image/Kvw83ynKIZL.png) !important;
 	background-repeat: no-repeat !important;
 	background-size: auto !important;
 	background-position: right -103px !important;
@@ -4699,7 +4708,7 @@ a.uiLinkDark {
 	left: 8px;
 	position: absolute;
 	top: 6px;
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -83px -5px;
@@ -4709,7 +4718,7 @@ a.uiLinkDark {
 }
 
 .uiMenu .selected .uiMenuItemPlusIcon {
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: -75px -5px
@@ -4818,7 +4827,7 @@ a.uiLinkDark {
 
 .uiSelectorNormal .uiSelectorButton,.uiSelectorNormal .uiSelectorButton:active,.uiSelectorNormal .uiSelectorButton:focus,.uiSelectorNormal .uiSelectorButton:hover,.uiSelectorNormal .uiButtonSuppressed:active,.uiSelectorNormal .uiButtonSuppressed:focus,.uiSelectorNormal .uiButtonSuppressed:hover
 	{
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: right -5px;
@@ -4828,14 +4837,14 @@ a.uiLinkDark {
 
 .uiSelectorNormal .uiButtonDisabled,.uiSelectorNormal a.uiButtonDisabled:active,.uiSelectorNormal a.uiButtonDisabled:focus,.uiSelectorNormal a.uiButtonDisabled:hover
 	{
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: right -54px
 }
 
 .uiSelectorNormal .uiButtonSuppressed.uiButtonDisabled {
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: right -201px
@@ -4843,7 +4852,7 @@ a.uiLinkDark {
 
 .uiSelectorNormal .uiButtonOverlay,.uiSelectorNormal .uiButtonOverlay:active,.uiSelectorNormal .uiButtonOverlay:focus,.uiSelectorNormal .uiButtonOverlay:hover,.uiSelectorNormal .uiSelectorButton:active,.uiSelectorNormal .uiButtonSuppressed
 	{
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: right -153px
@@ -4855,7 +4864,7 @@ a.uiLinkDark {
 
 .uiSelectorNormal .openToggler .uiSelectorButton,.uiSelectorNormal .openToggler .uiSelectorButton:active,.uiSelectorNormal .openToggler .uiSelectorButton:focus,.uiSelectorNormal .openToggler .uiSelectorButton:hover,.uiSelectorNormal .openToggler .uiButtonSuppressed,.uiSelectorNormal .openToggler .uiButtonSuppressed:active,.uiSelectorNormal .openToggler .uiButtonSuppressed:focus,.uiSelectorNormal .openToggler .uiButtonSuppressed:hover
 	{
-	background-image: url(/rsrc.php/v2/yv/r/Kvw83ynKIZL.png);
+	background-image: url(/homepage/image/Kvw83ynKIZL.png);
 	background-repeat: no-repeat;
 	background-size: auto;
 	background-position: right -103px
@@ -4895,7 +4904,7 @@ a.uiLinkDark {
 }
 
 .uiSelectorMenuWrapper .loading span {
-	background: url(/rsrc.php/v2/yb/r/GsNJNwuI-UM.gif) no-repeat 0 0;
+	background: url(/homepage/image/GsNJNwuI-UM.gif) no-repeat 0 0;
 	display: inline-block;
 	height: 11px;
 	margin: 0 auto;
@@ -5753,7 +5762,7 @@ div._3qw {
 
 .uiVideoThumbSmall.uiVideoThumbLoading i,.uiVideoThumbTiny.uiVideoThumbLoading i
 	{
-	background-image: url(/rsrc.php/v2/yb/r/GsNJNwuI-UM.gif)
+	background-image: url(/homepage/image/GsNJNwuI-UM.gif)
 }
 
 .uiVideoThumbLoading img {
@@ -6289,7 +6298,7 @@ div.uiTypeaheadView .selected {
 }
 
 .uiTypeaheadView .arrow {
-	background: transparent url(/rsrc.php/v2/yV/r/IJYgcESal33.png) 0 -413px;
+	background: transparent url(/homepage/image/IJYgcESal33.png) 0 -413px;
 	display: inline-block;
 	height: 7px;
 	margin-left: 4px;
@@ -6351,12 +6360,12 @@ div.typeaheadViewLoading li.calltoaction span.text {
 }
 
 div.typeaheadViewLoading li.calltoaction {
-	background: #f7f7f7 url(/rsrc.php/v2/yb/r/GsNJNwuI-UM.gif) no-repeat 50%
+	background: #f7f7f7 url(/homepage/image/GsNJNwuI-UM.gif) no-repeat 50%
 		50%
 }
 
 div.typeaheadViewLoading li.calltoaction.selected {
-	background: #6d84b4 url(/rsrc.php/v2/y-/r/AGUNXgX_Wx3.gif) no-repeat 50%
+	background: #6d84b4 url(/homepage/image/AGUNXgX_Wx3.gif) no-repeat 50%
 		50%
 }
 

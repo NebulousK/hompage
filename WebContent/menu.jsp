@@ -9,13 +9,13 @@
 		<li><a>친구 찾기</a></li>
 		<li class="aside-submenu">
 		<a>Some N Some<span class="count-number"> 3</span></a>
-			<!-- ifë¬¸ìì -->
+			<!-- if문 시작 -->
 			<ul>
 				<li><a>러브 스토리</a></li>
 				<li><a>사진첩</a></li>
 				<li><a>달력</a></li>
 			</ul>
-			<!-- ifë¬¸ë -->
+			<!-- if문 끝 -->
 		</li>
 	</ul>
 </div>

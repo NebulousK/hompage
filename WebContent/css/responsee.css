@@ -8,8 +8,9 @@ body {
 	background:none repeat scroll 0 0 #d3d3d3;
 	font-size:100%;
 	margin:0;
-  font-family:tahoma;
-  color:#444;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+   /*  font-family:tahoma; */
+    color:#444;
   }
 h1, h2, h3, h4, h5, h6 {
   color:#444;
@@ -24,7 +25,7 @@ h5 {font-size:1em;}
 h6 {font-size:0.9em;}    
 a, a:link, a:visited, a:hover, a:active {
 	text-decoration:none;
-  color:#444;
+    color:#444;
 	}
 img {
 	height:auto;
@@ -50,7 +51,7 @@ td {border-right:1px solid #e0e0e0;}
 }
 .size-1140 .line {
   margin:0 auto;
-  max-width:80.00em;
+  max-width:95.00em;
   /* max-width:71.25em; */
   padding:0 0.625em;
 }
