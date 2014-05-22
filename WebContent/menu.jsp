@@ -4,16 +4,16 @@
 	<ul><!-- ë³¸ì¸ íì´ì§ / ë´ì¤í¼ë/ ì¹êµ¬ëª©ë¡/ ì¹êµ¬ ì°¾ê¸°/ Some N Some -->
 		<li><a>환영</a></li>
 		<li><a>It's me</a></li>
-		<li><a>뉴스 피드</a></li>
-		<li><a>친구 목록</a></li>
-		<li><a>친구 찾기</a></li>
+		<li><a href="/homepage/newsfeed/main.jsp">뉴스 피드</a></li>
+		<li><a href ="/homepage/friendList/main.jsp">친구 목록</a></li>
+		<li><a href ="/homepage/friendFind/main.jsp">친구 찾기</a></li>
 		<li class="aside-submenu">
 		<a>Some N Some<span class="count-number"> 3</span></a>
 			<!-- if문 시작 -->
 			<ul>
-				<li><a>러브 스토리</a></li>
-				<li><a>사진첩</a></li>
-				<li><a>달력</a></li>
+				<li><a href="/homepage/someNsome/menu1/main.jsp">러브 스토리</a></li>
+				<li><a href="/homepage/someNsome/menu2/photo.jsp">사진첩</a></li>
+				<li><a href="/homepage/someNsome/menu3/main.jsp">달력</a></li>
 			</ul>
 			<!-- if문 끝 -->
 		</li>
