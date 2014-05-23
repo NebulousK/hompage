@@ -20,9 +20,9 @@
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 
 <link rel='stylesheet' type='text/css' href='fullcalendar.css' />
-  <script type='text/javascript' src='jquery-1.5.2.min.js'></script>
-  <script type='text/javascript' src='jquery-ui-1.8.11.custom.min.js'></script>
-  <script type='text/javascript' src='fullcalendar.min.js'></script>
+<script type='text/javascript' src='jquery-1.5.2.min.js'></script>
+<script type='text/javascript' src='jquery-ui-1.8.11.custom.min.js'></script>
+<script type='text/javascript' src='fullcalendar.min.js'></script>
   
   <script type="text/javascript">
 		/*

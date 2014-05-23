@@ -19,9 +19,6 @@
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 
-<link href="bootstrap.css" rel="stylesheet" />
-
-
 
 </head>
 <body class="size-1140">

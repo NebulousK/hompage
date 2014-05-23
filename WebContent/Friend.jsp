@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
-<link href="/css/bootstrap.css" rel="stylesheet" />
 <script>
 function group(){
 	alert("goup event");
