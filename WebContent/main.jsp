@@ -19,7 +19,6 @@
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 
-
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->

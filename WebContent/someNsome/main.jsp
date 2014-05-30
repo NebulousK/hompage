@@ -1,31 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css"> 
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">  
-
- <link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/oBwXKrMsLPd.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
- <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
- <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
-
+<link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
-
-<link href="/homepage/css/bootstrap2.css" rel="stylesheet" type="text/css" /> 
-<link href="/homepage/css/1.css" rel="stylesheet" type="text/css" />
-
-
+<link href="/homepage/css/bootstrap2.css" rel="stylesheet" type="text/css"/> 
+<link href="/homepage/css/1.css" rel="stylesheet" type="text/css"/>
 </head>
+<jsp:useBean id="dao" class="homepage.someDao"/>
+<jsp:useBean id="dto" class="homepage.someDto"/>
+<% dao.idealtype(522, "여", 27); %>
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -58,18 +54,18 @@
 									<p>&nbsp;</p>
 									<div align="center" class="span3">
 										<div class="customDiv">
-											<img src="/homepage/images/portfolio01.jpg" style="max-width: 200px; height: auto;" />
+											<img src="/////////////////" style="max-width: 200px; height: auto;" />
 										</div>
 									</div>
 									<div class="span3.5">
 										<div>
 											<p style="padding-bottom: 10px" align="left">전이런 사람 입니다.</p>
 											<ol>
-												<li class="customLi">이름 :</li>
-												<li class="customLi">나이 :</li>
-												<li class="customLi">지역 :</li>
-												<li class="customLi">성격 :</li>
-												<li class="customLi">스타일 :</li>
+												<li class="customLi">이름 : </li>
+												<li class="customLi">나이 : </li>
+												<li class="customLi">지역 : </li>
+												<li class="customLi">성격 : </li>
+												<li class="customLi">스타일 : </li>
 											</ol>
 											<textarea name="coment" style="width: 280px; height: 150px; resize: none; background-color: white;"
 											readonly="readonly">받아줘요!</textarea>

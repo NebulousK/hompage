@@ -3,13 +3,32 @@ package homepage;
 public class someDto {
 	private int no, hit, like, parent, age, height, state;
 	private String id, content, day, filename, desination, filesize, filetype, fileurl,  
-			regist_day, userid1, userid2, friends, blood, hobby, personality, style, password,  
-			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day,  end_Day;
+			regist_day, userid1, userid2, friends, blood, hobby, mbit, style, password,  
+			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, weight,
+			fashion;
+	public String getFashion() {
+		return fashion;
+	}
+	public void setFashion(String fashion) {
+		this.fashion = fashion;
+	}
 	public int getNo() {
 		return no;
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public String getMbit() {
+		return mbit;
+	}
+	public void setMbit(String mbit) {
+		this.mbit = mbit;
+	}
+	public String getWeight() {
+		return weight;
+	}
+	public void setWeight(String weight) {
+		this.weight = weight;
 	}
 	public int getHit() {
 		return hit;
@@ -131,12 +150,7 @@ public class someDto {
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
-	public String getPersonality() {
-		return personality;
-	}
-	public void setPersonality(String personality) {
-		this.personality = personality;
-	}
+
 	public String getStyle() {
 		return style;
 	}
