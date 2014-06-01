@@ -8,30 +8,26 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/annotations-api.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/catalina.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/catalina-ant.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/catalina-ha.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/catalina-tribes.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/cos.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/ecj-P20140317-1600.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/el-api.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/jasper.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/jasper-el.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/mysql-connector-java-5.1.30-bin.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/ojdbc6_g.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat7-websocket.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-api.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-coyote.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-dbcp.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-i18n-es.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-i18n-fr.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-i18n-ja.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-jdbc.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/tomcat-util.jar"/>
-	<classpathentry kind="lib" path="C:/APM_Setup/Server/Tomcat/lib/websocket-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/ecj-P20140317-1600.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat7-websocket.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/websocket-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

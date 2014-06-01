@@ -50,6 +50,7 @@
 							<h2>세부정보 입력</h2>
 							<div class="span12">
 								<h3>본인의 세부정보</h3>
+								<form>
 								<table align="center">
 									<tr>
 										<td style="width: 50px">혈액형</td>
@@ -245,6 +246,7 @@
 								</div>
 							</div>
 						</div>
+						</form>
 					</div>
 
 				</section>

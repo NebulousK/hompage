@@ -1,13 +1,49 @@
 package homepage;
 
 public class someDto {
-	private int no, hit, like, parent, age, height, state;
-	private String id, content, day, filename, desination, filesize, filetype, fileurl,  
+	private int no, hit, like, parent, age, height, state, zip, zip2;
+	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4,  
 			regist_day, userid1, userid2, friends, blood, hobby, mbit, style, password,  
 			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, weight,
 			fashion;
 	public String getFashion() {
 		return fashion;
+	}
+	public int getZip() {
+		return zip;
+	}
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+	public int getZip2() {
+		return zip2;
+	}
+	public void setZip2(int zip2) {
+		this.zip2 = zip2;
+	}
+	public String getJuso1() {
+		return juso1;
+	}
+	public void setJuso1(String juso1) {
+		this.juso1 = juso1;
+	}
+	public String getJuso2() {
+		return juso2;
+	}
+	public void setJuso2(String juso2) {
+		this.juso2 = juso2;
+	}
+	public String getJuso3() {
+		return juso3;
+	}
+	public void setJuso3(String juso3) {
+		this.juso3 = juso3;
+	}
+	public String getJuso4() {
+		return juso4;
+	}
+	public void setJuso4(String juso4) {
+		this.juso4 = juso4;
 	}
 	public void setFashion(String fashion) {
 		this.fashion = fashion;
@@ -150,6 +186,7 @@ public class someDto {
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
 	}
+
 
 	public String getStyle() {
 		return style;
