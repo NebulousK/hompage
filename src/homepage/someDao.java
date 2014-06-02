@@ -160,23 +160,30 @@ public class someDao {
 	public String login(String id, String password){
 		connect();
 		String sql = "select * from member where id= ?";
+		String set = "";
 		try{
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
-			rs.next();
-			if(rs == null){
-				return null;
+			if(!rs.next()){
+				set =  "b";
 			}
 			else{
-				
+				if(!password.equals(rs.getString("password"))){
+					set = "a";
+				}
+				else{
+					set +=  id + ",";
+					set +=  rs.getInt("no") + ",";
+					set +=  rs.getString("sex");
+				}
 			}
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
 			discon();
 		}
-		return null;
+		return set;
 	}
 	
 	public void idealtype(int no, String sex){
@@ -186,7 +193,7 @@ public class someDao {
 		ArrayList<someDto> g = new ArrayList<someDto>();
 		String sql="";
 		int age, height = 0;
-		String hobby = null, fashion = null, blood = null, style = null, weight = null;
+		String hobby = null, fashions = null, blood = null, style = null, weight = null, fashion=null, fashion2=null, fashion3=null;
 		try{
 			sql = "select * from idealtype where no = ?";
 			stmt = con.prepareStatement(sql);
@@ -199,12 +206,21 @@ public class someDao {
 			blood = rs.getString("blood");
 			style =	rs.getString("style");
 			weight = rs.getString("weight");
-			fashion = rs.getString("fashion");
+			fashions = rs.getString("fashion");
+			String arr[] = fashions.split(",");
+			fashion = arr[0];
+			if(!arr[1].equals(null)){
+				fashion2 = arr[1];
+			}
+			if(!arr[2].equals(null)){
+				fashion3 = arr[2];
+			}
 			sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age < ? ";	
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, sex);
 			stmt.setInt(2, rs.getInt("age"));
 			rs = stmt.executeQuery();
+			System.out.println(stmt);
 			while(rs.next()){
 				someDto dto = new someDto();
 				dto.setNo(Integer.parseInt(rs.getString("a.no")));
@@ -214,7 +230,15 @@ public class someDao {
 				dto.setBlood(rs.getString("b.blood"));
 				dto.setStyle(rs.getString("b.style"));
 				dto.setWeight(rs.getInt("b.weight"));
-				dto.setFashion(rs.getString("b.Fashion"));
+				fashions = rs.getString("b.Fashion");
+				String arr1[] = fashions.split(",");
+				dto.setFashion(arr1[0]);
+				if(!arr1[1].equals(null)){
+					dto.setFashion2(arr1[1]);
+				}
+				if(!arr1[2].equals(null)){
+					dto.setFashion3(arr1[2]);
+				}
 				g.add(dto);
 			}
 			int total[][] = new int[1][g.size()];
@@ -254,10 +278,19 @@ public class someDao {
 				else if(!blood.equals(dto.getBlood())){result += 5;}
 				if(style.equals(dto.getStyle())){result += 10;}
 				if(fashion.equals(dto.getFashion())){result += 10;}
-				total[0][0] = dto.getNo();
-				total[0][1] = result;
+				if(fashion.equals(dto.getFashion2())){result += 10;}
+				if(fashion.equals(dto.getFashion3())){result += 10;}
+				if(fashion2.equals(dto.getFashion())){result += 10;}
+				if(fashion2.equals(dto.getFashion2())){result += 10;}
+				if(fashion2.equals(dto.getFashion3())){result += 10;}
+				if(fashion3.equals(dto.getFashion())){result += 10;}
+				if(fashion3.equals(dto.getFashion2())){result += 10;}
+				if(fashion3.equals(dto.getFashion3())){result += 10;}
+				total[i][0] = dto.getNo();
+				total[i][1] = result;
 			}
-			System.out.println(total[0][0] +  " " + total[0][1]);
+			System.out.println(total[0][0] +  " " + total[0][1] + "1번째");
+			System.out.println(total[1][0] +  " " + total[1][1] + "2번째");
 		}catch(Exception err){
 			System.out.println(err);
 		}

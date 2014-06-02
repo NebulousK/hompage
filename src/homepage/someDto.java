@@ -3,10 +3,16 @@ package homepage;
 public class someDto {
 	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2;
 	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4,  
-			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2,    
+			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2, fashion3,   
 			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion;
 	public String getFashion() {
 		return fashion;
+	}
+	public String getFashion3() {
+		return fashion3;
+	}
+	public void setFashion3(String fashion3) {
+		this.fashion3 = fashion3;
 	}
 	public int getHeight2() {
 		return height2;

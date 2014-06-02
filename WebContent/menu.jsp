@@ -9,7 +9,7 @@
 		<li><a href ="/homepage/friendFind/main.jsp">친구 찾기</a></li>
 		<li class="aside-submenu">
 		<a>Some N Some<!-- <span class="count-number"> 3</span> --></a>
-			<%if(session.getAttribute("user") != null){ %>
+			<%if(session.getAttribute("id") == null || session.getAttribute("id") == ""){ %>
 			<ul>
 				<li><a href="/homepage/someNsome/menu1/main.jsp">러브 스토리</a></li>
 				<li><a href="/homepage/someNsome/menu2/photo.jsp">사진첩</a></li>
@@ -17,8 +17,8 @@
 			</ul>
 			<%}else{ %>
 			<ul>
-				<li><a href="/homepage/someNsome/main2.jsp">Dash</a></li>
-				<li><a href="/homepage/someNsome/main.jsp">call me</a></li>
+				<li><a href="/homepage/someNsome/main.jsp">Dash</a></li>
+				<li><a href="/homepage/someNsome/main2.jsp">call me</a></li>
 			</ul>
 			<%} %>
 		</li>

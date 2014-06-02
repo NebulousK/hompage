@@ -34,20 +34,24 @@
 		str = str.split("^^");
 		zip1 = str[0];
 		zip2 = str[1];
-		juso = str[2] + " " + form1.jusor.value;
+		juso = str[2];
+		juso2 = form1.jusor.value;
 
 		if (zip_kind == 1) {
 			opener.form1.o_zip1.value = zip1;
 			opener.form1.o_zip2.value = zip2;
 			opener.form1.o_juso.value = juso;
+			opener.form1.addr.value = juso2;
 		} else if (zip_kind == 2) {
 			opener.form1.r_zip1.value = zip1;
 			opener.form1.r_zip2.value = zip2;
 			opener.form1.r_juso.value = juso;
+			opener.form1.addr.value = juso2;
 		} else {
 			opener.form1.zip1.value = zip1;
 			opener.form1.zip2.value = zip2;
 			opener.form1.juso.value = juso;
+			opener.form1.addr.value = juso2;
 		}
 		self.close();
 	}

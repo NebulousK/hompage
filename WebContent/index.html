@@ -42,7 +42,9 @@
 					<div>
 						<div class="row">
 							<div class="12u">
-								<form method="post" action="/homepage/member/member_proc.jsp">
+								<form name="form" method="post" action="/homepage/member/member_proc.jsp">
+								<table>
+								<input type="hidden" name="action" value="login"/>
 									<div>
 										<div class="row half">
 											<div class="12u">
@@ -56,17 +58,18 @@
 										</div>
 										<div class="row half">
 											<div class="12u">
-												<input type="text" name="pass" id="password" placeholder="PassWord : " />
+												<input type="password" name="password" id="password" placeholder="PassWord : " />
 											</div>
 										</div>
 										<div class="row">
 											<div class="12u">
-												<a href="#" class="button form-button-submit">Login</a>
+												<a href="#" class="button" onclick="javascript:document.form.submit();">Login</a>
 												<!-- <a href="#" class="button button-alt form-button-reset">Clear</a> -->
 												<a href="/homepage/member/member_join.jsp" class="button">Join</a>
 											</div>
 										</div>
 									</div>
+									</table>
 								</form>
 							</div>
 						</div>

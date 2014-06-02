@@ -21,7 +21,14 @@
 </head>
 <jsp:useBean id="dao" class="homepage.someDao"/>
 <jsp:useBean id="dto" class="homepage.someDto"/>
-<% dao.idealtype(532, "여");%>
+<% 
+	String sex;
+	if(session.getAttribute("sex").equals("man")){
+		sex = "woman";
+	}else{
+		sex = "남";
+	}
+ 	dao.idealtype(Integer.parseInt((String) session.getAttribute("no")), sex);%>
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->

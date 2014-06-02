@@ -22,12 +22,6 @@
 <script src="/homepage/js/jquery-2.1.1.min.js"></script>
 <script src="/homepage/js/bootstrap.js"></script>
 <script type = "text/javascript" src = "/homepage/js/ajax.js"></script>
-<script>
-
-</script>
-
-
-
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -49,6 +43,8 @@
 					<div class="container">
 						<!-- <div class="row"> -->
 							<h2>세부정보 입력</h2>
+							<p align="left">*세부정보 입력시에만 이성추천을 해드립니다.</p>
+							<P align="left">*추후 수정 및 추가 가능 합니다.</P>
 							<div class="span12">
 								<h3>본인의 세부정보</h3>
 								<form action="/homepage/member/member_proc.jsp" method="post">

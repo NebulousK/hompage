@@ -39,7 +39,38 @@
 <% 
 	}
 	if(action.equals("login")){
-		
+		String result =  dao.login(dto.getId(), dto.getPassword());
+		System.out.println(result);
+		if(result == "b"){
+%>
+	<script>
+		alert("존재 하지 않는 아이디 입니다. 아이디를 확인하세요");
+		location.href = "/homepage/index.html";
+	</script>	
+<% 
+		}
+		else if(result == "a"){
+%>
+	<script>
+		alert("비밀 번호가 틀렸습니다. 비밀번호를 확인 하세요");
+		location.href = "/homepage/index.html";
+	</script>
+<% 			
+		}
+		else{
+			String a[] = result.split(",");
+			session.setAttribute("id", a[0]);
+			session.setAttribute("no", a[1]);
+			session.setAttribute("sex", a[2]);
+			System.out.println(a[0]);
+			System.out.println(a[1]);
+			System.out.println(a[2]);
+%>
+	<script>
+		location.href = "/homepage/main.jsp";
+	</script>	
+<% 
+		}
 	}
 	else{
 		dao.member_join(request);
