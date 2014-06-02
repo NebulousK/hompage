@@ -12,6 +12,8 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.omg.CORBA.FREE_MEM;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -30,7 +32,7 @@ public class someDao {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
-			System.out.println("연결");
+			/*System.out.println("연결");*/
 		} catch (Exception err) {
 			System.out.println("에러");
 			System.out.println(err);
@@ -89,7 +91,10 @@ public class someDao {
 
 	public void member_join(HttpServletRequest req) {
 		connect();
-		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, e-mail) VALUES(?,?,?,?,?,?,?,?,?,?)";		
+		setPath(req, "profile");
+		setMax(5*1024*1024);
+		setEncType("UTF-8");
+		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`) VALUES(?,?,?,?,?,?,?,?,?,?)";		
 		try{
 			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
 			stmt = con.prepareStatement(sql);
@@ -111,34 +116,73 @@ public class someDao {
 			stmt.setString(8, f.getPath());
 			stmt.setInt(9, age);
 			stmt.setString(10, email);
-			System.out.println(stmt);
-			//stmt.executeUpdate();	
+			//System.out.println(stmt);
+			stmt.executeUpdate();	
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();		
+		}
+	}
+	
+	public void member_detail(someDto g){
+		connect();
+		String sql = "INSERT INTO m_profile(no, height, hobby, blood, style, weight, fashion) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?)";
+		try{
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getHeight());
+			stmt.setString(2, g.getHobby());
+			stmt.setString(3, g.getBlood());
+			stmt.setString(4, g.getStyle());
+			stmt.setInt(5, g.getWeight());
+			stmt.setString(6, g.getFashion());
+			/*System.out.println(stmt);*/
+			stmt.executeUpdate();
+	        stmt = null;	
+			sql = "INSERT INTO idealtype(no, height, hobby, blood, style, weight, fashion, age) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?,?)";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getHeight2());
+			stmt.setString(2, g.getHobby2());
+			stmt.setString(3, g.getBlood2());
+			stmt.setString(4, g.getStyle2());
+			stmt.setInt(5, g.getWeight2());
+			stmt.setString(6, g.getFashion2());
+			stmt.setInt(7, g.getAge());
+			/*System.out.println(stmt);*/
+			stmt.executeUpdate();			
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();		
+		}
+	}
+	
+	public String login(String id, String password){
+		connect();
+		String sql = "select * from member where id= ?";
+		try{
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			rs.next();
+			if(rs == null){
+				return null;
+			}
+			else{
+				
+			}
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
 			discon();
 		}
+		return null;
 	}
 	
-	public String getUpFile(){
-		String result = "";
-		Enumeration enumer = multi.getFileNames();
-		while(enumer.hasMoreElements()){
-			String name = (String)enumer.nextElement();
-			result = "오리지날 : " + multi.getOriginalFileName(name) + "<br/>";
-			result += "저장된파일명 : " + multi.getFilesystemName(name) + "<br/>";
-			result += "타입 : " + multi.getContentType(name) + "<br/>";
-			File f = multi.getFile(name);
-			result += "파일길이 : " + f.length() + "byte <br/>";
-			result += "파일경로 : " + f.getPath();
-		}
-		return result;
-	}
-	
-	
-	
-	public void idealtype(int no, String sex, int ages){
+	public void idealtype(int no, String sex){
 		connect();
+		/*System.out.println(no);
+		System.out.println(sex);*/
 		ArrayList<someDto> g = new ArrayList<someDto>();
 		String sql="";
 		int age, height = 0;
@@ -148,19 +192,18 @@ public class someDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			while(rs.next()){
-				age = Integer.parseInt(rs.getString("age"));
-				height = Integer.parseInt(rs.getString("height"));
-				hobby = rs.getString("hobby");;
-				blood = rs.getString("blood");
-			    style =	rs.getString("style");
-				weight = rs.getString("weight");
-				fashion = rs.getString("fashion");
-			}
+			rs.next();
+			age = Integer.parseInt(rs.getString("age"));
+			height = Integer.parseInt(rs.getString("height"));
+			hobby = rs.getString("hobby");;
+			blood = rs.getString("blood");
+			style =	rs.getString("style");
+			weight = rs.getString("weight");
+			fashion = rs.getString("fashion");
 			sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age < ? ";	
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, sex);
-			stmt.setInt(2, ages);
+			stmt.setInt(2, rs.getInt("age"));
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				someDto dto = new someDto();
@@ -170,7 +213,7 @@ public class someDao {
 				dto.setHobby(rs.getString("b.hobby"));;
 				dto.setBlood(rs.getString("b.blood"));
 				dto.setStyle(rs.getString("b.style"));
-				dto.setWeight(rs.getString("b.weight"));
+				dto.setWeight(rs.getInt("b.weight"));
 				dto.setFashion(rs.getString("b.Fashion"));
 				g.add(dto);
 			}
@@ -192,15 +235,15 @@ public class someDao {
 						else if(r<=5){result += 7;}
 						else if(r<=10){result += 4;}
 				}
-				if(Integer.parseInt(weight) >Integer.parseInt(dto.getWeight())){
-					int r = Integer.parseInt(weight) - Integer.parseInt(dto.getWeight());
+				if(Integer.parseInt(weight) > dto.getWeight()){
+					int r = Integer.parseInt(weight) - dto.getWeight();
 						if(r>10) {result += 0;}
 						else if(r<=3){result += 10;}
 						else if(r<=5){result += 7;}
 						else if(r<=10){result += 4;}
 				}
-				else if(Integer.parseInt(weight) < Integer.parseInt(dto.getWeight())){
-					int r =   Integer.parseInt(dto.getWeight()) - Integer.parseInt(weight);
+				else if(Integer.parseInt(weight) < dto.getWeight()){
+					int r = dto.getWeight() - Integer.parseInt(weight);
 						if(r>10) {result += 0;}
 						else if(r<=3){result += 10;}
 						else if(r<=5){result += 7;}

@@ -21,7 +21,7 @@
 </head>
 <jsp:useBean id="dao" class="homepage.someDao"/>
 <jsp:useBean id="dto" class="homepage.someDto"/>
-<% dao.idealtype(522, "여", 27); %>
+<% dao.idealtype(532, "여");%>
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->

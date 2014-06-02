@@ -1,13 +1,54 @@
 package homepage;
 
 public class someDto {
-	private int no, hit, like, parent, age, height, state, zip, zip2;
+	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2;
 	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4,  
-			regist_day, userid1, userid2, friends, blood, hobby, mbit, style, password,  
-			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, weight,
-			fashion;
+			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2,    
+			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion;
 	public String getFashion() {
 		return fashion;
+	}
+	public int getHeight2() {
+		return height2;
+	}
+	public void setHeight2(int height2) {
+		this.height2 = height2;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public int getWeight2() {
+		return weight2;
+	}
+	public void setWeight2(int weight2) {
+		this.weight2 = weight2;
+	}
+	public String getBlood2() {
+		return blood2;
+	}
+	public void setBlood2(String blood2) {
+		this.blood2 = blood2;
+	}
+	public String getHobby2() {
+		return hobby2;
+	}
+	public void setHobby2(String hobby2) {
+		this.hobby2 = hobby2;
+	}
+	public String getFashion2() {
+		return fashion2;
+	}
+	public void setFashion2(String fashion2) {
+		this.fashion2 = fashion2;
+	}
+	public String getStyle2() {
+		return style2;
+	}
+	public void setStyle2(String style2) {
+		this.style2 = style2;
 	}
 	public int getZip() {
 		return zip;
@@ -53,18 +94,6 @@ public class someDto {
 	}
 	public void setNo(int no) {
 		this.no = no;
-	}
-	public String getMbit() {
-		return mbit;
-	}
-	public void setMbit(String mbit) {
-		this.mbit = mbit;
-	}
-	public String getWeight() {
-		return weight;
-	}
-	public void setWeight(String weight) {
-		this.weight = weight;
 	}
 	public int getHit() {
 		return hit;
