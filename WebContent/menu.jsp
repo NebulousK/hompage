@@ -17,8 +17,8 @@
 			</ul>
 			<%}else{ %>
 			<ul>
-				<li><a href="/homepage/someNsome/main.jsp">Dash</a></li>
-				<li><a href="/homepage/someNsome/main2.jsp">call me</a></li>
+				<li><a href="/homepage/someNsome/main2.jsp">Dash</a></li>
+				<li><a href="/homepage/someNsome/main.jsp">call me</a></li>
 			</ul>
 			<%} %>
 		</li>

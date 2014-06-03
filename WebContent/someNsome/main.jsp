@@ -19,16 +19,7 @@
 <link href="/homepage/css/bootstrap2.css" rel="stylesheet" type="text/css"/> 
 <link href="/homepage/css/1.css" rel="stylesheet" type="text/css"/>
 </head>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
-<% 
-	String sex;
-	if(session.getAttribute("sex").equals("man")){
-		sex = "woman";
-	}else{
-		sex = "남";
-	}
- 	dao.idealtype(Integer.parseInt((String) session.getAttribute("no")), sex);%>
+
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -70,12 +61,15 @@
 											<ol>
 												<li class="customLi">이름 : </li>
 												<li class="customLi">나이 : </li>
+												<li class="customLi">혈액형 : </li>
+												<li class="customLi">키 : </li>
+												<li class="customLi">몸무게 : </li>
 												<li class="customLi">지역 : </li>
 												<li class="customLi">성격 : </li>
 												<li class="customLi">스타일 : </li>
+												<li class="customLi">취미 : </li>
 											</ol>
-											<textarea name="coment" style="width: 280px; height: 150px; resize: none; background-color: white;"
-											readonly="readonly">받아줘요!</textarea>
+											<textarea name="coment" style="width: 280px; height: 150px; resize: none; background-color: white;" placeholder="내용 들어감" readonly="readonly"></textarea>
 										</div>
 									</div>
 								</div>

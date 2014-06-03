@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script src="pixlr.js" type="text/javascript">/* www.pixlr.com/developer/api */</script>
+<h3>pixlr 연동 테스트</h3>
+<h4>이미지를 클릭하여 편집</h4>
+<b>이미지 편집기를 오버레이로 열기</b><br>
+<a href="javascript:pixlr.overlay.show({image:'srcIamgeUrl1', title:'Example image 1', service:'editor'});"><img src="srcIamgeUrl1" title="Edit in pixlr" height="150" width="250"></a><br>
+<b>이미지 익스프레스를 오버레이로 열기</b><br>
+<a href="javascript:pixlr.overlay.show({image:'srcIamgeUrl2', title:'Example image 2', service:'express'});"><img src="srcIamgeUrl2" title="Edit in pixlr" height="150" width="250"></a><br>
+<b>이미지 편집기를 링크로 열기</b><br>
+<a href="javascript:pixlr.edit({image:'srcIamgeUrl3', method:'get', title:'Example image 3', service:'editor', target:'저장처리URL3', exit:'NewFile5.html', loc:'kr'});"><img src="srcIamgeUrl3" title="Edit in pixlr" height="150" width="250"></a><br>
+<b>이미지 익스프레스를 팝업으로 열기</b><br>
+<a href="javascript:pixlr.edit({image:'srcIamgeUrl4', method:'get', title:'Example image 3', service:'express', target:'저장처리URL4', exit:'마칠때이동할URL4', loc:'kr'});"><img src="srcIamgeUrl4" title="Edit in pixlr" height="150" width="250"></a>
+</body>
+
+http://developer.pixlr.com/
+</html>
