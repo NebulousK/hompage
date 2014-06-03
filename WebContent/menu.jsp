@@ -2,7 +2,7 @@
 <h3>Navigation</h3>
 <div class="aside-nav">
 	<ul><!-- ë³¸ì¸ íì´ì§ / ë´ì¤í¼ë/ ì¹êµ¬ëª©ë¡/ ì¹êµ¬ ì°¾ê¸°/ Some N Some -->
-		<li><a>환영</a></li>
+		<li><a>${sessionScope.id}님 환영합니다.</a></li>
 		<li><a>It's me</a></li>
 		<li><a href="/homepage/newsfeed/main.jsp">뉴스 피드</a></li>
 		<li><a href ="/homepage/friendList/main.jsp">친구 목록</a></li>

@@ -188,11 +188,9 @@ public class someDao {
 	
 	public void idealtype(int no, String sex){
 		connect();
-		/*System.out.println(no);
-		System.out.println(sex);*/
 		ArrayList<someDto> g = new ArrayList<someDto>();
 		String sql="";
-		int age, height = 0;
+		int age = 0, height = 0;
 		String hobby = null, fashions = null, blood = null, style = null, weight = null, fashion=null, fashion2=null, fashion3=null;
 		try{
 			sql = "select * from idealtype where no = ?";
@@ -241,7 +239,7 @@ public class someDao {
 				}
 				g.add(dto);
 			}
-			int total[][] = new int[1][g.size()];
+			/*int total[][] = new int[1][1];*/
 			for (int i = 0; i < g.size(); i++) {
 				someDto dto = g.get(i);
 				int result = 0;
@@ -286,11 +284,13 @@ public class someDao {
 				if(fashion3.equals(dto.getFashion())){result += 10;}
 				if(fashion3.equals(dto.getFashion2())){result += 10;}
 				if(fashion3.equals(dto.getFashion3())){result += 10;}
-				total[i][0] = dto.getNo();
-				total[i][1] = result;
+				/*total[i][0] = dto.getNo();
+				total[i][1] = result;*/
+				System.out.println("몇번돔? : " + i);
 			}
-			System.out.println(total[0][0] +  " " + total[0][1] + "1번째");
-			System.out.println(total[1][0] +  " " + total[1][1] + "2번째");
+			/*System.out.println(total[0][0] +  " " + total[0][1] + "1번째");*/
+			/*System.out.println(total.length);*/
+			/*System.out.println(total[1][0] +  " " + total[1][1] + "2번째");*/
 		}catch(Exception err){
 			System.out.println(err);
 		}

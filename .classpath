@@ -29,5 +29,6 @@
 	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-jdbc.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/tomcat-util.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/websocket-api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/cos.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

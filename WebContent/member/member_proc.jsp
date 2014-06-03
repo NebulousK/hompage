@@ -40,7 +40,6 @@
 	}
 	if(action.equals("login")){
 		String result =  dao.login(dto.getId(), dto.getPassword());
-		System.out.println(result);
 		if(result == "b"){
 %>
 	<script>
@@ -62,9 +61,6 @@
 			session.setAttribute("id", a[0]);
 			session.setAttribute("no", a[1]);
 			session.setAttribute("sex", a[2]);
-			System.out.println(a[0]);
-			System.out.println(a[1]);
-			System.out.println(a[2]);
 %>
 	<script>
 		location.href = "/homepage/main.jsp";
