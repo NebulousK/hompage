@@ -24,6 +24,23 @@
 
 <link href="/homepage/css/bootstrap2.css" rel="stylesheet" type="text/css" />
 <link href="/homepage/css/1.css" rel="stylesheet" type="text/css" />
+
+<link href="/homepage/css/rateit.css" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="/homepage/js/jquery.rateit.js" type="text/javascript"></script>
+<script type="text/javascript">
+	function test() {
+		document.getElementById("value").value = $('#rateit').rateit('value');
+		var text = $("#coment").val();
+		var value = $("#value").val();
+		if(value == 0 ){
+			document.getElementById("i").innerHTML = "<font color='red'>대쉬를 하기위해서는 별점을 선택하셔야됩니다!!!</font>";
+		} else if(text == ""){
+			document.getElementById("coment").placeholder="멘트도 안날리고 대쉬 할 생각인가요????";
+		}
+		else{document.form.submit();}
+	}
+</script>
 </head>
 <jsp:useBean id="dao" class="homepage.someDao"/>
 <jsp:useBean id="dto" class="homepage.someDto"/>
@@ -35,6 +52,7 @@
 		sex = "남";
 	}
  	dto = dao.idealtype(Integer.parseInt((String)session.getAttribute("no")), sex);
+ 	String check[] = dao.dashch(Integer.parseInt((String)session.getAttribute("no")), dto.getNo()).split(",");
 %>
 <body>
 <body class="size-1140">
@@ -60,7 +78,14 @@
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
 
-					<form action="">
+					<form action="/homepage/someNsome/someProc.jsp" name="form" method="post" >
+						<%if(check[0].equals("no")) {%>
+						<input type="hidden" name="action" value="dash" />
+						<%}else{ %>
+						<input type="hidden" name="action" value="dashup" />
+						<%} %>
+						<input type="hidden" name="userID" value="<%=session.getAttribute("no") %>" />
+						<input type="hidden" name="itemID" value="<%=dto.getNo() %>" />
 						<div align="center">
 							<div style="width: 530px; text-align: left;">
 								<div class="row">
@@ -68,7 +93,7 @@
 									<h1>오늘의 추천 이성</h1>
 									<p>&nbsp;</p>
 									<div style="float: left;"> 
-									<img src="/homepage/profile/13.jpg" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
+									<img src="/homepage/profile/<%=dto.getPhoto()%>" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
 									</div>
 									<div style="float: left;">
 									<p>&nbsp;</p>
@@ -83,21 +108,36 @@
 												<li class="customLi">스타일 : <%=dto.getFashion() %></li>
 												<li class="customLi">취미 : <%=dto.getHobby() %></li>
 											</ol>
+									</div> 
+									<div style="float:left;text-align:left;width:287px">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<div class="rateit" id="rateit"></div><span id="i">&nbsp;&nbsp;: 이상형과 얼마나 일치하나요?</span>
+    									 <input type="hidden" name="value" id="value" value="" />
 									</div>
 									<div style="clear: both; height: 10px"></div>
-									
 									<div style="float: left;">
-									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" placeholder="작업멘트를 날려라"></textarea>
+									<%if(check[0].equals("no")) {%>
+								    <textarea name="coment" id="coment" style="width: 500px; height: 150px; resize: none;" placeholder="작업멘트를 날려라"></textarea>
+									<%}else{ %>							
+									<script>
+									function test1(){
+										 $('#rateit').rateit('value', <%=check[1]%>);
+									}
+									window.onload=test1</script>
+									<textarea name="coment" id="coment" style="width: 500px; height: 150px; resize: none;" ><%=check[0] %></textarea>
+									<%} %>
 									</div>
 									<div style="clear: both;"></div>
-									
 								</div>
 							</div>
 						</div>
-
 						<p>&nbsp;</p>
 						<div align="center">
-							<input type="button" style="width: 500px; height: 50px; font-size: 15pt;" class="btn-custom" value="대쉬!!!" />
+						<%if(check[0].equals("no")) {%>
+							<input type="button" style="width: 500px; height: 50px; font-size: 15pt;" class="btn-custom" value="대쉬!!!" onclick="test()"/>
+						<%}else{ %>
+							<input type="button" style="width: 500px; height: 50px; font-size: 15pt;" class="btn-custom" value="대쉬 수정" onclick="test()"/>
+						<%} %>
 						</div>
 					</form>
 

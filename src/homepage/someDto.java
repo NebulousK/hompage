@@ -1,10 +1,42 @@
 package homepage;
 
 public class someDto {
-	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2;
-	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4,  
+	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2, itemID, userID;
+	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4, date, coment, 
 			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2, fashion3,   
 			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion;
+	private float value;
+	
+	public float getValue() {
+		return value;
+	}
+	public void setValue(float value) {
+		this.value = value;
+	}
+	public int getItemID() {
+		return itemID;
+	}
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
+	}
+	public int getUserID() {
+		return userID;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getComent() {
+		return coment;
+	}
+	public void setComent(String coment) {
+		this.coment = coment;
+	}
 	public String getFashion() {
 		return fashion;
 	}

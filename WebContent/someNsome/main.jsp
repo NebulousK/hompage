@@ -50,15 +50,12 @@
 								<div class="row">
 									<h1>나에게 대쉬한 이성</h1>
 									<p>&nbsp;</p>
-									<div align="center" class="span3">
-										<div class="customDiv">
-											<img src="/////////////////" style="max-width: 200px; height: auto;" />
-										</div>
+									<div style="float: left;"> 
+									<img src="/homepage/profile/" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
 									</div>
-									<div class="span3.5">
-										<div>
-											<p style="padding-bottom: 10px" align="left">전이런 사람 입니다.</p>
-											<ol>
+									<div style="float: left;">
+									<p>&nbsp;</p>
+											<ol style="font-size: 13pt;">
 												<li class="customLi">이름 : </li>
 												<li class="customLi">나이 : </li>
 												<li class="customLi">혈액형 : </li>
@@ -69,9 +66,13 @@
 												<li class="customLi">스타일 : </li>
 												<li class="customLi">취미 : </li>
 											</ol>
-											<textarea name="coment" style="width: 280px; height: 150px; resize: none; background-color: white;" placeholder="내용 들어감" readonly="readonly"></textarea>
-										</div>
 									</div>
+									<div style="clear: both; height: 10px"></div>
+									
+									<div style="float: left;">
+									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" placeholder="내용 들어감" readonly="readonly"></textarea>
+									</div>
+									<div style="clear: both;"></div>
 								</div>
 							</div>
 						</div>

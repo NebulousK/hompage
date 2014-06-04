@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,31 +43,29 @@ public class someDao {
 	private String path;
 	private int max;
 	private String encType;
-	
-	
+
 	public void connect() {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
-			/*System.out.println("연결");*/
 		} catch (Exception err) {
 			System.out.println("에러");
 			System.out.println(err);
-		} 
+		}
 	}
-	
-	public void discon(){
-		pool.freeConnection(con,stmt,rs);
+
+	public void discon() {
+		pool.freeConnection(con, stmt, rs);
 	}
-	
-	public ArrayList<someDto> zip(String dong){
+
+	public ArrayList<someDto> zip(String dong) {
 		connect();
 		ArrayList<someDto> g = new ArrayList<someDto>();
-		try{
-			String sql = "select * from zip where juso3 like '%"+ dong +"%'"; 
+		try {
+			String sql = "select * from zip where juso3 like '%" + dong + "%'";
 			stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				someDto dto = new someDto();
 				dto.setNo(Integer.parseInt(rs.getString("no")));
 				dto.setZip(Integer.parseInt(rs.getString("zip")));
@@ -77,48 +76,48 @@ public class someDao {
 				dto.setJuso4(rs.getString("juso4"));
 				g.add(dto);
 			}
-		}catch(Exception err){
+		} catch (Exception err) {
 			System.out.println(err);
-		}finally{
+		} finally {
 			discon();
 		}
 		return g;
 	}
-	
-	
-	public void setPath(HttpServletRequest servlet, String path){
+
+	public void setPath(HttpServletRequest servlet, String path) {
 		this.path = servlet.getServletContext().getRealPath(path);
 	}
 
-	public void setMax(int max){
+	public void setMax(int max) {
 		this.max = max;
 	}
 
-	public void setEncType(String encType){
+	public void setEncType(String encType) {
 		this.encType = encType;
 	}
-	public String getUser(){
+
+	public String getUser() {
 		return multi.getParameter("user");
 	}
 
-	public String getTitle(){
+	public String getTitle() {
 		return multi.getParameter("title");
 	}
 
 	public void member_join(HttpServletRequest req) {
 		connect();
 		setPath(req, "profile");
-		setMax(5*1024*1024);
+		setMax(5 * 1024 * 1024);
 		setEncType("UTF-8");
-		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`) VALUES(?,?,?,?,?,?,?,?,?,?)";		
-		try{
+		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		try {
 			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
 			stmt = con.prepareStatement(sql);
 			File f = multi.getFile("imgInp");
 			String email;
-			if(multi.getParameter("email2").equals(null)|| multi.getParameter("email2").equals("")){
+			if (multi.getParameter("email2").equals(null) || multi.getParameter("email2").equals("")) {
 				email = multi.getParameter("email1") + "@" + multi.getParameter("email3");
-			}else{
+			} else {
 				email = multi.getParameter("email1") + "@" + multi.getParameter("email2");
 			}
 			int age = (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(multi.getParameter("year"))) + 1;
@@ -132,19 +131,19 @@ public class someDao {
 			stmt.setString(8, multi.getFilesystemName("imgInp"));
 			stmt.setInt(9, age);
 			stmt.setString(10, email);
-			//System.out.println(stmt);
-			stmt.executeUpdate();	
-		}catch(Exception err){
+			// System.out.println(stmt);
+			stmt.executeUpdate();
+		} catch (Exception err) {
 			System.out.println(err);
-		}finally{
-			discon();		
+		} finally {
+			discon();
 		}
 	}
-	
-	public void member_detail(someDto g){
+
+	public void member_detail(someDto g) {
 		connect();
 		String sql = "INSERT INTO m_profile(no, height, hobby, blood, style, weight, fashion) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?)";
-		try{
+		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, g.getHeight());
 			stmt.setString(2, g.getHobby());
@@ -152,9 +151,9 @@ public class someDao {
 			stmt.setString(4, g.getStyle());
 			stmt.setInt(5, g.getWeight());
 			stmt.setString(6, g.getFashion());
-			/*System.out.println(stmt);*/
+			/* System.out.println(stmt); */
 			stmt.executeUpdate();
-	        stmt = null;	
+			stmt = null;
 			sql = "INSERT INTO idealtype(no, height, hobby, blood, style, weight, fashion, age) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?,?)";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, g.getHeight2());
@@ -164,221 +163,348 @@ public class someDao {
 			stmt.setInt(5, g.getWeight2());
 			stmt.setString(6, g.getFashion2());
 			stmt.setInt(7, g.getAge());
-			/*System.out.println(stmt);*/
-			stmt.executeUpdate();			
-		}catch(Exception err){
+			/* System.out.println(stmt); */
+			stmt.executeUpdate();
+		} catch (Exception err) {
 			System.out.println(err);
-		}finally{
-			discon();		
+		} finally {
+			discon();
 		}
 	}
-	
-	public String login(String id, String password){
+
+	public String login(String id, String password) {
 		connect();
 		String sql = "select * from member where id= ?";
 		String set = "";
-		try{
+		try {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			rs = stmt.executeQuery();
-			if(!rs.next()){
-				set =  "b";
-			}
-			else{
-				if(!password.equals(rs.getString("password"))){
+			if (!rs.next()) {
+				set = "b";
+			} else {
+				if (!password.equals(rs.getString("password"))) {
 					set = "a";
-				}
-				else{
-					set +=  id + ",";
-					set +=  rs.getInt("no") + ",";
-					set +=  rs.getString("sex");
+				} else {
+					set += id + ",";
+					set += rs.getInt("no") + ",";
+					set += rs.getString("sex");
 				}
 			}
-		}catch(Exception err){
+		} catch (Exception err) {
 			System.out.println(err);
-		}finally{
+		} finally {
 			discon();
 		}
 		return set;
 	}
-	
-	public someDto idealtype(int no, String sex){
+
+	public someDto idealtype(int no, String sex) {
 		connect();
 		ArrayList<someDto> g = new ArrayList<someDto>();
-		HashMap<Integer , Integer> map = new HashMap<Integer , Integer>();
-		HashMap<Integer , Integer> map2 = new HashMap<Integer , Integer>();
-		String sql="";
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+		String sql = "";
 		someDto re = new someDto();
 		int age = 0, height = 0;
-		String hobby = null, fashions = null, blood = null, style = null, weight = null, fashion=null, fashion2=null, fashion3=null;
-		try{
-			sql = "select * from idealtype where no = ?";
+		String hobby = null, fashions = null, blood = null, style = null, weight = null, fashion = null, fashion2 = null, fashion3 = null;
+		try {
+			sql = "select * from `join` where userid = ? and date = CURDATE()";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			rs.next();
-			age = Integer.parseInt(rs.getString("age"));
-			height = Integer.parseInt(rs.getString("height"));
-			hobby = rs.getString("hobby");;
-			blood = rs.getString("blood");
-			style =	rs.getString("style");
-			weight = rs.getString("weight");
-			fashions = rs.getString("fashion");
-			String arr[] = fashions.split(",");
-			fashion = arr[0];
-			if(!arr[1].equals(null)){
-				fashion2 = arr[1];
+			if (rs.next()) {
+				sql = "SELECT a.no ,a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, Integer.parseInt(rs.getString("itemid")));
+				rs = stmt.executeQuery();
+				rs.next();
+				re.setNo(rs.getInt("a.no"));
+				re.setName(rs.getString("a.name"));
+				re.setAge(Integer.parseInt(rs.getString("a.age")));
+				re.setBlood(rs.getString("b.blood"));
+				re.setHeight(Integer.parseInt(rs.getString("b.height")));
+				re.setWeight(Integer.parseInt(rs.getString("b.weight")));
+				String c[] = rs.getString("a.addr").split(" ");
+				re.setAddr(c[1]);
+				re.setStyle(rs.getString("b.style"));
+				re.setFashion(rs.getString("b.fashion"));
+				re.setHobby(rs.getString("b.hobby"));
+				re.setPhoto(rs.getString("a.photo"));
+			}else {
+				sql = "select * from idealtype where no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				rs = stmt.executeQuery();
+				rs.next();
+				age = Integer.parseInt(rs.getString("age"));
+				height = Integer.parseInt(rs.getString("height"));
+				hobby = rs.getString("hobby");
+				blood = rs.getString("blood");
+				style = rs.getString("style");
+				weight = rs.getString("weight");
+				fashions = rs.getString("fashion");
+				String arr[] = fashions.split(",");
+				fashion = arr[0];
+				if (!arr[1].equals(null)) {fashion2 = arr[1];}
+				if (!arr[2].equals(null)) {fashion3 = arr[2];}
+				sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age < ?  AND a.no not in (select itemid from `join` where userid = ?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, sex);
+				stmt.setInt(2, rs.getInt("age"));
+				stmt.setInt(3, no);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					someDto dto = new someDto();
+					dto.setNo(Integer.parseInt(rs.getString("a.no")));
+					dto.setAge(Integer.parseInt(rs.getString("a.age")));
+					dto.setHeight(Integer.parseInt(rs.getString("b.height")));
+					dto.setHobby(rs.getString("b.hobby"));
+					dto.setBlood(rs.getString("b.blood"));
+					dto.setStyle(rs.getString("b.style"));
+					dto.setWeight(rs.getInt("b.weight"));
+					fashions = rs.getString("b.Fashion");
+					String arr1[] = fashions.split(",");
+					dto.setFashion(arr1[0]);
+					if (!arr1[1].equals(null)) {dto.setFashion2(arr1[1]);}
+					if (!arr1[2].equals(null)) {dto.setFashion3(arr1[2]);}
+					g.add(dto);
+				}
+				for (int i = 0; i < g.size(); i++) {
+					someDto dto = g.get(i);
+					int result = 0;
+					if (height >= dto.getHeight()) {
+						int r = height - dto.getHeight();
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					} else if (height <= dto.getHeight()) {
+						int r = dto.getHeight() - height;
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					}
+					if (Integer.parseInt(weight) >= dto.getWeight()) {
+						int r = Integer.parseInt(weight) - dto.getWeight();
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					} else if (Integer.parseInt(weight) <= dto.getWeight()) {
+						int r = dto.getWeight() - Integer.parseInt(weight);
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					}
+					if (hobby.equals(dto.getHobby())) {result += 10;}
+					if (blood.equals(dto.getBlood())) {result += 10;} 
+					else if (!blood.equals(dto.getBlood())) {result += 5;}
+					if (style.equals(dto.getStyle())) {result += 10;}
+					if (fashion.equals(dto.getFashion())) {result += 10;}
+					if (fashion.equals(dto.getFashion2())) {result += 10;}
+					if (fashion.equals(dto.getFashion3())) {result += 10;}
+					if (fashion2.equals(dto.getFashion())) {result += 10;}
+					if (fashion2.equals(dto.getFashion2())) {result += 10;}
+					if (fashion2.equals(dto.getFashion3())) {result += 10;}
+					if (fashion3.equals(dto.getFashion())) {result += 10;}
+					if (fashion3.equals(dto.getFashion2())) {result += 10;}
+					if (fashion3.equals(dto.getFashion3())) {result += 10;}
+					map.put(dto.getNo(), result);
+				}
+				sql = "select * from rating ORDER BY userID ASC";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\test.csv"));
+				while (rs.next()) {
+					bw.write(rs.getInt("userID") + "," + rs.getInt("itemID") + "," + rs.getInt("value") + "\n");
+				}
+				bw.close();
+				DataModel model = new FileDataModel(new File("c:\\test.csv"));
+				UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
+				// 피어슨 상관 관계??
+				UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
+				// NearestNUserNeighborhood(int n, double minSimilarity,
+				// UserSimilarity userSimilarity, DataModel dataModel)
+				Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
+				List<RecommendedItem> recommendations = recommender.recommend(no, 3);
+				// recommend(long userID, int howMany)
+				for (RecommendedItem recommendation : recommendations) {
+						map2.put((int) recommendation.getItemID(), (int) (recommendation.getValue() * 10));
+				}
+				Set<Entry<Integer, Integer>> set2 = map2.entrySet();
+				Iterator<Entry<Integer, Integer>> it2 = set2.iterator();
+				while (it2.hasNext()) {
+					Map.Entry<Integer, Integer> e = (Map.Entry<Integer, Integer>) it2.next();
+					if (map.get(e.getKey()) != null) {
+						map.put(e.getKey(), map.get(e.getKey()) + e.getValue());
+					}
+				}
+				ValueComparator<Integer, Integer> comparator = new ValueComparator<Integer, Integer>(map);
+				TreeMap<Integer, Integer> reverse = new TreeMap<Integer, Integer>(new ReverseComparator<Integer>(comparator));
+				reverse.putAll(map);
+				 /*System.out.println(reverse); 
+				 System.out.println(reverse.firstKey()); 
+				 System.out.println(reverse.get(reverse.firstKey())); */
+				sql = "SELECT a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, reverse.firstKey());
+				rs = stmt.executeQuery();
+				rs.next();
+				re.setNo(reverse.firstKey());
+				re.setName(rs.getString("a.name"));
+				re.setAge(Integer.parseInt(rs.getString("a.age")));
+				re.setBlood(rs.getString("b.blood"));
+				re.setHeight(Integer.parseInt(rs.getString("b.height")));
+				re.setWeight(Integer.parseInt(rs.getString("b.weight")));
+				String c[] = rs.getString("a.addr").split(" ");
+				re.setAddr(c[1]);
+				re.setStyle(rs.getString("b.style"));
+				re.setFashion(rs.getString("b.fashion"));
+				re.setHobby(rs.getString("b.hobby"));
+				re.setPhoto(rs.getString("a.photo"));
+				sql = "insert into `join`(userid, itemid, date ) values(?,?,now())";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.setInt(2, reverse.firstKey());
+				stmt.executeUpdate();
+				sql = "insert into rating(userid, itemid, value) values(?,?,0)";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.setInt(2, reverse.firstKey());
+				stmt.executeUpdate();
 			}
-			if(!arr[2].equals(null)){
-				fashion3 = arr[2];
-			}
-			sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age < ? ";	
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return re;
+	}
+	
+	public void dash(someDto g){
+		connect();
+		String sql ="";		
+		try{
+			sql = "update rating set userID=?, itemID=?, value=? where userid=? and itemid=?";
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, sex);
-			stmt.setInt(2, rs.getInt("age"));
-			rs = stmt.executeQuery();
-			while(rs.next()){
-				someDto dto = new someDto();
-				dto.setNo(Integer.parseInt(rs.getString("a.no")));
-				dto.setAge(Integer.parseInt(rs.getString("a.age")));
-				dto.setHeight(Integer.parseInt(rs.getString("b.height")));
-				dto.setHobby(rs.getString("b.hobby"));;
-				dto.setBlood(rs.getString("b.blood"));
-				dto.setStyle(rs.getString("b.style"));
-				dto.setWeight(rs.getInt("b.weight"));
-				fashions = rs.getString("b.Fashion");
-				String arr1[] = fashions.split(",");
-				dto.setFashion(arr1[0]);
-				if(!arr1[1].equals(null)){
-					dto.setFashion2(arr1[1]);
-				}
-				if(!arr1[2].equals(null)){
-					dto.setFashion3(arr1[2]);
-				}
-				g.add(dto);
-			}
-			for (int i = 0; i < g.size(); i++) {
-				someDto dto = g.get(i);
-				int result = 0;
-				if(height >= dto.getHeight()){
-					int r = height - dto.getHeight();
-						if(r>10) {result += 0;}
-						else if(r<=3){result += 10;}
-						else if(r<=5){result += 7;}
-						else if(r<=10){result += 4;}
-				}
-				else if(height <= dto.getHeight()){
-					int r = dto.getHeight() - height;
-						if(r>10) {result += 0;}
-						else if(r<=3){result += 10;}
-						else if(r<=5){result += 7;}
-						else if(r<=10){result += 4;}
-				}
-				if(Integer.parseInt(weight) >= dto.getWeight()){
-					int r = Integer.parseInt(weight) - dto.getWeight();
-						if(r>10) {result += 0;}
-						else if(r<=3){result += 10;}
-						else if(r<=5){result += 7;}
-						else if(r<=10){result += 4;}
-				}
-				else if(Integer.parseInt(weight) <= dto.getWeight()){
-					int r = dto.getWeight() - Integer.parseInt(weight);
-						if(r>10) {result += 0;}
-						else if(r<=3){result += 10;}
-						else if(r<=5){result += 7;}
-						else if(r<=10){result += 4;}
-				}
-				if(hobby.equals(dto.getHobby())){result += 10;}
-				if(blood.equals(dto.getBlood())){result += 10;}
-				else if(!blood.equals(dto.getBlood())){result += 5;}
-				if(style.equals(dto.getStyle())){result += 10;}
-				if(fashion.equals(dto.getFashion())){result += 10;}
-				if(fashion.equals(dto.getFashion2())){result += 10;}
-				if(fashion.equals(dto.getFashion3())){result += 10;}
-				if(fashion2.equals(dto.getFashion())){result += 10;}
-				if(fashion2.equals(dto.getFashion2())){result += 10;}
-				if(fashion2.equals(dto.getFashion3())){result += 10;}
-				if(fashion3.equals(dto.getFashion())){result += 10;}
-				if(fashion3.equals(dto.getFashion2())){result += 10;}
-				if(fashion3.equals(dto.getFashion3())){result += 10;}
-				map.put(dto.getNo(), result);
-			}
-			sql = "select * from rating ORDER BY userID ASC";
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			stmt.setFloat(3, g.getValue());
+			stmt.setInt(4, g.getUserID());
+			stmt.setInt(5, g.getItemID());
+			stmt.executeUpdate();
+			sql = "insert into dash(userID, itemID, coment, date) values(?,?,?,now())";
 			stmt = con.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			BufferedWriter bw = new BufferedWriter(new FileWriter ("C:\\test.csv"));
-			while (rs.next()) {
-				bw.write(rs.getInt("userID") + "," + rs.getInt("itemID") + "," + rs.getInt("value") + "\n");
-			}
-			bw.close();
-			DataModel model = new FileDataModel(new File("c:\\test.csv"));
-		    UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
-		    //피어슨 상관 관계??
-		    UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
-		    //NearestNUserNeighborhood(int n, double minSimilarity, UserSimilarity userSimilarity, DataModel dataModel) 
-		    Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
-		    List<RecommendedItem> recommendations = recommender.recommend(no, 3);
-		    //recommend(long userID, int howMany)
-		    for (RecommendedItem recommendation : recommendations) {
-		    	map2.put((int)recommendation.getItemID(), (int)(recommendation.getValue() * 10));
-		    }
-		    Set<Entry<Integer, Integer>> set2 = map2.entrySet();
-			Iterator<Entry<Integer, Integer>> it2 = set2.iterator();
-			while (it2.hasNext()) {
-				Map.Entry<Integer, Integer> e = (Map.Entry<Integer, Integer>)it2.next();
-				if(map.get(e.getKey()) != null){
-					map.put(e.getKey(), map.get(e.getKey()) + e.getValue());
-				}
-			}
-			ValueComparator<Integer, Integer> comparator = new ValueComparator<Integer, Integer>(map);
-			TreeMap<Integer, Integer> reverse = new TreeMap<Integer, Integer>(new ReverseComparator<Integer>(comparator));
-		    reverse.putAll(map);
-		    /*System.out.println(reverse);*/
-		    /*System.out.println(reverse.firstKey());*/
-		   /*System.out.println(reverse.get(reverse.firstKey()));*/
-		    sql = "SELECT a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";	
-			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, reverse.firstKey());
-			rs = stmt.executeQuery();
-			rs.next();
-			re.setName(rs.getString("a.name"));
-			re.setAge(Integer.parseInt(rs.getString("a.age")));
-			re.setBlood(rs.getString("b.blood"));
-			re.setHeight(Integer.parseInt(rs.getString("b.height")));
-			re.setWeight(Integer.parseInt(rs.getString("b.weight")));
-			String c[] = rs.getString("a.addr").split(" ");
-			re.setAddr(c[1]);
-			re.setStyle(rs.getString("b.style"));
-			re.setFashion(rs.getString("b.fashion"));
-			re.setHobby(rs.getString("b.hobby"));
-			re.setPhoto(rs.getString("a.photo"));
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			stmt.setString(3, g.getComent());
+			stmt.executeUpdate();
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
 			discon();
 		}
-		return re;
 	}
-	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>> implements Comparator<K>{
-        private Map<K, V> map;
-        ValueComparator(Map<K, V> map) {
-            this.map = map;
-        }
-        public int compare(K o1, K o2) {
-            int p = map.get(o1).compareTo(map.get(o2));
-            if (p != 0) {
-                return p;
-            }
-            return o1.compareTo(o2);
-        }
-    }
-    private static class ReverseComparator<T> implements Comparator<T>{
-        private Comparator<T> comparator;
-        ReverseComparator(Comparator<T> comparator) {
-            this.comparator = comparator;
-        }
-        public int compare(T o1, T o2) {
-            return -1 * comparator.compare(o1, o2);
-        }
-    }
+	
+	public String dashch(int userID, int itemID){
+		connect();
+		String sql ="";
+		String result ="";
+		try{
+			sql = "select a.userID, a.itemID, a.coment, b.value from dash a , rating b where a.userID = ? and a.itemID = ? and a.userID=b.userID and a.itemID=b.itemID";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, userID);
+			stmt.setInt(2, itemID);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				result = rs.getString("a.coment") + "," + rs.getString("b.value");
+			}else{
+				result = "no,no";
+			}
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+		return result;
+	}
+	
+	public void dashup(someDto g){
+		connect();
+		String sql ="";
+		try{
+			sql = "update rating set userID=?, itemID=?, value=? where userid=? and itemid=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			stmt.setFloat(3, g.getValue());
+			stmt.setInt(4, g.getUserID());
+			stmt.setInt(5, g.getItemID());
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			sql = "update dash set userID=?, itemID=?, coment=? where userid=? and itemid=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			stmt.setString(3, g.getComent());
+			stmt.setInt(4, g.getUserID());
+			stmt.setInt(5, g.getItemID());
+			stmt.executeUpdate();
+			System.out.println(stmt);
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+	}
+	
+	public Vector<someDto> callme(int no){
+		connect();
+		String sql ="";
+		Vector<someDto> g = new Vector<someDto>();
+		try{
+			sql = "select a.name, a.age, b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.date = CURDATE()";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+		return g;
+	}
+	
+	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
+			implements Comparator<K> {
+		private Map<K, V> map;
+
+		ValueComparator(Map<K, V> map) {
+			this.map = map;
+		}
+
+		public int compare(K o1, K o2) {
+			int p = map.get(o1).compareTo(map.get(o2));
+			if (p != 0) {
+				return p;
+			}
+			return o1.compareTo(o2);
+		}
+	}
+
+	private static class ReverseComparator<T> implements Comparator<T> {
+		private Comparator<T> comparator;
+
+		ReverseComparator(Comparator<T> comparator) {
+			this.comparator = comparator;
+		}
+
+		public int compare(T o1, T o2) {
+			return -1 * comparator.compare(o1, o2);
+		}
+	}
 }

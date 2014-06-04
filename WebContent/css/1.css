@@ -1,5 +1,18 @@
 @CHARSET "UTF-8";
 
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #ff0033;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #ff0033;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #ff0033;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #ff0033;
+}
+
 .customDiv {
 	width: 200px;
 	height: 400px;
@@ -54,3 +67,12 @@
 	-webkit-font-smoothing: antialiased;
 	border-radius: 0.5em;
 }
+
+div.point1 {
+        background:url('/homepage/images/star_off.gif') no-repeat;
+        width:59px;
+        height:11px;
+    }
+div.point1 div.point2 {
+        overflow:hidden;
+    }
