@@ -512,15 +512,12 @@ public class someDao {
 				sql = "insert into `some_some`(man_ID, woman_ID, state, `start_Day`) values(?,?,?,now())";
 				System.out.println("들어옴");
 				if(sex.equals("man")){
-					System.out.println("들어옴 if");
 					stmt = con.prepareStatement(sql);
 					stmt.setInt(1, itemID);
 					stmt.setInt(2, userID);
 					stmt.setInt(3, state); 
 					stmt.executeUpdate();
-					System.out.println(stmt);
 				}else{
-					System.out.println("들어옴 else");
 					stmt = con.prepareStatement(sql);
 					stmt.setInt(1, userID);
 					stmt.setInt(2, itemID);
