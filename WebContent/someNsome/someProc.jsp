@@ -23,4 +23,23 @@
 	</script>
 <%
 	}
+	else if(action.equals("callme")){
+		String sex = (String) session.getAttribute("sex");
+		int select = dao.callme(dto.getUserID(), dto.getItemID(), dto.getState(), sex);
+		if(select == 1){
+%>
+	<script>
+		alert("좋은 인연이 시작되길 바래요!!");
+		location.href = "/homepage/main.jsp";
+	</script>
+<%
+		}else{
+%>
+	<script>
+		alert("인연이 아니였나 보군요!");
+		location.href = "/homepage/someNsome/main.jsp";
+	</script>		
+<% 			
+		}
+	}
 %>

@@ -254,6 +254,7 @@ public class someDao {
 				stmt.setInt(2, rs.getInt("age"));
 				stmt.setInt(3, no);
 				rs = stmt.executeQuery();
+				System.out.println(stmt);
 				while (rs.next()) {
 					someDto dto = new someDto();
 					dto.setNo(Integer.parseInt(rs.getString("a.no")));
@@ -464,19 +465,97 @@ public class someDao {
 	public Vector<someDto> callme(int no){
 		connect();
 		String sql ="";
-		Vector<someDto> g = new Vector<someDto>();
+		Vector<someDto> v = new Vector<someDto>();
 		try{
-			sql = "select a.name, a.age, b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.date = CURDATE()";
+			sql = "select a.name, a.age, a.photo,b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment , c.userID, c.itemID , c.state from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.state = 0 and c.itemID = ?";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			
+			while(rs.next()){
+				someDto g = new someDto();
+				g.setName(rs.getString("a.name"));
+				g.setAge(rs.getInt("a.age"));
+				g.setPhoto(rs.getString("a.photo"));
+				g.setBlood(rs.getString("b.blood"));
+				g.setHeight(rs.getInt("b.height"));
+				g.setWeight(rs.getInt("b.weight"));
+				String c[] = rs.getString("a.addr").split(" ");
+				g.setAddr(c[1]);
+				g.setStyle(rs.getString("b.style"));
+				g.setFashion(rs.getString("b.fashion"));
+				g.setHobby(rs.getString("b.hobby"));
+				g.setComent(rs.getString("c.coment"));
+				g.setUserID(rs.getInt("c.userID"));
+				g.setItemID(rs.getInt("c.itemID"));
+				g.setState(rs.getInt("c.state"));
+				v.add(g);
+			}
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
 			discon();
 		}
-		return g;
+		return v;
+	}
+	
+	public int callme(int userID, int itemID, int state, String sex){
+		connect();
+		String sql ="";
+		try{
+			sql = "update dash set state=? where userid=? and itemid=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, state);
+			stmt.setInt(2, userID);
+			stmt.setInt(3, itemID);
+			stmt.executeUpdate();
+			if(state == 1){
+				sql = "insert into `some_some`(man_ID, woman_ID, state, `start_Day`) values(?,?,?,now())";
+				System.out.println("들어옴");
+				if(sex.equals("man")){
+					System.out.println("들어옴 if");
+					stmt = con.prepareStatement(sql);
+					stmt.setInt(1, itemID);
+					stmt.setInt(2, userID);
+					stmt.setInt(3, state); 
+					stmt.executeUpdate();
+					System.out.println(stmt);
+				}else{
+					System.out.println("들어옴 else");
+					stmt = con.prepareStatement(sql);
+					stmt.setInt(1, userID);
+					stmt.setInt(2, itemID);
+					stmt.setInt(3, state);
+					stmt.executeUpdate();
+				}
+				return 1;
+			}
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+		return 2;
+	}
+	
+	public boolean some_some(int no){
+		connect();
+		String sql ="";
+		try{
+			sql = "select * from `some_some` where man_ID = ? or woman_ID = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			if(rs.getInt("state") == 1){
+				return true;
+			}
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+		return false;
 	}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>

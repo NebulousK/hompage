@@ -49,7 +49,7 @@
 	if(session.getAttribute("sex").equals("man")){
 		sex = "woman";
 	}else{
-		sex = "남";
+		sex = "man";
 	}
  	dto = dao.idealtype(Integer.parseInt((String)session.getAttribute("no")), sex);
  	String check[] = dao.dashch(Integer.parseInt((String)session.getAttribute("no")), dto.getNo()).split(",");
@@ -77,7 +77,6 @@
 				</aside>
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
-
 					<form action="/homepage/someNsome/someProc.jsp" name="form" method="post" >
 						<%if(check[0].equals("no")) {%>
 						<input type="hidden" name="action" value="dash" />
@@ -92,11 +91,11 @@
 									<p style="color: red" align="right">*매일 정오업데이트 됩니다.*</p>
 									<h1>오늘의 추천 이성</h1>
 									<p>&nbsp;</p>
-									<div style="float: left;"> 
+									<div style="float: left;width: 263px;height: 368px"> 
 									<img src="/homepage/profile/<%=dto.getPhoto()%>" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
 									</div>
-									<div style="float: left;">
-									<p>&nbsp;</p>
+									<div style="float: left;width: 287px;height: 340px">
+									
 											<ol style="font-size: 13pt;">
 												<li class="customLi">이름 : <%=dto.getName() %></li>
 												<li class="customLi">나이 : <%=dto.getAge() %></li>

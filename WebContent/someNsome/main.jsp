@@ -1,3 +1,5 @@
+<%@page import="homepage.someDto"%>
+<%@page import="java.util.Vector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,8 +20,22 @@
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 <link href="/homepage/css/bootstrap2.css" rel="stylesheet" type="text/css"/> 
 <link href="/homepage/css/1.css" rel="stylesheet" type="text/css"/>
+<script>
+	function like(this_form,set) {
+		if(set == 1){
+			this_form.state.value = 1;
+		}else{
+			this_form.state.value = 2;
+		}
+		this_form.submit();
+	}
+</script>
 </head>
-
+<jsp:useBean id="dao" class="homepage.someDao"/>
+<jsp:useBean id="dto" class="homepage.someDto"/>
+<% 
+	Vector g = dao.callme(Integer.parseInt((String)session.getAttribute("no")));
+%>
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -43,34 +59,42 @@
 				</aside>
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
-
-					<form action="">
+					<%
+						if(g.size() > 0){
+							for(int i=0; i<g.size();i++){
+								dto = (homepage.someDto) g.get(i);
+					%>
+					<form action="someProc.jsp" method="post">
 						<div align="center">
 							<div style="width: 530px; text-align: left;">
 								<div class="row">
+									<input type="hidden" name="action" id="action" value="callme" />
+									<input type="hidden" name="userID" id="userID" value="<%=dto.getUserID()%>"/>
+									<input type="hidden" name="itemID" id="itemID" value="<%=dto.getItemID()%>"/>
+									<input type="hidden" name="state" id="state" value=""/>
 									<h1>나에게 대쉬한 이성</h1>
 									<p>&nbsp;</p>
 									<div style="float: left;"> 
-									<img src="/homepage/profile/" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
+									<img src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
 									</div>
-									<div style="float: left;">
-									<p>&nbsp;</p>
+									<div style="float: left;width: 287px;height: 340px">
+									
 											<ol style="font-size: 13pt;">
-												<li class="customLi">이름 : </li>
-												<li class="customLi">나이 : </li>
-												<li class="customLi">혈액형 : </li>
-												<li class="customLi">키 : </li>
-												<li class="customLi">몸무게 : </li>
-												<li class="customLi">지역 : </li>
-												<li class="customLi">성격 : </li>
-												<li class="customLi">스타일 : </li>
-												<li class="customLi">취미 : </li>
+												<li class="customLi">이름 : <%=dto.getName() %></li>
+												<li class="customLi">나이 : <%=dto.getAge() %></li>
+												<li class="customLi">혈액형 : <%=dto.getBlood() %></li>
+												<li class="customLi">키 : <%=dto.getHeight() %></li>
+												<li class="customLi">몸무게 : <%=dto.getWeight() %></li>
+												<li class="customLi">지역 : <%=dto.getAddr() %></li>
+												<li class="customLi">성격 : <%=dto.getState() %></li>
+												<li class="customLi">스타일 : <%=dto.getFashion() %></li>
+												<li class="customLi">취미 : <%=dto.getHobby() %></li>
 											</ol>
 									</div>
 									<div style="clear: both; height: 10px"></div>
 									
 									<div style="float: left;">
-									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" placeholder="내용 들어감" readonly="readonly"></textarea>
+									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" readonly="readonly"><%=dto.getComent() %></textarea>
 									</div>
 									<div style="clear: both;"></div>
 								</div>
@@ -78,13 +102,15 @@
 						</div>
 						<p>&nbsp;</p>
 						<div align="center">
-							<input type="button"style="width: 250px; height: 50px; font-size: 15pt; resize: none;"
-								class="btn-custom" value="좋아!!!" /> &nbsp;&nbsp; 
-							<input type="button" style="width: 250px; height: 50px; font-size: 15pt; resize: none;"
-								class="btn-custom" value="싫어!!!" />
+							<input type="button"style="width: 250px; height: 50px; font-size: 15pt; resize: none;" class="btn-custom" value="좋아!!!" onclick="like(this.form,1)"/> &nbsp;&nbsp; 
+							<input type="button" style="width: 250px; height: 50px; font-size: 15pt; resize: none;" class="btn-custom" value="싫어!!!" onclick="like(this.form,2)" />
 						</div>
-					</form>
-
+					</form> 
+					<%		}
+						}else{		
+					%>
+						인기가 없네 하아
+					<%} %>
 				</section>
 				<!-- ASIDE NAV 2 -->
 				<aside class="s-12 l-five">
