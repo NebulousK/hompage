@@ -555,6 +555,30 @@ public class someDao {
 		return false;
 	}
 	
+	public void upimg(HttpServletRequest req) {
+		connect();
+		setPath(req, "profile");
+		setMax(5 * 1024 * 1024);
+		setEncType("UTF-8");
+		String sql = "INSERT INTO member(no, filename, desination, filesize, filetype, fileurl) VALUES(LAST_INSERT_ID() + 1,?,?,?,?,?)";
+		try {
+			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
+			stmt = con.prepareStatement(sql);
+			File f = multi.getFile("imgInp");
+			stmt.setString(1, multi.getFilesystemName("imgInp"));
+			stmt.setString(2, f.getPath());
+			stmt.setFloat(3, f.length());
+			stmt.setString(4, multi.getContentType("imgInp"));
+			stmt.setString(5, f.getPath());
+			// System.out.println(stmt);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}
+	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 호스트: localhost
--- 처리한 시간: 14-06-04 23:38
+-- 처리한 시간: 14-06-07 14:53
 -- 서버 버전: 5.1.41-community
 -- PHP 버전: 5.2.12
 
@@ -78,6 +78,22 @@ CREATE TABLE IF NOT EXISTS `board_image` (
 -- --------------------------------------------------------
 
 --
+-- 테이블 구조 `board_some`
+--
+
+CREATE TABLE IF NOT EXISTS `board_some` (
+  `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '게시판 번호',
+  `id` varchar(30) COLLATE utf8_bin NOT NULL COMMENT '작성자 id',
+  `content` text COLLATE utf8_bin NOT NULL COMMENT '내용',
+  `day` date NOT NULL COMMENT '작성일',
+  `hit` int(11) NOT NULL DEFAULT '0' COMMENT '조회수',
+  `like` int(11) NOT NULL DEFAULT '0' COMMENT '추천 좋아요~',
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
 -- 테이블 구조 `borad_ripple`
 --
 
@@ -111,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `dash` (
 --
 
 INSERT INTO `dash` (`no`, `userID`, `itemID`, `coment`, `date`, `state`) VALUES
-(5, 532, 545, '아이유 이퀄 진리!!@!@!@\r\naaaawewaewa\r\nadadsa\r\ndadsa\r\ndasdasdasdd\r\nsdasadasa', '2014-06-04', 0);
+(5, 532, 545, '아이유 이퀄 진리!!@!@!@\r\naaaawewaewa\r\nadadsa\r\ndadsa\r\ndasdasdasdd\r\nsdasadasa', '2014-06-04', 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +207,8 @@ CREATE TABLE IF NOT EXISTS `join` (
 INSERT INTO `join` (`userID`, `itemID`, `Date`) VALUES
 (532, 546, '2014-06-02'),
 (532, 547, '2014-06-01'),
-(532, 545, '2014-06-04');
+(532, 545, '2014-06-04'),
+(545, 541, '2014-06-07');
 
 -- --------------------------------------------------------
 
@@ -353,7 +370,24 @@ INSERT INTO `rating` (`userID`, `itemID`, `value`) VALUES
 (550, 552, 4),
 (550, 534, 3),
 (550, 545, 4),
-(532, 545, 4);
+(532, 545, 4),
+(545, 541, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `someboard_image`
+--
+
+CREATE TABLE IF NOT EXISTS `someboard_image` (
+  `no` int(11) NOT NULL,
+  `filename` varchar(30) NOT NULL DEFAULT '',
+  `desination` varchar(30) DEFAULT NULL,
+  `filesize` varchar(30) DEFAULT NULL,
+  `filetype` varchar(30) DEFAULT NULL,
+  `fileurl` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`filename`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -369,7 +403,14 @@ CREATE TABLE IF NOT EXISTS `some_some` (
   `end_Day` date DEFAULT NULL COMMENT '종료일',
   `state` int(11) DEFAULT NULL COMMENT '수락상태',
   PRIMARY KEY (`no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+
+--
+-- 테이블의 덤프 데이터 `some_some`
+--
+
+INSERT INTO `some_some` (`no`, `man_ID`, `woman_ID`, `start_Day`, `end_Day`, `state`) VALUES
+(1, '532', '545', '2014-06-07', NULL, 1);
 
 -- --------------------------------------------------------
 
