@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 호스트: localhost
--- 처리한 시간: 14-06-07 14:53
+-- 처리한 시간: 14-06-09 02:12
 -- 서버 버전: 5.1.41-community
 -- PHP 버전: 5.2.12
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `board_some` (
   `hit` int(11) NOT NULL DEFAULT '0' COMMENT '조회수',
   `like` int(11) NOT NULL DEFAULT '0' COMMENT '추천 좋아요~',
   PRIMARY KEY (`no`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -208,7 +208,8 @@ INSERT INTO `join` (`userID`, `itemID`, `Date`) VALUES
 (532, 546, '2014-06-02'),
 (532, 547, '2014-06-01'),
 (532, 545, '2014-06-04'),
-(545, 541, '2014-06-07');
+(545, 541, '2014-06-07'),
+(541, 539, '2014-06-08');
 
 -- --------------------------------------------------------
 
@@ -371,23 +372,70 @@ INSERT INTO `rating` (`userID`, `itemID`, `value`) VALUES
 (550, 534, 3),
 (550, 545, 4),
 (532, 545, 4),
-(545, 541, 0);
+(545, 541, 0),
+(541, 539, 0);
 
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `someboard_image`
+-- 테이블 구조 `someboard_plus`
 --
 
-CREATE TABLE IF NOT EXISTS `someboard_image` (
+CREATE TABLE IF NOT EXISTS `someboard_plus` (
   `no` int(11) NOT NULL,
-  `filename` varchar(30) NOT NULL DEFAULT '',
-  `desination` varchar(30) DEFAULT NULL,
+  `filename` varchar(200) NOT NULL DEFAULT '',
+  `desination` varchar(500) DEFAULT NULL,
   `filesize` varchar(30) DEFAULT NULL,
   `filetype` varchar(30) DEFAULT NULL,
-  `fileurl` varchar(30) DEFAULT NULL,
+  `fileurl` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`filename`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 테이블의 덤프 데이터 `someboard_plus`
+--
+
+INSERT INTO `someboard_plus` (`no`, `filename`, `desination`, `filesize`, `filetype`, `fileurl`) VALUES
+(3, 'Hydrangeas.jpg', 'C:\\Users\\sun\\Desktop\\work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\homepage\\upload\\Hydrangeas.jpg', '595284.0', 'image/jpeg', '/homepage/upload/Hydrangeas.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `some_board`
+--
+
+CREATE TABLE IF NOT EXISTS `some_board` (
+  `no` int(11) NOT NULL AUTO_INCREMENT COMMENT '게시판 번호',
+  `id` varchar(30) COLLATE utf8_bin NOT NULL COMMENT '작성자 id',
+  `id_no` int(11) NOT NULL,
+  `content` text COLLATE utf8_bin NOT NULL COMMENT '내용',
+  `day` date NOT NULL COMMENT '작성일',
+  `hit` int(11) NOT NULL DEFAULT '0' COMMENT '조회수',
+  `like` int(11) NOT NULL DEFAULT '0' COMMENT '추천 좋아요~',
+  PRIMARY KEY (`no`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=4 ;
+
+--
+-- 테이블의 덤프 데이터 `some_board`
+--
+
+INSERT INTO `some_board` (`no`, `id`, `id_no`, `content`, `day`, `hit`, `like`) VALUES
+(3, 'iyou', 545, '<p>awrra</p><p>awrar</p><p>arw</p><p style="text-align: center;"><img src="/homepage/upload/Hydrangeas.jpg" class="txc-image" style="clear:none;float:none;" /></p><p><br></p>', '2014-06-08', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `some_photo`
+--
+
+CREATE TABLE IF NOT EXISTS `some_photo` (
+  `no` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(30) COLLATE utf8_bin NOT NULL,
+  `id_no` int(11) NOT NULL,
+  `subject` varchar(30) COLLATE utf8_bin NOT NULL,
+  `photo` varchar(100) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`no`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
