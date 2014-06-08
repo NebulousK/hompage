@@ -246,7 +246,7 @@
             return this.getBasePath() + "css/"
         },
         getPageBasePath: function () {
-            return this.getBasePath() + "pages/"
+            return this.getBasePath() + "someNsome/menu1/pages/"
         },
         getOption: function (M) {
             return D(M) || i(M) || F(M)
