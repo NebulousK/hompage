@@ -61,6 +61,7 @@
 			session.setAttribute("id", a[0]);
 			session.setAttribute("no", a[1]);
 			session.setAttribute("sex", a[2]);
+			session.setAttribute("photo", a[3]);
 %>
 	<script>
 		location.href = "/homepage/main.jsp";

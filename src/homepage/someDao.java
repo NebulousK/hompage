@@ -188,7 +188,8 @@ public class someDao {
 				} else {
 					set += id + ",";
 					set += rs.getInt("no") + ",";
-					set += rs.getString("sex");
+					set += rs.getString("sex") + ",";
+					set += rs.getString("photo");
 				}
 			}
 		} catch (Exception err) {
@@ -558,21 +559,44 @@ public class someDao {
 		return false;
 	}
 	
-	public void upimg(HttpServletRequest req) {
+	public String[] up(HttpServletRequest req) {
 		connect();
-		setPath(req, "profile");
+		String file[] = new String[2];
+		setPath(req, "upload");
 		setMax(5 * 1024 * 1024);
 		setEncType("UTF-8");
-		String sql = "INSERT INTO member(no, filename, desination, filesize, filetype, fileurl) VALUES(LAST_INSERT_ID() + 1,?,?,?,?,?)";
+		String sql = "INSERT INTO `someboard_plus`(no, filename, desination, filesize, filetype, fileurl) VALUES(LAST_INSERT_ID() + 1,?,?,?,?,?)";
 		try {
 			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
 			stmt = con.prepareStatement(sql);
-			File f = multi.getFile("imgInp");
-			stmt.setString(1, multi.getFilesystemName("imgInp"));
+			File f = multi.getFile("upload_file");
+			stmt.setString(1, multi.getFilesystemName("upload_file"));
 			stmt.setString(2, f.getPath());
 			stmt.setFloat(3, f.length());
-			stmt.setString(4, multi.getContentType("imgInp"));
-			stmt.setString(5, f.getPath());
+			stmt.setString(4, multi.getContentType("upload_file"));
+			stmt.setString(5, "/homepage/upload/" + multi.getFilesystemName("upload_file"));
+			/*System.out.println(stmt);*/
+			stmt.executeUpdate();
+			file[0] = multi.getFilesystemName("upload_file");
+			file[1] = Double.toString(f.length());
+			file[2] = multi.getContentType("upload_file");
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return file;
+	}
+	
+
+	public void some_board(someDto g) {
+		connect();
+		String sql = "INSERT INTO some_board(id, `id_no`, content, day) VALUES(?,?,?,now())";
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, g.getId());
+			stmt.setInt(2, g.getNo());
+			stmt.setString(3, g.getContent());
 			// System.out.println(stmt);
 			stmt.executeUpdate();
 		} catch (Exception err) {
@@ -580,6 +604,42 @@ public class someDao {
 		} finally {
 			discon();
 		}
+	}
+	
+	public ArrayList<someDto> some_board_list(int no) {
+		connect();
+		ArrayList<someDto> g = new ArrayList<someDto>();
+		String sql;
+		try {
+			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			int id1 = rs.getInt("man_ID");
+			int id2 = rs.getInt("woman_ID");
+			sql = "select * from some_board where `id_no` = ? or `id_no` = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id1);
+			stmt.setInt(2, id2);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				someDto dto = new someDto();
+				dto.setNo(rs.getInt("no"));
+				dto.setName(rs.getString("id"));
+				dto.setContent(rs.getString("content"));
+				dto.setDate(rs.getString("day"));
+				dto.setHit(rs.getInt("hit"));
+				dto.setLike(rs.getInt("like"));
+				g.add(dto);
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return g;
 	}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>

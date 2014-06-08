@@ -18,18 +18,18 @@
 	file = dao.up(request);
 %>
 <script type="text/javascript">
+// <![CDATA[
+	
 	function done() {
 		if (typeof(execAttach) == 'undefined') { //Virtual Function
 	        return;
 	    }
 		
 		var _mockdata = {
-				'imageurl': '<%="/homepage/upload/" + file[0]%>',
-				'filename': '<%="/homepage/upload/" + file[0]%>',
-				'filesize': '<%=file[1]%>',
-				'imagealign': 'C',
-				'originalurl': '<%="/homepage/upload/" + file[0]%>',
-				'thumburl': '<%="/homepage/upload/" + file[0]%>'
+			'attachurl': '<%="/homepage/upload/" + file[0]%>',
+			'filemime': '<%=file[2]%>',
+			'filename': '<%=file[0]%>',
+			'filesize': '<%=file[1]%>'
 		};
 		execAttach(_mockdata);
 		closeWindow();
@@ -42,21 +42,22 @@
 	        return;
 	    }
 	    
-	    var _attacher = getAttacher('image', _opener);
+	    var _attacher = getAttacher('file', _opener);
 	    registerAction(_attacher);
 	}
+	
 </script>
 </head>
 <body onload="initUploader();">
 <div class="wrapper">
 	<div class="header">
-		<h1>사진 첨부</h1>
+		<h1>파일 첨부</h1>
 	</div>	
 	<div class="body">
 		<dl class="alert">
-		    <dt>사진 첨부 확인</dt>
+		    <dt>파일 첨부 확인</dt>
 		    <dd>
-		    	확인을누루시면  사진첨부가 됩니다.<br /> 
+		    	확인을 누르시면 파일첨부가  됩니다.<br /> 
 			</dd>
 		</dl>
 	</div>

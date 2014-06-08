@@ -1,3 +1,4 @@
+<%@page import="homepage.someDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*"%>
 <html>
@@ -21,7 +22,8 @@
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 <link rel="stylesheet" href="/homepage/css/editor.css" type="text/css" charset="utf-8" />
 <script src="/homepage/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
-
+<jsp:useBean id="dao" class="homepage.someDao"/>
+<jsp:useBean id="dto" class="homepage.someDto"/>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -48,8 +50,11 @@
 					<!--============================================================================= 글쓰기 시작 -->
 					<div class="_4-u2 mbm">
 						<div id="main_border_down" style="width: 580px;">
-							<form name="tx_editor_form" id="tx_editor_form" action="" method="post" accept-charset="utf-8">
+							<form name="tx_editor_form" id="tx_editor_form" action="proc.jsp" method="post" accept-charset="utf-8">
 								<div id="board_title">
+								<input type="hidden" name="action" id="action" value="insert">
+								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
+								<input type="hidden" name="no" id="no" value="${sessionScope.no}">
 									<!-- 타이틀 -->
 								</div>
 								<div id='blnk2' style="height: 0px;">&nbsp;&nbsp;&nbsp;</div>
@@ -638,7 +643,7 @@
 								var formGenerator = editor.getForm();
 								var content = editor.getContent();
 								formGenerator.createField(tx.textarea({
-									'name' : "tx_content", // 본문 내용을 필드를 생성하여 값을 할당하는 부분
+									'name' : "content", // 본문 내용을 필드를 생성하여 값을 할당하는 부분
 									'style' : {
 										'display' : "none"
 									}
@@ -674,9 +679,35 @@
 					</div>
 					<!-- ------------------------------------------------------------------글 쓰기 끝------------------------------------------------------------------------- -->
 					<!-- ==================================================================내용 시작=========================================================================== -->
+					<%
+						int totalRecord = 0; //총
+						int numPerPage = 10;  //한페이지
+						int pagePerBlock = 3; //한 블럭당 페이지수
+						int totalPage = 0;  //전체 페이지수
+						int totalBlock = 0; //전체 블락수
+						int nowPage = 0;  // 현제 페이지 번호
+						int nowBlock = 0; // 현제 블럭 번호
+						int beginPerPage = 0; //페이지당 시작 번호
+						
+						ArrayList<someDto> g = dao.some_board_list(Integer.parseInt((String) session.getAttribute("no")));
+						
+						totalRecord = g.size();
+			        	totalPage = (int) Math.ceil(((double)totalRecord/numPerPage));
+			        	beginPerPage = nowPage * numPerPage;
+			            totalBlock = (int) Math.ceil(((double)totalPage/pagePerBlock));
+						if(g.size() < 0){
+					%>
+						작성된 글이 없습니다.
+					<%
+						}else{
+							for(int i=beginPerPage; i<beginPerPage + numPerPage; i++){
+								if(i == totalRecord){
+									break;
+								}
+							    dto = (someDto) g.get(i);
+					%>
 					<div>
-						<div class="_4-u2 mbm _5jmm _5pat _5v3q _5sq8 _5x16"
-							id="u_ps_0_0_m">
+						<div class="_4-u2 mbm _5jmm _5pat _5v3q _5sq8 _5x16" id="u_ps_0_0_m">
 							<div class="userContentWrapper _5pcr _3ccb">
 								<div class="_4r_y">
 									<div class="_6a uiPopover _5pbi _5puc _5v56" id="u_ps_0_0_n">
@@ -684,11 +715,8 @@
 									</div>
 								</div>
 								<div class="clearfix _5x46">
-									<a class="_5pb8 _5v9u _29h _303"
-										href="https://www.facebook.com/jooj.kim?fref=nf"> <img
-										class="_s0 _5xib _5sq7 _rw img"
-										src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/t1.0-1/p50x50/10364179_757626114269354_4273839319281872169_s.jpg"
-										alt="" /></a>
+									<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf"> 
+									<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/${sessionScope.photo}" alt="" /></a>
 									<div class="_3dp _29k">
 										<div>
 											<div class="_6a">
@@ -696,17 +724,16 @@
 												<div class="_6a _6b">
 													<h5 class="_5pbw">
 														<div class="fwn fcg">
-															<span class="fwb fcg"> <a
-																href="https://www.facebook.com/jooj.kim?fref=nf">JooJ
-																	Kim</a></span>
+															<span class="fwb fcg"> 
+															<a href="https://www.facebook.com/jooj.kim?fref=nf"><%=dto.getName() %></a></span>
 														</div>
 													</h5>
 													<div class="_5pcp">
-														<span><span class="fsm fwn fcg"> <a
-																class="_5pcq" href="#" rel="theater"> <abbr
-																	title="2014&#xb144; 5&#xc6d4; 19&#xc77c; &#xc6d4;&#xc694;&#xc77c; &#xc624;&#xc804; 4:21"
-																	data-utime="1400440877" data-shorten="1"
-																	class="_5ptz timestamp livetimestamp">11시간</abbr></a></span></span> · <a
+														<span><span class="fsm fwn fcg"> 
+														<a class="_5pcq" href="#" rel="theater"> 
+														<abbr title="2014&#xb144; 5&#xc6d4; 19&#xc77c; &#xc6d4;&#xc694;&#xc77c; &#xc624;&#xc804; 4:21"
+															  data-utime="1400440877" data-shorten="1"
+															  class="_5ptz timestamp livetimestamp"><%=dto.getDate() %></abbr></a></span></span> · <a
 															class="uiStreamPrivacy inlineBlock fbStreamPrivacy fbPrivacyAudienceIndicator _5pcq"
 															href="#" role="button" id="u_ps_0_0_1o"> <i
 															class="lock img sp_tl_T4GR6Alw sx_151e86"></i></a>
@@ -717,25 +744,7 @@
 									</div>
 								</div>
 								<div class="_5pbx userContent">
-									<p>분식.</p>
-								</div>
-								<div>
-									<div>
-										<div class="mtm">
-											<div class="_5cq3" id="u_ps_0_0_o">
-												<a class="_4-eo" href="#" rel="theater"
-													style="width: 470px;">
-													<div class="_46-h _4-ep"
-														style="width: 470px; height: 352px;" id="u_ps_0_0_p">
-														<img class="_46-i img"
-															src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-frc3/t1.0-9/q71/s480x480/10275928_759045664127399_7768173795641478267_n.jpg"
-															style="left: -5px; top: 0px;" alt="&#xbd84;&#xc2dd;."
-															width="480" height="360" />
-													</div>
-												</a>
-											</div>
-										</div>
-									</div>
+									<p><%=dto.getContent() %></p>
 								</div>
 								<form
 									class="live_759045664127399_316526391751760 commentable_item autoexpand_mode"
@@ -755,9 +764,9 @@
 												onclick="return fc_click(this);" /></label> · <a
 												class="share_action_link" href="#">공유하기</a> · <a
 												class="uiBlingBox feedbackBling"> <i
-												class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text">9,053</span>
+												class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text"><%=dto.getLike() %></span>
 												<i class="mls img sp_p5WkkL41GeK sx_b783d0"></i><span
-												class="text">306</span> <i
+												class="text"><%=dto.getHit() %></span> <i
 												class="mls img sp_p5WkkL41GeK sx_e57ebd"></i><span
 												class="text">658</span></a>
 										</div>
@@ -768,103 +777,11 @@
 							</div>
 						</div>
 					</div>
+					<%		}
+						}
+					%>
 					<!-- -----------------------------=========================================================내용끝 ============================================== -->
 					<!-- ==================================================================내용 시작=========================================================================== -->
-					<div>
-						<div class="_4-u2 mbm _5jmm _5pat _5v3q _5sq8 _5x16"
-							id="u_ps_0_0_m">
-							<div class="userContentWrapper _5pcr _3ccb">
-								<div class="_4r_y">
-									<div class="_6a uiPopover _5pbi _5puc _5v56" id="u_ps_0_0_n">
-										<a class="_5pbj _p" href="#" id="u_ps_0_0_w"></a>
-									</div>
-								</div>
-								<div class="clearfix _5x46">
-									<a class="_5pb8 _5v9u _29h _303"
-										href="https://www.facebook.com/jooj.kim?fref=nf"> <img
-										class="_s0 _5xib _5sq7 _rw img"
-										src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/t1.0-1/p50x50/10364179_757626114269354_4273839319281872169_s.jpg"
-										alt="" /></a>
-									<div class="_3dp _29k">
-										<div>
-											<div class="_6a">
-												<div class="_6a _6b" style="height: 40px"></div>
-												<div class="_6a _6b">
-													<h5 class="_5pbw">
-														<div class="fwn fcg">
-															<span class="fwb fcg"> <a
-																href="https://www.facebook.com/jooj.kim?fref=nf">JooJ
-																	Kim</a></span>
-														</div>
-													</h5>
-													<div class="_5pcp">
-														<span><span class="fsm fwn fcg"> <a
-																class="_5pcq" href="#" rel="theater"> <abbr
-																	title="2014&#xb144; 5&#xc6d4; 19&#xc77c; &#xc6d4;&#xc694;&#xc77c; &#xc624;&#xc804; 4:21"
-																	data-utime="1400440877" data-shorten="1"
-																	class="_5ptz timestamp livetimestamp">11시간</abbr></a></span></span> · <a
-															class="uiStreamPrivacy inlineBlock fbStreamPrivacy fbPrivacyAudienceIndicator _5pcq"
-															href="#" role="button" id="u_ps_0_0_1o"> <i
-															class="lock img sp_tl_T4GR6Alw sx_151e86"></i></a>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="_5pbx userContent">
-									<p>분식.</p>
-								</div>
-								<div>
-									<div>
-										<div class="mtm">
-											<div class="_5cq3" id="u_ps_0_0_o">
-												<a class="_4-eo" href="#" rel="theater"
-													style="width: 470px;">
-													<div class="_46-h _4-ep"
-														style="width: 470px; height: 352px;" id="u_ps_0_0_p">
-														<img class="_46-i img"
-															src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-frc3/t1.0-9/q71/s480x480/10275928_759045664127399_7768173795641478267_n.jpg"
-															style="left: -5px; top: 0px;" alt="&#xbd84;&#xc2dd;."
-															width="480" height="360" />
-													</div>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<form
-									class="live_759045664127399_316526391751760 commentable_item autoexpand_mode"
-									method="post" action="#" id="u_ps_0_0_15">
-									<div class="clearfix">
-										<div class="_5pcp _5vsi lfloat _ohe">
-											<button title="&#xc88b;&#xc544;&#xc694;" type="submit"
-												name="like" onclick="fc_click(this, false); return true;"
-												class="like_link stat_elem as_link">
-												<span class="default_message">좋아요</span><span
-													class="saving_message">좋아요 취소</span>
-											</button>
-											· <label class="uiLinkButton comment_link"
-												title="&#xb313;&#xae00; &#xb0a8;&#xae30;&#xae30;"> <input
-												class="uiLinkButtonInput" type="button"
-												value="&#xb313;&#xae00; &#xb2ec;&#xae30;"
-												onclick="return fc_click(this);" /></label> · <a
-												class="share_action_link" href="#">공유하기</a> · <a
-												class="uiBlingBox feedbackBling"> <i
-												class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text">9,053</span>
-												<i class="mls img sp_p5WkkL41GeK sx_b783d0"></i><span
-												class="text">306</span> <i
-												class="mls img sp_p5WkkL41GeK sx_e57ebd"></i><span
-												class="text">658</span></a>
-										</div>
-									</div>
-									<div class="uiUfi UFIContainer _5pc9 _5vsj _5v9k"
-										id="u_ps_0_0_1b"></div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<!-- -----------------------------=========================================================내용끝 ============================================== -->
 				</section>
 				<!-- ASIDE NAV 2 -->
 				<aside class="s-12 l-five">

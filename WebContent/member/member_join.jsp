@@ -52,10 +52,10 @@
 										<div class="customDiv2" align="center">
 											<img id="blah" src="/homepage/images/noData.gif" style="max-width: 450px; max-height: 460px;" /> 
 											<br/><br/> 
+										</div>
 											<span id="fileInputForm" style="position:relative; float:left; width:100px; height:30px; overflow:hidden; cursor:pointer; background-image:url('../images/cc.png');">
 											<input type="file" id="imgInp" name="imgInp" style='position：absolute; margin-left:-10px; width:62px; height:18px; filter:alpha(opacity=0); opacity:0; -moz-opacity:0; cursor:pointer;'>
 											</span>
-											</div>
 									</div>
 
 									<div class="span5" style="margin-right: 0;">

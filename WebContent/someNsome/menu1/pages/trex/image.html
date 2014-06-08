@@ -6,15 +6,25 @@
 <link rel="stylesheet" href="/homepage/css/popup.css" type="text/css"  charset="utf-8"/>
 <title>이미지 첨부</title> 
 </head>
-<body onload="initUploader();" >
-<form name="form1" method="post" enctype="multipart/form-data" action="/homepage/control.jsp">
-<table align=center>
-<tr height='40'></tr>
-<tr>
-<td><input type="file" name="upload_file"></input></td>
-<td><input type="submit" value="등록"></input></td>
-</tr>
-</table>
+<body onload="initUploader();">
+<div class="wrapper">
+	<div class="header">
+		<h1>사진 첨부</h1>
+	</div>	
+	<div class="body">
+		<dl class="alert">
+		    <dt>사진 첨부</dt>
+		    <dd>
+<form name="form1" method="post" enctype="multipart/form-data" action="image.jsp">
+	<input type="file" name="upload_file"></input>
+	<input type="submit" value="등록"></input>
 </form>
+			</dd>
+		</dl>
+	</div>
+	<div class="footer">
+		<p><a href="#" onclick="closeWindow();" title="닫기" class="close">닫기</a></p>
+	</div>
+</div>
 </body>
 </html>

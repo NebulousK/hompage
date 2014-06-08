@@ -3,14 +3,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>파일 첨부</title> 
-<script src="../../js/popup.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="../../css/popup.css" type="text/css"  charset="utf-8"/>
+<script src="/homepage/js/popup.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="/homepage/css/popup.css" type="text/css"  charset="utf-8"/>
 </head>
 <body onload="initUploader();">
-<form name="form1" method="post" enctype="multipart/form-data" action="file.php">
-<input type="file" name="upload_file">
-<input type="submit">
-</form>
+<div class="wrapper">
+	<div class="header">
+		<h1>파일 첨부</h1>
+	</div>	
+	<div class="body">
+		<dl class="alert">
+		    <dt>파일 첨부</dt>
+		    <dd>
+		<form name="form1" method="post" enctype="multipart/form-data" action="file.jsp">
+		<input type="file" name="upload_file"/>
+		<input type="submit" value="등록"/>			
+		</form>
+		</dd>
+		</dl>
+	</div>
+	<div class="footer">
+		<p><a href="#" onclick="closeWindow();" title="닫기" class="close">닫기</a></p>
+	</div>
 </div>
 </body>
 </html>

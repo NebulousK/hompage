@@ -26,6 +26,10 @@
 <script src="js/skel.min.js"></script>
 <link type="text/css" rel="stylesheet" href="photo.css" />   
 
+<script>
+function photoup() 
+{window.open("photoup.jsp", "", "scrollbars=no,width=500,height=500");}
+</script>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -51,11 +55,10 @@
 				<section class="s-12 l-7">
 		<div id="main">
 				<div id="reel">
-					
 					<!-- Thumb Items -->
 						<article class="item thumb" data-width="250">
 							<h2>You really got me</h2>
-							<a href="images/fulls/01.jpg"><img src="images/thumbs/01.jpg" alt="" ></a>
+							<a href="/homepage/profile/3.jpg"><img src="/homepage/profile/3.jpg" alt="" ></a>
 						</article>
 						
 						<article class="item thumb" data-width="250">
@@ -92,7 +95,32 @@
 							<h2>The Spectators</h2>
 							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
 						</article>
+						
+						<article class="item thumb" data-width="250">
+							<h2>The Spectators</h2>
+							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
+						</article>
+						
+						<article class="item thumb" data-width="250">
+							<h2>The Spectators</h2>
+							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
+						</article>
+						
+						<article class="item thumb" data-width="250">
+							<h2>The Spectators</h2>
+							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
+						</article>
+						
+						<article class="item thumb" data-width="250">
+							<h2>The Spectators</h2>
+							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
+						</article>
 				</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" value="사진올리기" onclick="photoup()">
 			</div>		
 				</section>
 				<!-- ASIDE NAV 2 -->
