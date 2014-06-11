@@ -561,25 +561,39 @@ public class someDao {
 	
 	public String[] up(HttpServletRequest req) {
 		connect();
-		String file[] = new String[2];
+		String file[] = new String[5];
 		setPath(req, "upload");
 		setMax(5 * 1024 * 1024);
 		setEncType("UTF-8");
-		String sql = "INSERT INTO `someboard_plus`(no, filename, desination, filesize, filetype, fileurl) VALUES(LAST_INSERT_ID() + 1,?,?,?,?,?)";
+		String sql ="";
 		try {
+			sql = "select no from `some_board` order by no desc";
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			int number;
+			if(rs.next()){
+				number = rs.getInt("no");
+			}
+			else{
+				number = 0;
+			}
+			sql = "INSERT INTO `someboard_plus`(no, filename, desination, filesize, filetype, fileurl) VALUES(?,?,?,?,?,?)";
 			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
 			stmt = con.prepareStatement(sql);
 			File f = multi.getFile("upload_file");
-			stmt.setString(1, multi.getFilesystemName("upload_file"));
-			stmt.setString(2, f.getPath());
-			stmt.setFloat(3, f.length());
-			stmt.setString(4, multi.getContentType("upload_file"));
-			stmt.setString(5, "/homepage/upload/" + multi.getFilesystemName("upload_file"));
+			stmt.setInt(1, number + 1);
+			stmt.setString(2, multi.getFilesystemName("upload_file"));
+			stmt.setString(3, f.getPath());
+			stmt.setFloat(4, f.length());
+			stmt.setString(5, multi.getContentType("upload_file"));
+			stmt.setString(6, "/homepage/upload/" + multi.getFilesystemName("upload_file"));
 			/*System.out.println(stmt);*/
 			stmt.executeUpdate();
 			file[0] = multi.getFilesystemName("upload_file");
 			file[1] = Double.toString(f.length());
 			file[2] = multi.getContentType("upload_file");
+			file[3] = multi.getParameter("width");
+			file[4] = multi.getParameter("height");
 		} catch (Exception err) {
 			System.out.println(err);
 		} finally {
@@ -632,6 +646,64 @@ public class someDao {
 				dto.setDate(rs.getString("day"));
 				dto.setHit(rs.getInt("hit"));
 				dto.setLike(rs.getInt("like"));
+				g.add(dto);
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return g;
+	}
+	
+	public void someplusdel(String name){
+		connect();
+		String sql;
+		try {
+			sql = "select * from `someboard_plus` where filename = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, name);
+			rs = stmt.executeQuery();
+			rs.next();
+			String path = rs.getString("desination");
+			File f = new File(path);
+			f.delete();
+			sql = "DELETE FROM `someboard_plus` WHERE filename = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, name);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}
+	
+	public ArrayList<someDto> photo(int no){
+		connect();
+		ArrayList<someDto> g = new ArrayList<someDto>();
+		String sql;
+		try {
+			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			int id1 = rs.getInt("man_ID");
+			int id2 = rs.getInt("woman_ID");
+			System.out.println(stmt);
+			sql = "select * from `someboard_plus` where no in (select no from some_board where `id_no` = ? or `id_no` = ?)";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id1);
+			stmt.setInt(2, id2);
+			rs = stmt.executeQuery();
+			System.out.println(stmt);
+			while (rs.next()) {
+				someDto dto = new someDto();
+				dto.setNo(rs.getInt("no"));
+				dto.setFilename(rs.getString("filename"));
+				dto.setFiletype(rs.getString("filetype"));
 				g.add(dto);
 			}
 		} catch (Exception err) {

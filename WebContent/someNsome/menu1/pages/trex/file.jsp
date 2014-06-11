@@ -14,7 +14,7 @@
 %>
 <jsp:setProperty property="*" name="dto"/>
 <%
-	String file[] = new String[2]; 
+	String file[] = new String[3]; 
 	file = dao.up(request);
 %>
 <script type="text/javascript">

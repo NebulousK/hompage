@@ -14,11 +14,11 @@
 %>
 <jsp:setProperty property="*" name="dto"/>
 <%
-	String file[] = new String[2]; 
+	String file[] = new String[5]; 
 	file = dao.up(request);
 %>
 <script type="text/javascript">
-	function done() {
+	function done(width, height) {
 		if (typeof(execAttach) == 'undefined') { //Virtual Function
 	        return;
 	    }
@@ -29,7 +29,9 @@
 				'filesize': '<%=file[1]%>',
 				'imagealign': 'C',
 				'originalurl': '<%="/homepage/upload/" + file[0]%>',
-				'thumburl': '<%="/homepage/upload/" + file[0]%>'
+				'thumburl': '<%="/homepage/upload/" + file[0]%>',
+				'width' : <%=file[3]%>,
+				'height' : <%=file[4]%>
 		};
 		execAttach(_mockdata);
 		closeWindow();

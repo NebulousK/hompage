@@ -1,6 +1,8 @@
 <%@page import="homepage.someDto"%>
 <%@page import="java.util.Vector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:useBean id="dao" class="homepage.someDao"/>
+<jsp:useBean id="dto" class="homepage.someDto"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +33,6 @@
 	}
 </script>
 </head>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
 <% 
 	Vector g = dao.callme(Integer.parseInt((String)session.getAttribute("no")));
 %>

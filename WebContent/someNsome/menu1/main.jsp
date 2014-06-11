@@ -588,18 +588,38 @@
 									preventUnload : false
 								},
 								sidebar : {
+									attacher: {
+									    image: {
+									           objattr: {
+									        	   width: 450,
+									        	   height : 450
+									        	   }
+									           }
+									    },
 									attachbox : {
 										show : true
 									}
 								},
 								size : {
-									contentWidth : 580, /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
+									contentWidth : 580 /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
 								}
 							};
-
+							
 							EditorJSLoader.ready(function(Editor) {
 								var editor = new Editor(config);
-							});
+							});	
+							
+							 Editor.getCanvas().observeJob(Trex.Ev.__CANVAS_PANEL_DELETE_SOMETHING, function (ev) {
+							    // 데이터중에 존재하지 stage에 존재하지 않는 entry는 박스에서 바로 제거
+							    var attachBox = Editor.getAttachBox();
+							    attachBox.datalist.each(function (entry) {
+							        if (entry.type === "image"  && entry.existStage === false ) {
+							            entry.execRemove();
+							            enrty = null;
+							        }
+							    });
+							    attachBox.refreshPreview();
+							});   
 						</script>
 
 						<!-- Sample: Saving Contents -->

@@ -18,6 +18,8 @@ window.txEval = function (source, target) {
         v = true,
         j = null,
         r;
+    var foo = new Array();
+    var check = "a,";
     var a;
     if (!a) {
         a = {}
@@ -12612,8 +12614,16 @@ window.txEval = function (source, target) {
             this.fireJobs(h.Ev.__ENTRYBOX_ENTRY_MODIFIED, e)
         },
         remove: function (e) {
-            e.deletedMark = v;
-            this.fireJobs(h.Ev.__ENTRYBOX_ENTRY_REMOVED, e)
+        	e.deletedMark = v;  //이거?
+        		if(check.match(e.boxAttr.name) == null ){
+        			if(check.indexOf(e.boxAttr.name) == -1){
+        				alert(check);
+        				alert(e.boxAttr.name);
+        				window.open("/homepage/someNsome/menu1/pages/trex/delete.jsp?name=" + e.boxAttr.name , "", "scrollbars=no,width=1,height=1"); //여기다
+        				check += " " + e.boxAttr.name;
+        			}
+        		}
+        	this.fireJobs(h.Ev.__ENTRYBOX_ENTRY_REMOVED, e)
         },
         syncBox: function (e) {
             this.datalist.each(function (x) {
@@ -12665,7 +12675,7 @@ window.txEval = function (source, target) {
             this.exchangeHandlerAtReload()
         },
         execRemove: function () {
-            this.remove();
+        	this.remove();
             this.entryBox.remove(this)
         },
         execReplace: function (e) {
@@ -12684,6 +12694,7 @@ window.txEval = function (source, target) {
             if (this.canvas.isWYSIWYG()) {
                 return (e.search(this.regHtml) > -1)
             } else {
+            	alert(e.search(this.regHtml) > -1);
                 return (e.search(this.regText) > -1)
             }
         },
@@ -16633,7 +16644,7 @@ window.txEval = function (source, target) {
             var e = this.canvas.getContent();
             if (this.canvas.isWYSIWYG()) {
                 if (e.search(this.regHtml) > -1) {
-                    e = e.replace(this.regHtml, "");
+                    e = e.replace(this.regHtml, ""); //img 앞부분 까지임
                     this.canvas.setContent(e)
                 }
             } else {
@@ -17102,7 +17113,8 @@ window.txEval = function (source, target) {
                 if (!confirm(TXMSG("@attacher.delete.confirm"))) {
                     return
                 }
-                z.execRemove()
+                
+                  z.execRemove(z.boxAttr.name); //box
             }, d);
             var C = z.elInsert = tx.a({
                 className: "tx-insert"
@@ -22660,13 +22672,13 @@ window.txEval = function (source, target) {
             return y
         },
         getSaveHtml: function (e) {
-            return '<img src="' + e.imageurl + '" class="txc-image"/>'
+            return '<img src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
         },
         getDispHtml: function (e) {
-            return '<img id="' + e.dispElId + '" src="' + e.imageurl + '" class="txc-image"/>'
-        },
+            return '<img id="' + e.dispElId + '" src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
+        }, //이넘 고치면 됨
         getDispText: function (e) {
-            return '<img src="' + e.imageurl + '" class="txc-image"/>'
+            return '<img src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
         },
         getRegLoad: function (e) {
             return new RegExp('<(?:img|IMG)[^>]*src="?' + e.imageurl.getRegExp() + '"?[^>]*/?>', "gim")
@@ -23096,7 +23108,7 @@ window.txEval = function (source, target) {
                 H += O[N]
             }
             var F = C(K);
-            return '<img src="' + F.imageSrc + '" width="' + L + '" height="' + M + '" border="0" class="tx-entry-embed txc-media' + F.className + '" ld="' + encodeURIComponent(H) + '"/>'
+            return '<img src="' + F.imageSrc + '" width="' + L + '" height="' + M + '" border="0" class="tx-entry-embed txc-media'  + F.className + '" ld="' + encodeURIComponent(H) + '"/>'
         }
 
         function x(K) {

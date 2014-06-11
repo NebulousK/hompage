@@ -1,3 +1,4 @@
+<%@page import="homepage.someDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <html>
 <head>
@@ -15,21 +16,23 @@
 <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
 
- <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
-<script type="text/javascript" src="/homepage/js/responsee.js"></script>
+<script type="text/javascript" src="/homepage/js/responsee.js"></script> 
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.poptrox.min.js"></script>
 <script src="js/config.js"></script>
-<script src="js/skel.min.js"></script>
-<link type="text/css" rel="stylesheet" href="photo.css" />   
+<script src="js/skel.min.js"></script> 
+<link type="text/css" rel="stylesheet" href="photo.css" />    
 
 <script>
 function photoup() 
 {window.open("photoup.jsp", "", "scrollbars=no,width=500,height=500");}
 </script>
+<jsp:useBean id="dao" class="homepage.someDao"/>
+<jsp:useBean id="dto" class="homepage.someDto"/>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -56,65 +59,28 @@ function photoup()
 		<div id="main">
 				<div id="reel">
 					<!-- Thumb Items -->
+					<%
+						ArrayList<someDto> g = dao.photo(Integer.parseInt((String)session.getAttribute("no")));
+						if(g.size() < 0){
+							System.out.println("??");
+					%>
 						<article class="item thumb" data-width="250">
 							<h2>You really got me</h2>
 							<a href="/homepage/profile/3.jpg"><img src="/homepage/profile/3.jpg" alt="" ></a>
 						</article>
-						
+					<%
+						}else{
+							for(int i=0; i<g.size(); i++){
+							dto =(someDto)g.get(i);
+					%>
 						<article class="item thumb" data-width="250">
-							<h2>Ad Infinitum</h2>
-							<a href="images/fulls/02.jpg"><img src="images/thumbs/02.jpg" alt=""></a>
+							<h2>You really got me</h2>
+						 <a href="/homepage/upload/<%=dto.getFilename()%>"><img src="/homepage/upload/<%=dto.getFilename()%>" alt="" ></a> 
 						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>Different.</h2>
-							<a href="images/fulls/03.jpg"><img src="images/thumbs/03.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>Elysium</h2>
-							<a href="images/fulls/04.jpg"><img src="images/thumbs/04.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>Kingdom of the Wind</h2>
-							<a href="images/fulls/05.jpg"><img src="images/thumbs/05.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Pursuit</h2>
-							<a href="images/fulls/06.jpg"><img src="images/thumbs/06.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>Boundless</h2>
-							<a href="images/fulls/07.jpg"><img src="images/thumbs/07.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Spectators</h2>
-							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Spectators</h2>
-							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Spectators</h2>
-							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Spectators</h2>
-							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
-						</article>
-						
-						<article class="item thumb" data-width="250">
-							<h2>The Spectators</h2>
-							<a href="images/fulls/08.jpg"><img src="images/thumbs/08.jpg" alt=""></a>
-						</article>
+					<%
+							}
+						}
+					%>
 				</div>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -134,6 +100,5 @@ function photoup()
 	<footer class="box">
 		<jsp:include page="/footer.html"/>
 	</footer>
-
 </body>
 </html>

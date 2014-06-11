@@ -7,22 +7,17 @@
 		/* alert(this_form.text_field.value); */
 		document.getElementById("a").innerHTML = "여기뜸";
 	}
+	function check()
+	{
+	 document.getElementById("change").innerHTML = "<input type=\"file\" name=\"my_file\" value=\"c:\test.txt\"/>";
+	  return true;
+	}
   </script>
  </head>
-
  <body>
-  <form name="test_form" method="post" action="">
-  <input type="text" name="text_field">
-  <input type="button" onclick="test(this.form)" value="alert">
-  <span id="a"></span>
-  </form>
-  <form name="test_form" method="post" action="">
-  <input type="text" name="text_field">
-  <input type="button" onclick="test(this.form)" value="alert">
-  </form>
-  <form name="test_form" method="post" action="">
-  <input type="text" name="text_field">
-  <input type="button" onclick="test(this.form)" value="alert">
-  </form>
+<form name='frm1' method='post' action='NewFile6.html' enctype='multipart/form-data' onsubmit='check();'>
+<div id="change"><input type='file' name='my_file'></div>
+<input type="button" value='aa' onclick="check()">
+</form>
  </body>
 </html>
