@@ -217,6 +217,7 @@ public class someDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
+			System.out.println(stmt);
 			if (rs.next()) {
 				sql = "SELECT a.no ,a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
 				stmt = con.prepareStatement(sql);
@@ -240,6 +241,7 @@ public class someDao {
 				stmt = con.prepareStatement(sql);
 				stmt.setInt(1, no);
 				rs = stmt.executeQuery();
+				System.out.println(stmt);
 				rs.next();
 				age = Integer.parseInt(rs.getString("age"));
 				height = Integer.parseInt(rs.getString("height"));
@@ -252,14 +254,13 @@ public class someDao {
 				fashion = arr[0];
 				if (!arr[1].equals(null)) {fashion2 = arr[1];}
 				if (!arr[2].equals(null)) {fashion3 = arr[2];}
-				sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age < ?  AND a.no not in (select itemid from `join` where userid = ?) and a.no not in (select `man_ID` from `some_some` where state = ?) and a.no not in (select `woman_ID` from `some_some` where state = ?)";
+				sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age <= ?  AND a.no not in (select itemid from `join` where userid = ?) and a.no not in (select `man_ID` from `some_some` where state = ?) and a.no not in (select `woman_ID` from `some_some` where state = ?)";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, sex);
 				stmt.setInt(2, rs.getInt("age"));
 				stmt.setInt(3, no);
 				stmt.setInt(4, 1);
 				stmt.setInt(5, 1);
-				
 				rs = stmt.executeQuery();
 				System.out.println(stmt);
 				while (rs.next()) {
