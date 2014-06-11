@@ -3,6 +3,8 @@ package homepage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -115,6 +117,7 @@ public class someDao {
 			stmt = con.prepareStatement(sql);
 			File f = multi.getFile("imgInp");
 			String email;
+			String password = sha1(multi.getParameter("password"));
 			if (multi.getParameter("email2").equals(null) || multi.getParameter("email2").equals("")) {
 				email = multi.getParameter("email1") + "@" + multi.getParameter("email3");
 			} else {
@@ -122,7 +125,7 @@ public class someDao {
 			}
 			int age = (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(multi.getParameter("year"))) + 1;
 			stmt.setString(1, multi.getParameter("id"));
-			stmt.setString(2, multi.getParameter("password"));
+			stmt.setString(2, password);
 			stmt.setString(3, multi.getParameter("name"));
 			stmt.setString(4, multi.getParameter("sex"));
 			stmt.setString(5, multi.getParameter("year") + "." + multi.getParameter("month") + "." + multi.getParameter("day"));
@@ -183,7 +186,7 @@ public class someDao {
 			if (!rs.next()) {
 				set = "b";
 			} else {
-				if (!password.equals(rs.getString("password"))) {
+				if (!sha1(password).equals(rs.getString("password"))) {
 					set = "a";
 				} else {
 					set += id + ",";
@@ -712,6 +715,25 @@ public class someDao {
 			discon();
 		}
 		return g;
+	}
+	
+	public String sha1(String s) {
+	    try {
+	        // Create MD5 Hash
+	        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+	        digest.update(s.getBytes());
+	        byte messageDigest[] = digest.digest();
+
+	        // Create Hex String
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i = 0; i < messageDigest.length; i++)
+	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	        return hexString.toString();
+
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	    }
+	    return "";
 	}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
