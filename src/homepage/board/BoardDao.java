@@ -68,17 +68,14 @@ public class BoardDao {
 	//글목록 불러오기
 	public Vector<someDto> getBoardList(String id){
 		Vector<someDto> v = new Vector<someDto>();
-		
 		try {
-			//String sql = "select * from board where id=? order by no desc"; 내 페이지 및 상대방페이지 아이디 하나의 글
-			//String sql = "select * from board where id IN (select userid2 from friends where userid1=? and friends = 2) order by no desc"; 
-							//뉴스피드 친구 글까지 불러오기
-		//	String sql = "SELECT a.no, a.id, a.content, a.day, a.hit, a.like, b.photo FROM board a INNER JOIN member b ON a.id = b.id where a.id = ?;";
-			String sql = "SELECT a.no, a.id, a.content, a.day, a.hit, a.like, b.photo FROM board a INNER JOIN member b ON a.id = b.id where a.id = ?;";
+			String sql ="select a.no, a.id, a.content, a.day, a.hit, a.like, b.photo from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') order by no desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
+			stmt.setString(2, id);
+			stmt.setString(3, id);
+			stmt.setString(4, id);
 			rs = stmt.executeQuery();
-			
 			while(rs.next()){
 				someDto Bdto = new someDto();
 				Bdto.setNo(rs.getInt(1));
@@ -90,7 +87,6 @@ public class BoardDao {
 				Bdto.setPhoto(rs.getString("b.photo"));
 				v.add(Bdto);
 			}
-			
 		} catch (SQLException e) {
 			System.out.println("getBoardList() : " + e);
 		}
@@ -99,6 +95,35 @@ public class BoardDao {
 		}
 		return v;
 	}
+	
+	//글목록 불러오기
+		public Vector<someDto> getBoardList2(String id){
+			Vector<someDto> v = new Vector<someDto>();
+			try {
+				String sql = "SELECT a.no, a.id, a.content, a.day, a.hit, a.like, b.photo FROM board a INNER JOIN member b ON a.id = b.id where a.id = ?;";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				System.out.println(stmt);
+				while(rs.next()){
+					someDto Bdto = new someDto();
+					Bdto.setNo(rs.getInt(1));
+					Bdto.setId(rs.getString(2));
+					Bdto.setContent(rs.getString(3));
+					Bdto.setDay(rs.getString(4));
+					Bdto.setHit(rs.getInt(5));
+					Bdto.setLike(rs.getInt(6));
+					Bdto.setPhoto(rs.getString("b.photo"));
+					v.add(Bdto);
+				}
+			} catch (SQLException e) {
+				System.out.println("getBoardList() : " + e);
+			}
+			finally{
+				freeCon();
+			}
+			return v;
+		}
 	
 	//like 증가
 	public void likeUpdate(int no, String id){

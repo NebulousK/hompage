@@ -1,3 +1,7 @@
+<%@page import="Group.GroupDto"%>
+<%@page import="Group.GroupDao"%>
+<%@page import="Member.MemberDto"%>
+<%@page import="Group.FriendDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <html>
 <head>
@@ -18,8 +22,18 @@
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
+<jsp:useBean id="friendDao" class="Group.GroupDao"></jsp:useBean>
+<jsp:useBean id="memberDto" class="Member.MemberDto"></jsp:useBean>
+<jsp:setProperty property="*" name="memberDto"/>
+<script>
+function go_addFriend(this_form){
+	this_form.submit();
+}
 
-
+</script>
+<%
+	String myid=(String) session.getAttribute("id");;
+%>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -50,38 +64,31 @@
 								<table
 									class="table table-bordered table-hover table-condensed table-striped">
 									<tbody>
-										<tr>
-											<td width="50" style="word-break: break-all"><img
-												src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-											<td width="50" style="word-break: break-all"><h6>Japen</h6></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="yes" />&nbsp;&nbsp;<input
-												type="button" value="no" /></td>
-										</tr>
-										<tr>
-											<td width="50" style="word-break: break-all"><img
-												src="img/1.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-
-											<td width="50" style="word-break: break-all"><h6>United
-													States</h6></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="yes" />&nbsp;&nbsp;<input
-												type="button" value="no" /></td>
-										</tr>
-										<tr>
-
-											<td width="50" style="word-break: break-all"><img
-												src="img/2.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-
-											<td width="50" style="word-break: break-all"><h6>서울시
-													강남구</h6></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="yes" />&nbsp;&nbsp;<input
-												type="button" value="no" /></td>
-										</tr>
+										<%
+											Vector rList=new Vector();
+											GroupDao dao=new GroupDao();
+											rList=dao.Request_List(myid, "false");
+											System.out.println("rList.size()"+rList.size());
+											for(int i=0;i<rList.size();i++){
+												MemberDto mdto=new MemberDto();
+												mdto=(MemberDto)rList.get(i);
+										%>
+										<form method="post" action="../AddFriend/List_Add_Friend.jsp">
+											<input type="hidden" name="userid1" value="<%=myid%>"/> 
+											<input type="hidden" name="userid2" value="<%=mdto.getId()%>"/> 
+											 <tr>
+												<td width="50" style="word-break: break-all"><img
+													src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px"/>
+													<a href="#"> <%=mdto.getName()%></a></td>
+													<td width="50" style="word-break: break-all"><h6><%=mdto.getAddr()%></h6></td>
+												 	<td width="50" style="word-break: break-all">
+												<input type="button" value="수락" onclick="go_addFriend(this.form)"/>&nbsp;&nbsp;<input type="button" value="취소"/>								
+											</tr>
+										</form>
+										<%
+									}
+								
+										%>
 									</tbody>
 								</table>
 
@@ -89,43 +96,40 @@
 								<hr />
 							</div>
 						</div>
-					</div>
-
-
+					</div>			
 					<div class="move">
 						<div class="row">
 							<h3>친구목록</h3>
 							<div class="span10" align="center">
-								<table
-									class="table table-bordered table-hover table-condensed table-striped">
-									<tbody>
-										<tr>
-											<td width="50" style="word-break: break-all"><img
-												src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-											<td width="50" style="word-break: break-all"><a href="#">@@</a></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="관리" /></td>
-										</tr>
-										<tr>
-											<td width="50" style="word-break: break-all"><img
-												src="img/1.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-
-											<td width="50" style="word-break: break-all"><a href="#">@@</a></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="관리" /></td>
-										</tr>
-										<tr>
-
-											<td width="50" style="word-break: break-all"><img
-												src="img/2.jpg" alt="그림이 없습니다." style="margin-right: 10px" /><a
-												href="#">이름</a></td>
-
-											<td width="50" style="word-break: break-all"><a href="#">$$</a></td>
-											<td width="50" style="word-break: break-all"><input
-												type="button" value="관리" /></td>
-										</tr>
+												
+								<!-- 내 아이디 및 친구 아이디 -->				
+								<table class="table table-bordered table-hover table-condensed table-striped">
+									<tbody>		
+								<%
+									Vector list=dao.friend_List(myid);
+										for(int i=0;i<list.size();i++) {
+											MemberDto dto=(MemberDto)list.get(i);
+								%>
+										<form action="../Delete_Group/List_Delete_Friend.jsp" method="post">
+										<%if(!dto.getId().equals(myid)){ 
+											System.out.println("i size() - price - count:"+i);
+											%>
+										 <input type="hidden" name="myid" value="<%=myid%>"/>
+										 <input type="hidden" name="userid2" value="<%=dto.getId()%>"/>
+												<tr>
+												 <td width="50" style="word-break: break-all"><img src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px"/>
+											 	<a href="#"><%=dto.getId()%></a></td>
+											
+											 <td width="50" style="word-break: break-all">
+											 <input type="submit" value="친구삭제" /> <input type="button" value="쪽지" /></td>
+										</tr> 
+									</form>
+								<%		}else if(dto.getId().equals("myid")){
+									
+											break;	
+									
+									}
+								}%>
 									</tbody>
 								</table>
 							</div>

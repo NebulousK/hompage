@@ -26,12 +26,54 @@ public class AjaxServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String command = request.getParameter("command");
-        command = "idcheck";
         if(command.equals("idcheck")){
             idcheck(request,response);
         }
+        else if(command.equals("emailcheck")){
+            emailcheck(request,response);
+        }
     }
      
+    protected void emailcheck(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+    	Connection con = null;
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	DBConnectionMgr pool = null;
+    	ArrayList<String> ids = new ArrayList<String>();
+    	try{
+        	pool = DBConnectionMgr.getInstance();
+			con = (Connection) pool.getConnection();
+			
+			String sql = "select `e-mail` from member";
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while (rs.next()) {	
+				ids.add(rs.getString("e-mail"));
+			}
+        	response.setContentType("text/html;charset=UTF-8");
+        	response.setHeader("Cache-Control", "no-cache");
+        	PrintWriter out = response.getWriter();
+        	// id 중복 처리
+        	String gotId = request.getParameter("email");
+        	String result = null;
+        	for(String id : ids){
+        		if(id.equals(gotId)){
+        			// 응답 메세지 1 : 이미 등록된 ID 입니다.
+        			result = "<font color='red'>이미 등록된 email 입니다.</font>";
+        			break;
+        		}else{
+        			// 응답 메세지 2 : 사용할 수 있는 ID 입니다.
+        			result = "<font color='green'>사용할 수 있는 email 입니다.</font>";
+        		}
+        	}
+        	out.println(result);
+        }catch(Exception err){
+        	System.out.println(err);
+        }finally{
+        	pool.freeConnection(con, stmt, rs);
+        }
+    }
+    
     // ID 중복 검사 처리
     protected void idcheck(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     	Connection con = null;
@@ -69,7 +111,7 @@ public class AjaxServlet extends HttpServlet {
         }catch(Exception err){
         	System.out.println(err);
         }finally{
-        	
+        	pool.freeConnection(con, stmt, rs);
         }
     }
 }

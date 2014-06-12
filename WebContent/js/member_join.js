@@ -326,12 +326,44 @@ function idcheck(){
         xhr.send(queryString);  // 요청 쿼리를 보내준다.
     }
 }
+function emailcheck(){
+    var email1 = document.getElementById("email1").value;
+    var bb = document.getElementById("email2").options.selectedIndex;
+    var email2 = document.getElementById("email2").options[bb].value;   
+    var email3 = document.getElementById("email3").value;
+    var email;
+    if(email2 == "a"){
+        document.getElementById("ems").innerHTML = "<font color=red>이메일 주소를 선택해주세요.</font>";     
+        return false;
+    }
+    if(email2 == "etc"){
+    		email = email1 + email3;
+    }else{
+    	email = email1 + email2; 
+    }
+    var queryString = "command=emailcheck&email="+ email;
+        // 1. XMLHttpReqeust 객체 생성
+        createXhr();
+        // 2. 이벤트 핸들러 등록
+        xhr.onreadystatechange = callback;  // callback 함수를 등록
+        // 3. open()를 통해 요청관련 설정을 설정
+        xhr.open("POST", "/homepage/javascript_ajax_class/AjaxServlet", true);
+        // 4. Header에 contentType 지정 - post
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        // 5. send()를 통해 요청
+        xhr.send(queryString);  // 요청 쿼리를 보내준다.
+    }
+
 function callback(){
     if(xhr.readyState==4){      // 응답을 다 받은 경우
         if(xhr.status == 200){  // 응답코드가 200인 경우 - 정상인 경우
             var resTxt = xhr.responseText;  // 서버가 보낸 응답 text
-            //alert(resTxt);
-            document.getElementById("ids").innerHTML = resTxt;         
+            /*alert(resTxt);*/
+            if(resTxt.indexOf(id)){
+            	document.getElementById("ids").innerHTML = resTxt;
+            }else{
+            	document.getElementById("ems").innerHTML = resTxt;
+            }
         }else{
             alert("요청 처리가 정상적으로 되지 않았습니다.\n"+xhr.status);
         }

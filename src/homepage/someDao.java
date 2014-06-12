@@ -59,6 +59,29 @@ public class someDao {
 	public void discon() {
 		pool.freeConnection(con, stmt, rs);
 	}
+	
+	public someDto member(String id){
+		connect();
+		someDto g = new someDto();
+		try {
+			String sql = "select * from member where id =?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			rs.next();
+			g.setId(rs.getString("id"));
+			g.setName(rs.getString("name"));
+			g.setBirthday(rs.getString("birthday"));
+			g.setAge(rs.getInt("age"));
+			g.setEmail(rs.getString("e-mail"));
+			g.setPhoto(rs.getString("photo"));
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return g;
+	}
 
 	public ArrayList<someDto> zip(String dong) {
 		connect();
@@ -192,7 +215,8 @@ public class someDao {
 					set += id + ",";
 					set += rs.getInt("no") + ",";
 					set += rs.getString("sex") + ",";
-					set += rs.getString("photo");
+					set += rs.getString("photo") + ",";
+					set += rs.getString("name");
 				}
 			}
 		} catch (Exception err) {

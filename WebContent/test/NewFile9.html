@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html>
-<body>
+<head>
+<style>
+    a.button {
+      -webkit-appearance: button;
+      -moz-appearance: button;
+      appearance: button;
+    }
 
-<p>Click the button to perfom a global (/g) search for the letters "ain" (/ain) in a string, and display the matches.</p>
+    input.submitLink {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
 
-<button onclick="myFunction()">Try it</button>
-
-<p id="demo"></p>
+    cursor: pointer;
+    }
+</style>
 
 <script>
-function myFunction() {
-	var a = 'ja va sc ri pt'; 
-	var b = a.indexOf("java");
-	alert(b);
-}
+    function formSubmit()
+    {
+    document.getElementById("frm1").submit();
+    }
 </script>
+
+</head>
+
+<body>
+
+<form action="test1.jsp" method="get">
+name: <input type=text name="name">
+phone: <input type=text name="phone">
+<input type=submit value="submit" class="submitLink">
+</form>
+
+
+<form id="frm1" action="test2.jsp" method="get">
+name: <input type=text name="name">
+phone: <input type=text name="phone">
+<a href=# class="button" onclick="formSubmit(); return false;">submit</a>
+</form>
 
 </body>
 </html>
-
