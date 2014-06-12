@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -241,7 +242,7 @@ public class someDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			System.out.println(stmt);
+			/*System.out.println(stmt);*/
 			if (rs.next()) {
 				sql = "SELECT a.no ,a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
 				stmt = con.prepareStatement(sql);
@@ -265,7 +266,7 @@ public class someDao {
 				stmt = con.prepareStatement(sql);
 				stmt.setInt(1, no);
 				rs = stmt.executeQuery();
-				System.out.println(stmt);
+				/*System.out.println(stmt);*/
 				rs.next();
 				age = Integer.parseInt(rs.getString("age"));
 				height = Integer.parseInt(rs.getString("height"));
@@ -286,7 +287,7 @@ public class someDao {
 				stmt.setInt(4, 1);
 				stmt.setInt(5, 1);
 				rs = stmt.executeQuery();
-				System.out.println(stmt);
+				/*System.out.println(stmt);*/
 				while (rs.next()) {
 					someDto dto = new someDto();
 					dto.setNo(Integer.parseInt(rs.getString("a.no")));
@@ -477,7 +478,7 @@ public class someDao {
 			stmt.setInt(4, g.getUserID());
 			stmt.setInt(5, g.getItemID());
 			stmt.executeUpdate();
-			System.out.println(stmt);
+			/*System.out.println(stmt);*/
 			sql = "update dash set userID=?, itemID=?, coment=? where userid=? and itemid=?";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, g.getUserID());
@@ -486,7 +487,7 @@ public class someDao {
 			stmt.setInt(4, g.getUserID());
 			stmt.setInt(5, g.getItemID());
 			stmt.executeUpdate();
-			System.out.println(stmt);
+			/*System.out.println(stmt);*/
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
@@ -542,7 +543,7 @@ public class someDao {
 			stmt.executeUpdate();
 			if(state == 1){
 				sql = "insert into `some_some`(man_ID, woman_ID, state, `start_Day`) values(?,?,?,now())";
-				System.out.println("들어옴");
+			/*	System.out.println("들어옴");*/
 				if(sex.equals("man")){
 					stmt = con.prepareStatement(sql);
 					stmt.setInt(1, itemID);
@@ -720,13 +721,13 @@ public class someDao {
 			rs.next();
 			int id1 = rs.getInt("man_ID");
 			int id2 = rs.getInt("woman_ID");
-			System.out.println(stmt);
+			/*System.out.println(stmt);*/
 			sql = "select * from `someboard_plus` where no in (select no from some_board where `id_no` = ? or `id_no` = ?)";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id1);
 			stmt.setInt(2, id2);
 			rs = stmt.executeQuery();
-			System.out.println(stmt);
+		/*	System.out.println(stmt);*/
 			while (rs.next()) {
 				someDto dto = new someDto();
 				dto.setNo(rs.getInt("no"));
@@ -759,6 +760,186 @@ public class someDao {
 	        e.printStackTrace();
 	    }
 	    return "";
+	}
+	
+	public int are(int id){
+		connect();
+		String sql;
+		int cnt = 0;
+		try {
+			sql = "select * from dash where itemID = ? and state = 0";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				cnt++;
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return cnt;	
+	}
+	
+	public boolean came(int id){
+		connect();
+		String sql;
+		try {
+			sql = "select * from dash where userID = ? and state = 1 and date = CURDATE()";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				return true;
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return false;	
+	}
+	
+	public int news (String id){
+		connect();
+		int cnt = 0;
+		try{
+		String sql ="select * from board where id = ? and day = CURDATE() order by no desc";
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, id);
+		rs = stmt.executeQuery();
+		while(rs.next()){
+			cnt++;
+		}
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+	return cnt;
+}
+	
+	public int fiee(String id){
+		connect();
+		int cnt = 0;
+		try{
+		String sql ="select * from freind where userid2 = ? and friends = 'false'";
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, id);
+		rs = stmt.executeQuery();
+		while(rs.next()){
+			cnt++;
+		}
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+	return cnt;
+	}
+	
+	public someDto memberget(int no){
+		someDto g = new someDto();
+		connect();
+		try{
+		String sql ="select * from member where no = ? ";
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, no);
+		rs = stmt.executeQuery();
+		rs.next();
+		g.setId(rs.getString("id"));
+		g.setName(rs.getString("name"));
+		g.setEmail(rs.getString("e-mail"));
+		g.setTel(rs.getString("tel"));
+		g.setAddr(rs.getString("addr"));
+		g.setBirthday(rs.getString("birthday"));
+		g.setSex(rs.getString("sex"));
+		g.setPhoto(rs.getString("photo"));
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+		return g;
+	}
+	
+	public void memberupdate(HttpServletRequest req, int no){
+		connect();	
+		try {
+			req.setCharacterEncoding("UTF-8");
+			String sql = "update  member set password=?, name=?, sex=?, birthday=?, addr=?, tel=?, photo=?, age=?, `e-mail`=? where no = ?";
+			setPath(req, "profile");
+			setMax(5 * 1024 * 1024);
+			setEncType("UTF-8");
+			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
+			stmt = con.prepareStatement(sql);
+			File f = multi.getFile("imgInp");
+			String email;
+			String password = sha1(multi.getParameter("password"));
+			if (multi.getParameter("email2").equals(null) || multi.getParameter("email2").equals("")) {
+				email = multi.getParameter("email1") + "@" + multi.getParameter("email3");
+			} else {
+				email = multi.getParameter("email1") + "@" + multi.getParameter("email2");
+			}
+			int age = (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(multi.getParameter("year"))) + 1;
+			stmt.setString(1, password);
+			stmt.setString(2, multi.getParameter("name"));
+			stmt.setString(3, multi.getParameter("sex"));
+			stmt.setString(4, multi.getParameter("year") + "." + multi.getParameter("month") + "." + multi.getParameter("day"));
+			stmt.setString(5, multi.getParameter("zip1") + "-" + multi.getParameter("zip2") + " " + multi.getParameter("juso") + " " + multi.getParameter("addr"));
+			stmt.setString(6, multi.getParameter("tel") + "-" + multi.getParameter("tel2") + "-" + multi.getParameter("tel3"));
+			stmt.setString(7, multi.getFilesystemName("imgInp"));
+			stmt.setInt(8, age);
+			stmt.setString(9, email);
+			stmt.setInt(10, no);
+			System.out.println(stmt);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}
+	
+	public someDto memberget2(int no){
+		someDto g = new someDto();
+		connect();
+		try{
+		String sql ="select * from `m_profile` where no = ? ";
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, no);
+		rs = stmt.executeQuery();
+		rs.next();
+		g.setHeight(rs.getInt("height"));
+		g.setHobby(rs.getString("hobby"));
+		g.setBlood(rs.getString("blood"));
+		g.setStyle(rs.getString("style"));
+		g.setWeight(rs.getInt("weight"));
+		g.setFashion(rs.getString("fashion"));
+		
+		sql ="select * from idealtype where no = ? ";
+		stmt = con.prepareStatement(sql);
+		stmt.setInt(1, no);
+		rs = stmt.executeQuery();
+		rs.next();
+		g.setHeight2(rs.getInt("height"));
+		g.setHobby2(rs.getString("hobby"));
+		g.setBlood2(rs.getString("blood"));
+		g.setStyle2(rs.getString("style"));
+		g.setWeight2(rs.getInt("weight"));
+		g.setFashion2(rs.getString("fashion"));
+		
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+		return g;
 	}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>

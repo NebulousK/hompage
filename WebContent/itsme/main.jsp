@@ -272,13 +272,13 @@
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
 						<div style="float: left;width: 270px;height: 290px;"> 
-							<img src="/homepage/profile/${sessionScope.photo}" style="max-width:270px" align="middle" />
+							<img src="/homepage/profile/${sessionScope.photo}" style="max-width:270px;max-height:290px" align="middle" />
 						</div>
 						<div style="float: left;width: 270px;height: 290px;display:table-cell;vertical-align:middle;text-align:center;">
 							<div style="height:50px"></div> 
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.id}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
-							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="#"'/>
+							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update.jsp"'/>
 							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="#"'/>
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
@@ -1565,10 +1565,6 @@
 
 	for(int j=0; j<vlike.size();j++){
 		String likeid =(String) vlike.get(j);
-		/* System.out.println(vlike.size());
-		System.out.println(likeid);
-		System.out.println(id);
-		System.out.println(id.equals(likeid)); */
 		if(connectid.equals(likeid)){
 			flag = 1;
 			break;
@@ -1576,7 +1572,6 @@
 		else{
 			flag = 0;
 		}
-		//System.out.println(flag);
 	}
 %>
 
@@ -1647,7 +1642,6 @@
 		ReplyDto Rdto = new ReplyDto();
 		Rdto = (ReplyDto) Rlist.get(r);
 %>
-	<%System.out.println(Rdto.getContent()); %>
 					<div style="height: 50px;margin-left: 7px" >
 								<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
 					<!-- 프로필 이미지  -->

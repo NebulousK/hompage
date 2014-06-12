@@ -172,7 +172,7 @@
 <%
 	//접속중인 아이디
 	String connectid = request.getParameter("id");
-	dao.member(connectid);
+	dto = dao.member(connectid);
 %>
 <%-- <body class="size-1140" onload="onload(<%=position%>)"> --%>
 <body class="size-1140" onload="document.body.scrollTop=document.cookie" onunload="document.cookie=document.body.scrollTop">
@@ -198,14 +198,28 @@
 				</aside>
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
-						<div style="float: left;width: 270px;height: 290px;"> 
-							<img src="/homepage/profile/${sessionScope.photo}" style="max-width:270px" align="middle" />
+						<div style="float: left;width: 280px;height: 290px;"> 
+							<img src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width:270px" align="middle" />
 						</div>
-						<div style="float: left;width: 270px;height: 290px;display:table-cell;vertical-align:middle;text-align:center;">
-							<div style="height:50px"></div> 
-							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.id}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
-							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
+						<div style="float: left;width: 280px;height: 290px;display:table-cell;vertical-align:middle;text-align:center;">
 							
+<p><table class="txc-table" width="280px" cellspacing="0" cellpadding="0" border="0" style="border:none;border-collapse:collapse;;font-family:굴림;font-size:13px"><tbody><tr><td style="width: 272px; height: 29px; border: 1px solid rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size: 14pt;">ID :&nbsp;</span></p></td>
+<td style="width: 50%; height: 29px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); border-top-width: 1px; border-top-style: solid; border-top-color: rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size: 14pt;"><%=dto.getId() %></span></p></td>
+</tr>
+<tr><td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(255, 255, 255); background-color: rgb(255,255,255)"><p style="text-align: center;"><span style="font-size: 14pt;">이름 :</span></p></td>
+<td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); background-color: rgb(255,255,255)"><p style="text-align: center;"><span style="font-size:14pt;"><%=dto.getName() %></span></p></td>
+</tr>
+<tr><td style="width: 50%; height: 30px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size: 14pt;">나이 :</span></p></td>
+<td style="width: 50%; height: 30px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size: 14pt;"><%=dto.getAge() %></span></p></td>
+</tr>
+<tr><td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(255, 255, 255); background-color: rgb(255,255,255)"><p style="text-align: center;"><span style="font-size: 14pt;">생일 :</span></p></td>
+<td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); background-color: rgb(255,255,255)"><p style="text-align: center;"><span style="font-size: 14pt;"><%=dto.getBirthday().substring(5,7) %>월 <%=dto.getBirthday().substring(8) %>일</span></p></td>
+</tr>
+<tr><td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size: 14pt;">Mail :</span></p></td>
+<td style="width: 50%; height: 24px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(255, 255, 255); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(255, 255, 255);"><p style="text-align: center;"><span style="font-size:14pt;"><%=dto.getEmail() %></span></p></td>
+</tr>
+</tbody></table></p>
+
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
 				<div class="_4-u2 mbm" style="border: 0px;height:300px"></div>
@@ -213,7 +227,6 @@
 	<!-- ==================================================================내용 시작=========================================================================== -->
 <%
 	BoardDao Bdao = new BoardDao();
-	
 	//글목록 벡터
 	Vector list= new Vector();
 	//글목록

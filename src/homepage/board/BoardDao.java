@@ -34,7 +34,7 @@ public class BoardDao {
 		try {
 			pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
-			 System.out.println("연결");
+			/* System.out.println("연결");*/
 		} catch (Exception err) {
 			System.out.println("에러");
 			System.out.println(err);
@@ -69,12 +69,13 @@ public class BoardDao {
 	public Vector<someDto> getBoardList(String id){
 		Vector<someDto> v = new Vector<someDto>();
 		try {
-			String sql ="select a.no, a.id, a.content, a.day, a.hit, a.like, b.photo from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') order by no desc";
+			String sql ="select a.no, a.id, a.content, a.day, a.hit, a.like, b.photo from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id = ? order by no desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setString(2, id);
 			stmt.setString(3, id);
 			stmt.setString(4, id);
+			stmt.setString(5, id);
 			rs = stmt.executeQuery();
 			while(rs.next()){
 				someDto Bdto = new someDto();
@@ -104,7 +105,7 @@ public class BoardDao {
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
 				rs = stmt.executeQuery();
-				System.out.println(stmt);
+			/*	System.out.println(stmt);*/
 				while(rs.next()){
 					someDto Bdto = new someDto();
 					Bdto.setNo(rs.getInt(1));
@@ -277,7 +278,7 @@ public class BoardDao {
 			stmt.setString(2, Rdto.getId());
 			stmt.setString(3, Rdto.getContent());
 			stmt.executeUpdate();
-			System.out.println(stmt);
+			/*System.out.println(stmt);*/
 			//System.out.println(Bdto.getContent());
 		} catch (SQLException e) {
 			System.out.println("insertBoard() : " + e);
@@ -400,7 +401,7 @@ public class BoardDao {
 	         stmt.setFloat(4, f.length());
 	         stmt.setString(5, multi.getContentType("upload_file"));
 	         stmt.setString(6, "/homepage/upload/" + multi.getFilesystemName("upload_file"));
-	         System.out.println(stmt);
+	         /*System.out.println(stmt);*/
 	         stmt.executeUpdate();
 	         file[0] = multi.getFilesystemName("upload_file");
 	         file[1] = Double.toString(f.length());

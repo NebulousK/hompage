@@ -57,7 +57,6 @@
 <jsp:useBean id="dao" class="Group.GroupDao"></jsp:useBean>
 <%
 	String myid=(String) session.getAttribute("id");
-
 		String research="";
 		String keyField="";
 		research=request.getParameter("research");
@@ -67,7 +66,6 @@
 		MemberDto mydto=null;
 		for(int i=0;i<my.size();i++){
 			 mydto=(MemberDto)my.get(i);
-			
 		}
 		//검색해서 나온 결과
 		Vector list=(Vector)dao.getResearchFriendList(keyField, research);
@@ -127,18 +125,12 @@
 								</fieldset>
 							</div>
 						</form>
-						
-						
-						
 							<% 
 								String acheck="";
 								acheck = request.getParameter("acheck");
-								System.out.println("acheck"+acheck);
 								String area="";
 								area = request.getParameter("area");
 								%>
-							
-							
 								<table
 									class="table table-bordered table-hover table-condensed table-striped">
 									<caption>전체 친구</caption>
@@ -154,48 +146,40 @@
 									<%
 									//요청 누눌때마다 올라가는 count 수
 										if("true".equals(acheck)){
-											Vector aList=dao.area_Print(area);
-										   	System.out.println("areaareaareaareaareaarea:"+area);							
+											Vector aList=dao.area_Print(area);						
 									int count=0;
 									for(int i=0;i<aList.size();i++){
 										MemberDto dto=(MemberDto)aList.get(i);
-										
-											
+										String addr[] = dto.getAddr().split(" ");
 									%>
 										<tr>
 											<form name="FriendRequest" method="post" action="../friendFind/FriendRequest.jsp">
 											<input type="hidden" name="no" value="<%=dto.getNo() %>"/>
 											<input type="hidden" name="id" value="<%=dto.getId()%>"/>
-											<input type="hidden" name="password" value="<%=dto.getPassword()%>"/>
 											<input type="hidden" name="name" value="<%= dto.getName() %>"/>
 											<input type="hidden" name="sex" value="<%=dto.getSex()%>"/>
 											<input type="hidden" name="birthday " value="<%=dto.getBirthday()%>"/>
-											<input type="hidden" name="addr" value="<%=dto.getAddr()%>"/>
+											<input type="hidden" name="addr" value="<%=addr[1] + " " + addr[2] %>"/>
 											<input type="hidden" name="tel" value="<%=dto.getTel()%>"/>
 											<input type="hidden" name="photo" value="<%=dto.getPhoto() %>"/>
 											<input type="hidden" name="check" value="true"/>
 											<input type="hidden" name="myid" value="<%=myid%>"/>
-											<td><a href="#"><img src="<%=dto.getPhoto() %>" alt="그림이 없습니다."/></a></td>
-											<td><a href="#"><%=dto.getName()%></a></td>
-											<td><font size="1"><%=dto.getAddr()%></font></td>
+											<td><a href="#"><img src="/homepage/profile/<%=dto.getPhoto() %>" alt="그림이 없습니다."/ style="width:40px;height:40px"></a></td>
+											<td><%=dto.getName()%></td>
+											<td><font size="1"><%=addr[1] + " " + addr[2]%></font></td>
 											<%
 											String check=dao.check_Friend(myid, dto.getId());
-											if(check.equals("1")){%>
-												
+											if(check.equals("1")){%>				
 											<td><span>친구요청 중입니다.</span>
 											<%	
 											} else if(check.equals("2")){
-												
 											%>
-											
 											<td><span>친구요청응답에 응답하세요.</span>
 											
 											<%
 											} else if(check.equals("3")){
 												%>
 											<td><span>이미 친구 입니다.</span>
-											
-											
 											<%
 											} else if(myid.equals(dto.getId())) {
 											
@@ -207,13 +191,14 @@
 											<%} %>
 											&nbsp;&nbsp;&nbsp;<input type="button" value="쪽지" /></td>
 										</tr>
-										
+										</form>
 									<%
 											}
 										} else {
 										
 											for(int i=0;i<list.size();i++){
 												MemberDto dto=(MemberDto)list.get(i);
+												String addr[] = dto.getAddr().split(" ");
 									%>
 											<tr>
 											<form name="FriendRequest" method="post" action="../friendFind/FriendRequest.jsp">
@@ -223,18 +208,17 @@
 											<input type="hidden" name="name" value="<%= dto.getName() %>"/>
 											<input type="hidden" name="sex" value="<%=dto.getSex()%>"/>
 											<input type="hidden" name="birthday " value="<%=dto.getBirthday()%>"/>
-											<input type="hidden" name="addr" value="<%=dto.getAddr()%>"/>
+											<input type="hidden" name="addr" value="<%=addr[1] + " " + addr[2]%>"/>
 											<input type="hidden" name="tel" value="<%=dto.getTel()%>"/>
 											<input type="hidden" name="photo" value="<%=dto.getPhoto() %>"/>
 											<input type="hidden" name="check" value="true"/>
 											<input type="hidden" name="myid" value="<%=myid%>"/>
-											<td><a href="#"><img src="<%=dto.getPhoto() %>" alt="그림이 없습니다."/></a></td>
-											<td><a href="#"><%=dto.getName()%></a></td>
-											<td><font size="1"><%=dto.getAddr()%></font></td>
+											<td><a href="#"><img src="/homepage/profile/<%=dto.getPhoto() %>" alt="그림이 없습니다."/ style="width:40px;height:40px"></a></td>
+											<td><%=dto.getName()%></td>
+											<td><font size="1"><%=addr[1] + " " + addr[2]%></font></td>
 											<%
 											String check=dao.check_Friend(myid, dto.getId());
 											if(check.equals("1")){%>
-												
 											<td><span>친구요청 중입니다.</span>
 											<%	
 											} else if(check.equals("2")){
@@ -256,7 +240,8 @@
 											<%
 											} else {
 											%>
-											<td><input type="button" value="친구요청" onclick="friendRequest(this.form)"/>
+											<td>
+											<input type="button" value="친구요청" onclick="friendRequest(this.form)"/>
 											<%} %>
 											&nbsp;&nbsp;&nbsp;<input type="button" value="쪽지" /></td>
 										</tr>

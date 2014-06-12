@@ -886,11 +886,6 @@
 					</div>
 				</div>
 				<div class="clearfix _5x46">
-					<!-- <a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
-					프로필 이미지 
-					<img class="_s0 _5xib _5sq7 _rw img"
-						src="/homepage/images/me.jpg"
-						alt="" /></a> -->
 					<div class="_3dp _29k">
 						<div>
 							<div class="_6a">
@@ -900,13 +895,13 @@
 							<table style="border: 0px;width: 554px">
 								<tr>
 									<td style="border: 0px;width: 55px; padding: 0px;margin: 0px;">
-								<a class="_5pb8 _5v9u _29h _303" href="/homepage/profile/<%=Bdto.getPhoto()%>">
-					<!-- 프로필 이미지  -->
-					<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Bdto.getPhoto()%>" alt="" align="middle" /></a>
+								<a class="_5pb8 _5v9u _29h _303" href="/homepage/itsme/main2.jsp?id=<%=Bdto.getId()%>">
+									<!-- 프로필 이미지  -->
+								<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Bdto.getPhoto()%>" alt="" align="middle" /></a>
 									</td>
 									<td style="border: 0px;text-align: left;">
 										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%= Bdto.getId() %></a></span><br/>
+										<a href="/homepage/itsme/main2.jsp?id=<%=Bdto.getId()%>" style="font-size: 14px;"><%= Bdto.getId() %></a></span><br/>
 										<div class="_5pcp" style="margin-top: 5px">
 										<span><%= Bdto.getDay()%></span>
 										</div>
@@ -1640,7 +1635,6 @@
 		ReplyDto Rdto = new ReplyDto();
 		Rdto = (ReplyDto) Rlist.get(r);
 %>
-	<%System.out.println(Rdto.getContent()); %>
 					<div style="height: 50px;margin-left: 7px" >
 								<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
 					<!-- 프로필 이미지  -->

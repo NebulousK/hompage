@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
   //Responsee eside nav
   $('.aside-nav > ul > li ul').each(function(index, element) {
     var count = $(element).find('li').length;
-    var content = '<span class="count-number"> ' + count + '</span>';
+    var content = '<span class="count-number" style="visibility:hidden"> ' + count + '</span>';
     $(element).closest('li').children('a').append(content);
   });
   $('.aside-nav > ul > li:has(ul)').addClass('aside-submenu');

@@ -72,16 +72,20 @@ function go_addFriend(this_form){
 											for(int i=0;i<rList.size();i++){
 												MemberDto mdto=new MemberDto();
 												mdto=(MemberDto)rList.get(i);
+												String addr[] = mdto.getAddr().split(" ");
 										%>
 										<form method="post" action="../AddFriend/List_Add_Friend.jsp">
 											<input type="hidden" name="userid1" value="<%=myid%>"/> 
 											<input type="hidden" name="userid2" value="<%=mdto.getId()%>"/> 
 											 <tr>
-												<td width="50" style="word-break: break-all"><img
-													src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px"/>
-													<a href="#"> <%=mdto.getName()%></a></td>
-													<td width="50" style="word-break: break-all"><h6><%=mdto.getAddr()%></h6></td>
+												<td width="50" style="word-break: break-all">
+												<img src="/homepage/profile/<%=mdto.getPhoto()%>" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
+													<a href="/homepage/itsme/main2.jsp?id=<%=mdto.getName()%>"> <%=mdto.getName()%></a></td>
+													<td width="50" style="word-break: break-all">
+													 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<h6><%=addr[1] + " " + addr[2]%></h6></td>
 												 	<td width="50" style="word-break: break-all">
+												 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="button" value="수락" onclick="go_addFriend(this.form)"/>&nbsp;&nbsp;<input type="button" value="취소"/>								
 											</tr>
 										</form>
@@ -117,10 +121,15 @@ function go_addFriend(this_form){
 										 <input type="hidden" name="myid" value="<%=myid%>"/>
 										 <input type="hidden" name="userid2" value="<%=dto.getId()%>"/>
 												<tr>
-												 <td width="50" style="word-break: break-all"><img src="img/3.jpg" alt="그림이 없습니다." style="margin-right: 10px"/>
-											 	<a href="#"><%=dto.getId()%></a></td>
+												 <td width="50" style="word-break: break-all">
+												<img src="/homepage/profile/<%=dto.getPhoto()%>" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
+											 	<a href="/homepage/itsme/main2.jsp?id=<%=dto.getId()%>"><%=dto.getId()%></a></td>
 											
-											 <td width="50" style="word-break: break-all">
+											 <td width="50" style="word-break: break-all" align="right">
+											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											 <input type="submit" value="친구삭제" /> <input type="button" value="쪽지" /></td>
 										</tr> 
 									</form>

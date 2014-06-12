@@ -70,6 +70,25 @@
 <% 
 		}
 	}
+	else if(action.equals("update")){
+		dao.memberupdate(request, Integer.parseInt((String) session.getAttribute("no")));
+%>
+	<script>
+		alert("수정 완료");
+		location.href = "/homepage/itsme/main.jsp";
+	</script>	
+<%
+	}
+	//여기
+	else if(action.equals("update")){
+		dao.memberupdate(request, Integer.parseInt((String) session.getAttribute("no")));
+%>
+	<script>
+		alert("수정 완료");
+		location.href = "/homepage/itsme/main.jsp";
+	</script>	
+<%
+	}
 	else{
 		dao.member_join(request);
 %>  
