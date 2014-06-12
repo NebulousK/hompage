@@ -279,7 +279,7 @@
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.id}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update.jsp"'/>
-							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="#"'/>
+							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update2.jsp"'/>
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
 				<div class="_4-u2 mbm" style="border: 0px">

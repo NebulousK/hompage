@@ -80,12 +80,38 @@
 <%
 	}
 	//여기
-	else if(action.equals("update")){
-		dao.memberupdate(request, Integer.parseInt((String) session.getAttribute("no")));
+	else if(action.equals("update2")){
+		String[] str = request.getParameterValues("fashion");
+		String[] str2 = request.getParameterValues("fashion2");
+		String fashion="" , fashion2="";
+		for(int i=0; i<str.length; i++){
+		 	if(i!=0){
+				fashion += ",";
+		 	}
+			fashion += str[i];
+		}
+		for(int i=0; i<str2.length; i++){
+			if(i!=0){
+				fashion2 += ",";
+		 	}
+			fashion2 += str2[i];
+		}
+		dto.setFashion(fashion);
+		dto.setFashion2(fashion2);
+		dao.memberupdate2(dto, Integer.parseInt((String) session.getAttribute("no")));
 %>
 	<script>
 		alert("수정 완료");
 		location.href = "/homepage/itsme/main.jsp";
+	</script>	
+<%
+	}
+	else if(action.equals("logout")){
+		session.invalidate();
+%>
+	<script>
+		alert("안녕히 가세요");
+		 top.location.href = '/homepage/index.html'; 
 	</script>	
 <%
 	}

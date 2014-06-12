@@ -662,19 +662,21 @@ public class someDao {
 			rs.next();
 			int id1 = rs.getInt("man_ID");
 			int id2 = rs.getInt("woman_ID");
-			sql = "select * from some_board where `id_no` = ? or `id_no` = ?";
+			sql = "select a.id, a.no, a.content, a.day, a.hit, a.like, b.photo from some_board a, member b where b.no = a.id_no and (a.id_no = ? or a.id_no = ?) order by a.no desc"; 
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id1);
 			stmt.setInt(2, id2);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				someDto dto = new someDto();
+				dto.setId(rs.getString("id"));
 				dto.setNo(rs.getInt("no"));
 				dto.setName(rs.getString("id"));
 				dto.setContent(rs.getString("content"));
-				dto.setDate(rs.getString("day"));
+				dto.setDay(rs.getString("day"));
 				dto.setHit(rs.getInt("hit"));
 				dto.setLike(rs.getInt("like"));
+				dto.setPhoto(rs.getString("photo"));
 				g.add(dto);
 			}
 		} catch (Exception err) {
@@ -932,7 +934,7 @@ public class someDao {
 		g.setStyle2(rs.getString("style"));
 		g.setWeight2(rs.getInt("weight"));
 		g.setFashion2(rs.getString("fashion"));
-		
+		g.setAge(rs.getInt("age"));
 	} catch (SQLException e) {
 		System.out.println("getBoardList() : " + e);
 	}
@@ -940,6 +942,40 @@ public class someDao {
 		discon();
 	}
 		return g;
+	}
+	
+	public void memberupdate2(someDto g, int no){
+		connect();	
+		try {
+			String sql = "update  `m_profile` set height=?, hobby=?, blood=?, style=?, weight=?, fashion=? where no=? ";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getHeight());
+			stmt.setString(2, g.getHobby());
+			stmt.setString(3, g.getBlood());
+			stmt.setString(4, g.getStyle());
+			stmt.setInt(5, g.getWeight());
+			stmt.setString(6, g.getFashion());
+			stmt.setInt(7, no);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+
+			sql = "update  `idealtype` set height=?, hobby=?, blood=?, style=?, weight=?, fashion=?, age=? where no=? ";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getHeight2());
+			stmt.setString(2, g.getHobby2());
+			stmt.setString(3, g.getBlood2());
+			stmt.setString(4, g.getStyle2());
+			stmt.setInt(5, g.getWeight2());
+			stmt.setString(6, g.getFashion2());
+			stmt.setInt(7, g.getAge());
+			stmt.setInt(8, no);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
 	}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>

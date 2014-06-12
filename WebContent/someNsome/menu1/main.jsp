@@ -56,15 +56,12 @@
 	
 	//수정창 및 댓글
 	$(document).ready(	
-		
 		function(){
-			
 		//댓글창 감추기	
 			$("div").each(function(i){
 					$("div#replydiv"+i).hide();	
 				}
-			);
-		
+			);	
 		//수정창 감추기	
 			$("div").each(function(i){
 					$("div#testdiv"+i).hide();	
@@ -100,7 +97,6 @@
 		});
 		
 	});
-	
 	//댓글창 엔터시 row늘리기
     function setLine( txa ){
            var line = 0;
@@ -110,7 +106,6 @@
 
            txa.rows = new_line;
     }
-	
 	//댓글지우기
 	function replyDelete(no){
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
@@ -121,7 +116,6 @@
 			return;
 		}
 	}
-	
 	//더보기 클릭시
 	function moreboard(numper){
 	 	document.more.numperpage.value = numper;
@@ -264,7 +258,7 @@
 		<!--============================================================================= 글쓰기 시작 -->
 	<div class="_4-u2 mbm" style="border: 0px">
 						<div id="main_border_down" style="width: 580px;">
-							<form name="tx_editor_formA" id="tx_editor_formA" action="Post_proc.jsp" method="post" accept-charset="utf-8">
+							<form name="tx_editor_formA" id="tx_editor_formA" action="proc.jsp" method="post" accept-charset="utf-8">
 								<div id="board_title">
 								<input type="hidden" name="action" id="action" value="insert">
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
@@ -843,6 +837,7 @@
 <%
 	//글목록 벡터
 	ArrayList list= new ArrayList();
+	list = dao.some_board_list(Integer.parseInt((String)session.getAttribute("no")));
 	//글목록
 	int flag = 0;
 	
@@ -881,22 +876,22 @@
 							<table style="border: 0px;width: 554px">
 								<tr>
 									<td style="border: 0px;width: 55px; padding: 0px;margin: 0px;">
-								<a class="_5pb8 _5v9u _29h _303" href="/homepage/itsme/main2.jsp?id=<%=Bdto.getId()%>">
+								<a class="_5pb8 _5v9u _29h _303" href="/homepage/itsme/main2.jsp?id=<%=dto.getId()%>">
 									<!-- 프로필 이미지  -->
-								<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Bdto.getPhoto()%>" alt="" align="middle" /></a>
+								<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=dto.getPhoto()%>" alt="" align="middle" /></a>
 									</td>
 									<td style="border: 0px;text-align: left;">
 										<span class="fwb fcg">
-										<a href="/homepage/itsme/main2.jsp?id=<%=Bdto.getId()%>" style="font-size: 14px;"><%= Bdto.getId() %></a></span><br/>
+										<a href="/homepage/itsme/main2.jsp?id=<%=dto.getId()%>" style="font-size: 14px;"><%= dto.getId() %></a></span><br/>
 										<div class="_5pcp" style="margin-top: 5px">
-										<span><%= Bdto.getDay()%></span>
+										<span><%= dto.getDay()%></span>
 										</div>
 									</td>
 							<!-- 수정 드롭다운 메뉴 (자기글이 아니면 권한X) 접속한 아이디와 글쓴아이디 비교  -->
 									<td style="border: 0px;text-align: right;">
 <%
 							//글쓴 아이디와 접속한 아이디 비교
-							if(Bdto.getId().equals(connectid)){
+							if(dto.getId().equals(connectid)){
 %>
 										<div class="dropdown">
   											<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
@@ -906,10 +901,10 @@
 												<li style="text-align: center;font-size: 12px;line-height: 25px;">
 												<span id="updateclick<%=i%>">수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정</span></li>
 												<mcjsjs><input type="hidden" id="divNoCheck<%=i %>" value="<%=i%>"/></mcjsjs>
-												<input type="hidden" id="boardId" value="<%=Bdto.getId() %>" />
+												<input type="hidden" id="boardId" value="<%=dto.getId() %>" />
 												<input type="hidden" id="connectId" value="<%=connectid %>" />
 												<li style="text-align: center;font-size: 12px;line-height: 25px">
-												<span onclick="Bdelete(<%=Bdto.getNo()%>)">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</span></li>
+												<span onclick="Bdelete(<%=dto.getNo()%>)">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</span></li>
 											</ul>
 										</div>
 <%
@@ -920,7 +915,7 @@
 										</div>
 									</h5>
 									<div class="_5pcp">
-										<span><%= Bdto.getDay()%></span>
+										<span><%= dto.getDay()%></span>
 									</div>
 								</div>
 							</div>
@@ -929,11 +924,11 @@
 				</div>
 <!-- 수정창 생성  -->		
 <div class="_55d0" id="testdiv<%=i%>">
-<form name="tx_editor_form<%=i %>" id="tx_editor_form<%=i %>" action="like_proc.jsp" method="post" accept-charset="utf-8">
+<form name="tx_editor_form<%=i %>" id="tx_editor_form<%=i %>" action="proc.jsp" method="post" accept-charset="utf-8">
 						<div id="board_title">
 								<input type="hidden" name="command" value="UPDATE"/>			
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
-								<input type="hidden" name="no" value="<%=Bdto.getNo()%>"/>
+								<input type="hidden" name="no" value="<%=dto.getNo()%>"/>
 									<!-- 타이틀 -->
 								</div>
 								<div id='blnk2' style="height: 0px;">&nbsp;&nbsp;&nbsp;</div>
@@ -1440,7 +1435,7 @@
 							<!-- </div> -->
 						</div>
 						
-						<textarea id="load_contents_source<%=i %>" style="display:none;"><%=Bdto.getContent() %></textarea>
+						<textarea id="load_contents_source<%=i %>" style="display:none;"><%=dto.getContent() %></textarea>
 						
 							<script type="text/javascript">
 							var config<%=i %> = {
@@ -1511,7 +1506,7 @@
 				
 				
 				<div class="_5pbx userContent">
-					<p><%= Bdto.getContent() %></p>
+					<p><%= dto.getContent() %></p>
 				</div>
 				<div>
 					<div>
@@ -1529,62 +1524,14 @@
 					</div>
 				</div>
 				<!-- <form  method="post" action="like_proc.jsp"  name="boardaction"> -->
-			<form action="like_proc.jsp" method="post" name="boardaction">
-					
+			<form action="proc.jsp" method="post" name="boardaction">
 					<div class="clearfix">
-						<div class="_5pcp _5vsi lfloat _ohe">
-<%
-	//like를 한 아이디인지 여부
-	vlike = Bdao.board_likeSelect(Bdto.getNo());
-
-	for(int j=0; j<vlike.size();j++){
-		String likeid =(String) vlike.get(j);
-		/* System.out.println(vlike.size());
-		System.out.println(likeid);
-		System.out.println(id);
-		System.out.println(id.equals(likeid)); */
-		if(connectid.equals(likeid)){
-			flag = 1;
-			break;
-		}
-		else{
-			flag = 0;
-		}
-		//System.out.println(flag);
-	}
-%>
-
-<%
-	if(flag == 0){
-%>							
-					 			<a href="javascript:like(<%=Bdto.getNo()%>, '<%=connectid %>')" class="default_message" name="like">좋아요</a>
-<%
-	}
-	else{
-%>
-								<a href="javascript:unlike(<%=Bdto.getNo()%>, '<%=connectid %>')" class="default_message" name="unlike">좋아요 취소</a>
-<%
-		flag = 0;
-	}
-%>						
-<!-- 					 	 	<button title="&#xc88b;&#xc544;&#xc694;" type="submit"
-								name="like" onclick="fc_click(this, false); return true;"
-								class="like_link stat_elem as_link">
-								<span class="default_message">좋아요</span>
-								<span class="saving_message">좋아요 취소</span>
-								
-								<button title="&#xc88b;&#xc544;&#xc694;" type="submit"
-								name="like" onclick="likeCheck()"
-								class="like_link stat_elem as_link">
-								<span class="default_message">좋아요</span>
-								<span class="saving_message">좋아요 취소</span>
-						 	
-							</button> -->	
-							
+						<div class="_5pcp _5vsi lfloat _ohe">					
+					 			<a href="javascript:like(<%=dto.getNo()%>, '<%=connectid %>')" class="default_message" name="like">좋아요</a>	
 							· <mcjsjs><span class="default_message" name="reply" id="replyshow<%=i%>" style="cursor:pointer;">댓글</span></mcjsjs>
 							<mcjsjs><input type="hidden" id="divNoCheck<%=i %>" value="<%=i%>"/></mcjsjs>
 							 · <a class="uiBlingBox feedbackBling">
-							 <i class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text"><%=Bdto.getLike() %></span>
+							 <i class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text"><%=dto.getLike() %></span>
 							</a>
 						</div>
 					</div>
@@ -1595,7 +1542,7 @@
 			<form method="post" action="like_proc.jsp" >
 			<div id="replydiv<%=i%>" style="background-color: #E6FFFF;">
 			<input type="hidden" name="command" id="command" value="REPLYPOST"> 
-			<input type="hidden" name="no" id="no" value="<%=Bdto.getNo()%>"/>
+			<input type="hidden" name="no" id="no" value="<%=dto.getNo()%>"/>
 			<input type="hidden" name="id" value="<%=connectid%>"/>
 				<hr/>
 					<div class="_3dp _29k" ">
@@ -1613,40 +1560,6 @@
 										</div></h5>
 										</div>
 			</form>	
-<%
-	//댓글 반복문
-	Vector Rlist = Bdao.getReplyList(Bdto.getNo());
-
-	for(int r = 0; r<Rlist.size();r++){
-		ReplyDto Rdto = new ReplyDto();
-		Rdto = (ReplyDto) Rlist.get(r);
-%>
-	<%System.out.println(Rdto.getContent()); %>
-					<div style="height: 50px;margin-left: 7px" >
-								<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
-					<!-- 프로필 이미지  -->
-					<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Rdto.getPhoto() %>" alt="" align="middle" style="width: 40px;height: 40px" /></a>
-										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%= Rdto.getId() %></a>&nbsp;&nbsp;</span><span><%=Rdto.getContent() %></span>&nbsp;&nbsp;&nbsp;&nbsp;
-<%
-	//댓글 작성자 아이디 접속 아이디와 비교
-	if(Rdto.getId().equals(connectid)){
-%>
-										<a href="#" onclick="replyDelete(<%=Rdto.getNo()%>)">...삭제</a>
-<%
-	}
-%>							
-										<br/>
-										<div class="_5pcp" style="margin-top: 5px">
-										<span><%=Rdto.getRegist_day() %></span>
-										</div>
-									</h5>
-									</div>
-					
-<%
-	}
-	//댓글 반복문 끝
-%>
 						</div>
 					<!-- 리스트div  -->			
 					</div>
@@ -1661,34 +1574,6 @@
 %>
 
 <div align="center"><span style="cursor: pointer;" onclick="moreboard(<%=numperpage+5%>)">..더보기</span></div>
-
-<!-- like 스크립트를 위한 폼 시작  -->
-<form action="like_proc.jsp" method="post" name="Baction">
-	<input type="hidden" name="command" value="LIKE" />
-	
-	<input type="hidden" name="no" />
-	<input type="hidden" name="id" />
-</form>
-<form action="like_proc.jsp" method="post" name="Baction1">
-	<input type="hidden" name="command" value="UNLIKE" />
-	
-	<input type="hidden" name="no" />
-	<input type="hidden" name="id" />
-</form>
-<form action="like_proc.jsp" method="post" name="Baction2">
-	<input type="hidden" name="command" value="DELETE" />
-	
-	<input type="hidden" name="no" />
-</form>
-<form action="like_proc.jsp" method="post" name="Raction">
-	<input type="hidden" name="command" value="REPLYDELETE" />
-
-	<input type="hidden" name="no" />
-</form>
-<form action="main.jsp" method="post" name="more">
-	<input type="hidden" name="numperpage"/>
-</form>
-<!-- like 스크립트를 위한 끝  -->
 
 				</section>
 <!-- -----------------------------=========================================================내용끝 ============================================== -->

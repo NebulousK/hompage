@@ -8,7 +8,7 @@
 	int friend = dao.fiee((String) session.getAttribute("id"));
 	int img = callme + friend;
 %>
-<h3>Navigation</h3>
+<h3>Navigation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="logout" onclick='location.href="/homepage/member/member_proc.jsp?action=logout"'/></h3>
 <div style="background-color:#e0e0e0">
 	<li>
 		${sessionScope.id}님 환영합니다.

@@ -3,3 +3,18 @@ http://zero-gravity.tistory.com/m/post/197
 URIEncoding="utf-8"
 
 http://www.nuac.go.kr/script/htmleditor/daumEditor/pages/popup/image.html
+
+초간단 요약 
+jQuery : javascript 기반으로 만들어진 라이브러리 
+JSON : 인터넷에서 자료를 주고받을때 쓰는 문법 
+ajax : 비동기로 화면깜박임 없이 데이터를 주고받는 방법 
+
+자세한건 아래 문서를.. 
+jQuery : http://ko.wikipedia.org/wiki/JQuery 
+JSON : http://ko.wikipedia.org/wiki/JSON 
+ajax : http://ko.wikipedia.org/wiki/Ajax 
+
+json은 key: value로 구성된 자바스크립트의 객체표현에서 따온 일종의 데이터의 열거방식 
+jquery 는 자바스크립트를 직관적으로 사용하는 것으로 테그이름이나 브라우져안의 문서를 쉽고 짭게 조작가능함 ( 단 사용하기 위해 jquery js파일을 별도로 추가해야함. 
+ajax 는 화면 갱신없이 클라이언트에서 자바스크립트를 이용해 변경되는 부분을 바꾸어주는 방식. 
+자바스크립트방식이도 있고 제이쿼리 방식도 있음 
