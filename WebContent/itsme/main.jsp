@@ -138,7 +138,6 @@
 							/* 예제용 함수 */
 							function saveContent(i) {
 								Editor.switchEditor(i);
-								alert(Editor.getInitializedId());
 								Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.		
 							}
 
@@ -251,11 +250,10 @@
 <body class="size-1140" onload="document.body.scrollTop=document.cookie" onunload="document.cookie=document.body.scrollTop">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center"
-						src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
 				
 			</div>
@@ -279,14 +277,16 @@
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.id}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update.jsp"'/>
-							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update2.jsp"'/>
+							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update2.jsp"'/><br/><br/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="button" value="회원 탈퇴" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_getout.jsp"'/>
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
 				<div class="_4-u2 mbm" style="border: 0px">
 						<div id="main_border_down" style="width: 580px;">
-							<form name="tx_editor_formA" id="tx_editor_formA" action="Post_proc.jsp" method="post" accept-charset="utf-8">
+							<form name="tx_editor_formA" id="tx_editor_formA" action="/homepage/newsfeed/Post_proc.jsp" method="post" accept-charset="utf-8">
 								<div id="board_title">
-								<input type="hidden" name="action" id="action" value="insert">
+								<input type="hidden" name="action" id="action" value="me">
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
 								<input type="hidden" name="no" id="no" value="${sessionScope.no}">
 									<!-- 타이틀 -->
@@ -955,7 +955,7 @@
 				</div>
 <!-- 수정창 생성  -->		
 <div class="_55d0" id="testdiv<%=i%>">
-<form name="tx_editor_form<%=i %>" id="tx_editor_form<%=i %>" action="like_proc.jsp" method="post" accept-charset="utf-8">
+<form name="tx_editor_form<%=i %>" id="tx_editor_form<%=i %>" action="/homepage/newsfeed/like_proc.jsp" method="post" accept-charset="utf-8">
 						<div id="board_title">
 								<input type="hidden" name="command" value="UPDATE"/>			
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
@@ -1555,7 +1555,7 @@
 					</div>
 				</div>
 				<!-- <form  method="post" action="like_proc.jsp"  name="boardaction"> -->
-			<form action="like_proc.jsp" method="post" name="boardaction">
+			<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="boardaction">
 					
 					<div class="clearfix">
 						<div class="_5pcp _5vsi lfloat _ohe">
@@ -1588,19 +1588,6 @@
 		flag = 0;
 	}
 %>						
-<!-- 					 	 	<button title="&#xc88b;&#xc544;&#xc694;" type="submit"
-								name="like" onclick="fc_click(this, false); return true;"
-								class="like_link stat_elem as_link">
-								<span class="default_message">좋아요</span>
-								<span class="saving_message">좋아요 취소</span>
-								
-								<button title="&#xc88b;&#xc544;&#xc694;" type="submit"
-								name="like" onclick="likeCheck()"
-								class="like_link stat_elem as_link">
-								<span class="default_message">좋아요</span>
-								<span class="saving_message">좋아요 취소</span>
-						 	
-							</button> -->	
 							
 							· <mcjsjs><span class="default_message" name="reply" id="replyshow<%=i%>" style="cursor:pointer;">댓글</span></mcjsjs>
 							<mcjsjs><input type="hidden" id="divNoCheck<%=i %>" value="<%=i%>"/></mcjsjs>
@@ -1613,7 +1600,7 @@
 				</form>
 			</div>
 <!-- 댓글 디자인  -->
-			<form method="post" action="like_proc.jsp" >
+			<form method="post" action="/homepage/newsfeed/like_proc.jsp" >
 			<div id="replydiv<%=i%>" style="background-color: #E6FFFF;">
 			<input type="hidden" name="command" id="command" value="REPLYPOST"> 
 			<input type="hidden" name="no" id="no" value="<%=Bdto.getNo()%>"/>
@@ -1683,24 +1670,24 @@
 <div align="center"><span style="cursor: pointer;" onclick="moreboard(<%=numperpage+5%>)">..더보기</span></div>
 
 <!-- like 스크립트를 위한 폼 시작  -->
-<form action="like_proc.jsp" method="post" name="Baction">
+<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction">
 	<input type="hidden" name="command" value="LIKE" />
 	
 	<input type="hidden" name="no" />
 	<input type="hidden" name="id" />
 </form>
-<form action="like_proc.jsp" method="post" name="Baction1">
+<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction1">
 	<input type="hidden" name="command" value="UNLIKE" />
 	
 	<input type="hidden" name="no" />
 	<input type="hidden" name="id" />
 </form>
-<form action="like_proc.jsp" method="post" name="Baction2">
+<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction2">
 	<input type="hidden" name="command" value="DELETE" />
 	
 	<input type="hidden" name="no" />
 </form>
-<form action="like_proc.jsp" method="post" name="Raction">
+<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Raction">
 	<input type="hidden" name="command" value="REPLYDELETE" />
 
 	<input type="hidden" name="no" />

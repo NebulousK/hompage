@@ -12617,8 +12617,6 @@ window.txEval = function (source, target) {
         	e.deletedMark = v;  //이거?
         		if(check.match(e.boxAttr.name) == null ){
         			if(check.indexOf(e.boxAttr.name) == -1){
-        				alert(check);
-        				alert(e.boxAttr.name);
         				window.open("/homepage/newsfeed/pages/trex/delete.jsp?name=" + e.boxAttr.name , "", "scrollbars=no,width=1,height=1"); //여기다
         				check += " " + e.boxAttr.name;
         			}

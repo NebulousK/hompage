@@ -122,11 +122,10 @@
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center"
-						src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
 				
 			</div>

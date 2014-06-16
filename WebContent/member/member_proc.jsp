@@ -1,4 +1,8 @@
 <%@page import="java.io.File"%>
+<%@page import="homepage.someDao"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="mail.Gmail"%>
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="my" uri="join" %>
 <jsp:useBean id="dao" class="homepage.someDao"/>
@@ -11,6 +15,7 @@
 <% 
 	if(!request.getParameter("action").equals(null)){
 		action = request.getParameter("action");
+		System.out.print(action);
 	}	
 	if(action.equals("detail")){
 		String[] str = request.getParameterValues("fashion");
@@ -39,6 +44,8 @@
 <% 
 	}
 	if(action.equals("login")){
+		String id = request.getParameter("id");
+		String state = dao.selectMemberState(id);
 		String result =  dao.login(dto.getId(), dto.getPassword());
 		if(result == "b"){
 %>
@@ -54,6 +61,13 @@
 		alert("비밀 번호가 틀렸습니다. 비밀번호를 확인 하세요");
 		location.href = "/homepage/index.html";
 	</script>
+<% 			
+		}
+		else if(!state.equals("true")){
+%>
+	<script>
+			location.href = "/homepage/emailfalse.jsp";
+	</script>	
 <% 			
 		}
 		else{
@@ -115,13 +129,42 @@
 	</script>	
 <%
 	}
-	else{
-		dao.member_join(request);
+	else if(action.equals("getout")){
+		boolean result = dao.getout(Integer.parseInt((String)session.getAttribute("no")), (String)session.getAttribute("id"), dto.getPassword());
+		if(result){
+%>
+	<script>
+		location.href = "/homepage/member/getoutcomplete.jsp";
+	</script>
+<% 
+	}else{
+%>
+		<script>
+			alert('비밀번호가 올바르지 않다.');
+			histroy.back();
+		</script>
+<% 		
+		}
+	}
+	else if(action.equals("join")){
+		/* dao.member_join(request);
+		 *///System.out.println(request.getParameter("id"));
+		Gmail gmail = new Gmail();
+		MultipartRequest multi = dao.member_join(request);
+	 	gmail.Gmail(multi); 
 %>  
 	<script>
 		alert("가입 완료");
 		location.href = "/homepage/member/member_join2.jsp";
 	</script>
 <% 
+	}
+	else{
+%>
+	<script>
+		alert("시스템이 오류 났다!!");
+		location.href = "/homepage/index.html";
+	</script>
+<%
 	}
 %>

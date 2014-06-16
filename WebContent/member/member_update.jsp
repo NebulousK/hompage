@@ -55,15 +55,15 @@
 <body class="size-1140" onload="name()">
    <!-- TOP NAV WITH LOGO -->
    <header>
-      <nav>
-         <div class="line">
-            <div class="s-12 l-2">
-               <img class="s-5 l-12 center" src="/homepage/images/logo.png">
-            </div>
-
-         </div>
-      </nav>
-   </header>
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
+				</div>
+				
+			</div>
+		</nav>
+	</header>
    <!-- ASIDE NAV AND CONTENT -->
    <div class="line">
       <div class="box  margin-bottom">

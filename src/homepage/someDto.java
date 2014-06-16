@@ -2,9 +2,10 @@ package homepage;
 
 public class someDto {
 	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2, itemID, userID;
-	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4, date, coment, email,
+	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4, date, coment, 
 			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2, fashion3,   
-			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion;
+			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion, 
+			confirmState, email, key;
 	private float value;
 	
 	public float getValue() {
@@ -357,10 +358,22 @@ public class someDto {
 	public void setEnd_Day(String end_Day) {
 		this.end_Day = end_Day;
 	}
+	public String getConfirmState() {
+		return confirmState;
+	}
+	public void setConfirmState(String confirmState) {
+		this.confirmState = confirmState;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
 	}  
 }

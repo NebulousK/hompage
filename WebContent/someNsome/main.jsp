@@ -40,12 +40,12 @@
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center" src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
-
+				
 			</div>
 		</nav>
 	</header>
@@ -86,7 +86,7 @@
 												<li class="customLi">키 : <%=dto.getHeight() %></li>
 												<li class="customLi">몸무게 : <%=dto.getWeight() %></li>
 												<li class="customLi">지역 : <%=dto.getAddr() %></li>
-												<li class="customLi">성격 : <%=dto.getState() %></li>
+												<li class="customLi">성격 : <%=dto.getStyle() %></li>
 												<li class="customLi">스타일 : <%=dto.getFashion() %></li>
 												<li class="customLi">취미 : <%=dto.getHobby() %></li>
 											</ol>
@@ -109,7 +109,11 @@
 					<%		}
 						}else{		
 					%>
-						인기가 없네 하아
+						<div align="center">
+						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+							<font size="5">온라인 상에서도 인기가 없네 하아....</font><br/><br/> 
+							<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						</div>
 					<%} %>
 				</section>
 				<!-- ASIDE NAV 2 -->

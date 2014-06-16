@@ -58,12 +58,12 @@
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center" src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
-
+				
 			</div>
 		</nav>
 	</header>
@@ -77,6 +77,7 @@
 				</aside>
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
+				<%if(dto.getName() != null){ %>
 					<form action="/homepage/someNsome/someProc.jsp" name="form" method="post" >
 						<%if(check[0].equals("no")) {%>
 						<input type="hidden" name="action" value="dash" />
@@ -139,11 +140,24 @@
 						<%} %>
 						</div>
 					</form>
-
+				<%}else{ %>
+					 <div align="center">
+							<div style="width: 530px; text-align: left;">
+							</div>
+						</div>
+						<p>&nbsp;</p>
+						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						<div align="center">
+							<font size="5">이상형 타입중 원하시는</font><br/><br/> 
+							<font size="5">나이와 같거나 작은 이성이 없습니다.</font><br/><br/>
+							<font size="5">나이 욕심을 버리세요</font> 
+							<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+						</div>
+				<%} %>
 				</section>
 				<!-- ASIDE NAV 2 -->
 				<aside class="s-12 l-five">
-					<jsp:include page="/Friend.jsp" />
+					<jsp:include page="/Friend.jsp" /> 
 				</aside>
 			</div>
 		</div>

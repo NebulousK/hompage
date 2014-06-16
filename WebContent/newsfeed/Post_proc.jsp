@@ -13,13 +13,18 @@
 	request.setCharacterEncoding("UTF-8");
 	String content = request.getParameter("content");
 	String id = request.getParameter("id");
-	
+	String action = null;
+	if(request.getParameter("content") !=null){
+		action = request.getParameter("action");
+	}
 	//System.out.println(content);
 
 	Bdto.setId(id);
 	Bdto.setContent(content);
 	Bdao.insertBoard(Bdto); 
-	
+	if(action.equals("me")){
+			
+	}
 	response.sendRedirect("main.jsp");
 %>
 </body>

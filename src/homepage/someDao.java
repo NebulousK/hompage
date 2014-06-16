@@ -130,12 +130,12 @@ public class someDao {
 		return multi.getParameter("title");
 	}
 
-	public void member_join(HttpServletRequest req) {
+	public MultipartRequest member_join(HttpServletRequest req) {
 		connect();
 		setPath(req, "profile");
 		setMax(5 * 1024 * 1024);
 		setEncType("UTF-8");
-		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`,confirmState) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
 			stmt = con.prepareStatement(sql);
@@ -158,6 +158,7 @@ public class someDao {
 			stmt.setString(8, multi.getFilesystemName("imgInp"));
 			stmt.setInt(9, age);
 			stmt.setString(10, email);
+			stmt.setString(11, multi.getParameter("confirmState"));
 			// System.out.println(stmt);
 			stmt.executeUpdate();
 		} catch (Exception err) {
@@ -165,31 +166,40 @@ public class someDao {
 		} finally {
 			discon();
 		}
+		return multi;
 	}
 
 	public void member_detail(someDto g) {
 		connect();
-		String sql = "INSERT INTO m_profile(no, height, hobby, blood, style, weight, fashion) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?)";
+		String sql;
 		try {
+			sql = "select no from member order by no desc";
 			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, g.getHeight());
-			stmt.setString(2, g.getHobby());
-			stmt.setString(3, g.getBlood());
-			stmt.setString(4, g.getStyle());
-			stmt.setInt(5, g.getWeight());
-			stmt.setString(6, g.getFashion());
+			rs = stmt.executeQuery();
+			rs.next();
+			int no = rs.getInt("no");
+			sql = "INSERT INTO m_profile(no, height, hobby, blood, style, weight, fashion) VALUES(?, ?,?,?,?,?,?)";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, g.getHeight());
+			stmt.setString(3, g.getHobby());
+			stmt.setString(4, g.getBlood());
+			stmt.setString(5, g.getStyle());
+			stmt.setInt(6, g.getWeight());
+			stmt.setString(7, g.getFashion());
 			/* System.out.println(stmt); */
 			stmt.executeUpdate();
 			stmt = null;
-			sql = "INSERT INTO idealtype(no, height, hobby, blood, style, weight, fashion, age) VALUES(LAST_INSERT_ID(), ?,?,?,?,?,?,?)";
+			sql = "INSERT INTO idealtype(no, height, hobby, blood, style, weight, fashion, age) VALUES(?, ?,?,?,?,?,?,?)";
 			stmt = con.prepareStatement(sql);
-			stmt.setInt(1, g.getHeight2());
-			stmt.setString(2, g.getHobby2());
-			stmt.setString(3, g.getBlood2());
-			stmt.setString(4, g.getStyle2());
-			stmt.setInt(5, g.getWeight2());
-			stmt.setString(6, g.getFashion2());
-			stmt.setInt(7, g.getAge());
+			stmt.setInt(1, no);
+			stmt.setInt(2, g.getHeight2());
+			stmt.setString(3, g.getHobby2());
+			stmt.setString(4, g.getBlood2());
+			stmt.setString(5, g.getStyle2());
+			stmt.setInt(6, g.getWeight2());
+			stmt.setString(7, g.getFashion2());
+			stmt.setInt(8, g.getAge());
 			/* System.out.println(stmt); */
 			stmt.executeUpdate();
 		} catch (Exception err) {
@@ -242,7 +252,6 @@ public class someDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			/*System.out.println(stmt);*/
 			if (rs.next()) {
 				sql = "SELECT a.no ,a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
 				stmt = con.prepareStatement(sql);
@@ -266,7 +275,6 @@ public class someDao {
 				stmt = con.prepareStatement(sql);
 				stmt.setInt(1, no);
 				rs = stmt.executeQuery();
-				/*System.out.println(stmt);*/
 				rs.next();
 				age = Integer.parseInt(rs.getString("age"));
 				height = Integer.parseInt(rs.getString("height"));
@@ -287,7 +295,6 @@ public class someDao {
 				stmt.setInt(4, 1);
 				stmt.setInt(5, 1);
 				rs = stmt.executeQuery();
-				/*System.out.println(stmt);*/
 				while (rs.next()) {
 					someDto dto = new someDto();
 					dto.setNo(Integer.parseInt(rs.getString("a.no")));
@@ -977,6 +984,174 @@ public class someDao {
 			discon();
 		}
 	}
+	
+	public boolean getout(int no, String id, String passwd){
+		connect();	
+		try {
+			String sql = "select * from member where no=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			System.out.println(stmt);
+			rs.next();
+			passwd = sha1(passwd);
+			String passwd2 = rs.getString("password");
+			
+			if(passwd.equals(passwd2)){
+			sql = "DELETE FROM `board_image` WHERE no in (select no from board where id = ?)  ";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM board where id = ? ";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+
+			sql = "DELETE FROM `borad_ripple` WHERE id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM idealtype where no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM `join` where userID = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM `m_profile` where no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			sql = "DELETE FROM member where no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.executeUpdate();
+			System.out.println(stmt);
+			
+			return true;
+			}
+			else{return false;}
+			
+			} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return false;
+	}
+	
+	//이메일 인증테이블 값넣기
+		public void insertEmailConfirm(String id, int key, String email) {
+			connect();
+			String sql = "INSERT INTO `emailconfirm`(`id`, `email`, `key`) VALUES (?, ? ,?)";
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, email);
+				stmt.setInt(3, key);
+				System.out.println(stmt);
+				stmt.executeUpdate();
+				
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+		}
+		//이메일 확인
+		public someDto selectEmailconfirm(String id) {
+			someDto Sdto = new someDto();
+			connect();
+			String sql = "SELECT `no`, `id`, `email`, `key` FROM `emailconfirm` where id=?";
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);			
+				System.out.println(stmt);
+				rs = stmt.executeQuery();
+
+				while(rs.next()){
+					Sdto.setNo(rs.getInt(1));
+					Sdto.setId(rs.getString(2));
+					Sdto.setEmail(rs.getString(3));
+					Sdto.setKey(rs.getString(4));
+				}
+				
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			return Sdto;
+		}
+		//이메일 인증후 회원 상태 변경
+		public void updateMemberState(String id){
+			connect();
+			String sql ="";
+			try{
+				sql = "update member set confirmstate='true' where id=?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.executeUpdate();
+				
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+		}
+		//회원의 이메일인증상태 조회
+		public String selectMemberState(String id){
+			connect();
+			String sql ="";
+			String state = "";
+			try{
+				sql = "select confirmstate from member where id=?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while(rs.next()){
+					state = rs.getString("confirmstate");
+				}
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return state;
+		}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {

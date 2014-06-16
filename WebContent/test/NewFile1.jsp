@@ -10,7 +10,7 @@
 <script type="text/javascript">
 	function test() {
 		/* document.getElementById("a").innerHTML = $('#rateit').rateit('value'); */
-		document.getElementById("value").value = $('#rateit').rateit('value');
+		document.getElementById("value2").value = $('#rateit').rateit('value');
 	}
 </script>
 </head>
@@ -19,6 +19,6 @@
 	<div class="rateit bigstars" data-rateit-starwidth="32" data-rateit-starheight="32" id="rateit"></div>
     <button onclick="test()">Get value</button>
     <div id="a"></div>
-    <input type="text" name="value" id="value" value="" />
+    <input type="text" name="value2" id="value2" value="" />
 </body>
 </html>

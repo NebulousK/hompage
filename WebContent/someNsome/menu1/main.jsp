@@ -127,7 +127,6 @@
 							/* 예제용 함수 */
 							function saveContent(i) {
 								Editor.switchEditor(i);
-								alert(Editor.getInitializedId());
 								Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.		
 							}
 
@@ -235,11 +234,10 @@
 <body class="size-1140" onload="document.body.scrollTop=document.cookie" onunload="document.cookie=document.body.scrollTop">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center"
-						src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
 				
 			</div>

@@ -23,20 +23,27 @@
 <script src="/homepage/js/bootstrap.js"></script> 
 <script src="/homepage/js/memberjoin.js"></script>
 <script src="/homepage/js/member_join.js"></script>
-
+<script src="ajax.js"></script>
 </head>
 <body class="size-1140">
    <!-- TOP NAV WITH LOGO -->
+   <form action="mail_proc.jsp" method="post" name="mail">
+	<input type="hidden" name="action" value="mailcheck"/>
+	<input type="hidden" name="email1" />
+	<input type="hidden" name="email2" />
+	<input type="hidden" name="email3" />
+	<input type="hidden" name="id" />	
+	</form>
    <header>
-      <nav>
-         <div class="line">
-            <div class="s-12 l-2">
-               <img class="s-5 l-12 center" src="/homepage/images/logo.png">
-            </div>
-
-         </div>
-      </nav>
-   </header>
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
+				</div>
+				
+			</div>
+		</nav>
+	</header>
    <!-- ASIDE NAV AND CONTENT -->
    <div class="line">
       <div class="box  margin-bottom">
@@ -47,6 +54,7 @@
                      <h1>회원가입</h1>
                      <br /> <br />
                      <form id="form1" name="form1" action="member_proc.jsp?action=join" method="post" enctype="multipart/form-data">
+						<!-- 이메일인증 스테이트  --><input type="hidden" name="confirmState" value="false" />
                      <div class="row">
                         <div class="span12">
                            <div class="span6" align="center">
@@ -65,7 +73,7 @@
                                  <tr>
                                     <input type="hidden" name="action" id="action" value="join"/>
                                     <td style="padding-right: 70px">아이디</td>
-                                    <td><input type="text" style="width: 150px" maxlength="12" name="id" id="id"  onkeyup="this.value=this.value.replace(/[^a-zA-z0-9]/g,'')" onchange="idcheck()"/>
+                                    <td><input type="text" style="width: 150px" maxlength="12" name="id" id="id" onchange="idcheck()"/>
                                     <br/>
                                     <span id="ids"></span></td>
                                  </tr>
@@ -83,8 +91,8 @@
                                  </tr>
                                  <tr>
                                     <td>e-mail</td>
-                                    <td id="email"><input type=text size=10 id="email1" name="email1" style="width: 100px" onblur="emailcheck()"> @
-                                    <select name="email2" id="email2" onChange="javascript:email_write()" style="width:130px;" onblur="emailcheck()">
+                                    <td id="email"><input type=text size=10 name="email1" style="width: 100px"> @
+                                    <select name="email2" onChange="javascript:email_write()" style="width:130px;">
                                           <option value="a" selected>:: 선택 ::</option>
                                           <option value="chol.com">chol.com</option>
                                           <option value="dreamwiz.com">dreamwiz.com</option>
@@ -101,9 +109,9 @@
                                           <option value="paran.com">paran.com</option>
                                           <option value="yahoo.co.kr">yahoo.co.kr</option>
                                           <option value="etc">직접입력
-                                    </select>
-                                    <input type=text size=20 name="email3" id="email3" value="" style="width:130px;display:none;" onblur="emailcheck()"><br/>
-                                    <span id="ems"></span>
+                                    </select><br/>
+                                    <span>가입과 동시에 인증메일 발송. 정확히 기재해주세요.</span>
+                                    <input type=text size=20 name="email3" value="" style="width:130px;display:none;"><br/><span id="ems"></span>
                                     </td>
                                  </tr>
                                  <tr>
@@ -123,7 +131,7 @@
                                  </tr>
                                  <tr>
                                     <td>상세주소</td>
-                                    <td><input type="text" style="width: 250px" name="addr" id="addr" readonly="readonly"/><br/><span id="ads"></span></td>
+                                    <td><input type="text" style="width: 250px" name="addr" id="addr"/><br/><span id="ads"></span></td>
                                  </tr>
                                  <tr>
                                     <td>생년월일</td>

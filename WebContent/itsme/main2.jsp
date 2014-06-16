@@ -178,11 +178,10 @@
 <body class="size-1140" onload="document.body.scrollTop=document.cookie" onunload="document.cookie=document.body.scrollTop">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
-		<nav>
-			<div class="line">
-				<div class="s-12 l-2">
-					<img class="s-5 l-12 center"
-						src="/homepage/images/logo.png">
+		<nav style="background-color: #212121;">
+			<div class="line" >
+				<div class="s-12 l-2" >
+					<img class="s-5 l-12 center" src="/homepage/images/IMG_004.png" style="width: 100px; height: 100px;margin-top: 7px;margin-bottom: 7px"/>
 				</div>
 				
 			</div>
@@ -199,7 +198,7 @@
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
 						<div style="float: left;width: 280px;height: 290px;"> 
-							<img src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width:270px" align="middle" />
+							<img src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width:270px;max-height:290px" align="middle" />
 						</div>
 						<div style="float: left;width: 280px;height: 290px;display:table-cell;vertical-align:middle;text-align:center;">
 							

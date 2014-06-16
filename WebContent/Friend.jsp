@@ -8,9 +8,7 @@
 	GroupDao dao=new GroupDao();
 	boolean check=false;
 %>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-
-
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 <script>
 	//popup 창 띄우기(num,myid를 넘겨줌)
 	function Pop_Create_Group(num,myid) {
@@ -51,7 +49,6 @@
     <TD align="center" valign="center" height="0">친구목록<hr/></TD>
   </TR>
   	<%
-		
   		Vector fList=(Vector)dao.getFriends(myid);
   		for(int i=0;i<fList.size();i++){
   			FriendDto dto=(FriendDto)fList.get(i);	
