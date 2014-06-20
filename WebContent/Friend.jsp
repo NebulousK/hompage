@@ -37,6 +37,17 @@
 		if(check==true){	
 		}
 	}
+	
+	function fn_layer_popup(){ 
+		var _x = event.clientX + document.body.scrollLeft; //마우스로 선택한곳의 x축(화면에서 좌측으로부터의 거리)를 얻는다. 
+		var _y = event.clientY + document.body.scrollTop; //마우스로 선택한곳의 y축(화면에서 상단으로부터의 거리)를 얻는다. 
+		var layer = document.getElementById("popup_layer"); 
+		if(_x < 0) _x = 0; //마우스로 선택한 위치의 값이 -값이면 0으로 초기화. (화면은 0,0으로 시작한다.) 
+		if(_y < 0) _y = 0; //마우스로 선택한 위치의 값이 -값이면 0으로 초기화. (화면은 0,0으로 시작한다.) 
+		layer.style.left = _x+"px"; //레이어팝업의 좌측으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
+		layer.style.top = _y+"px"; //레이어팝업의 상단으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
+		layer.style.visibility="visible"; 
+	} 
 </script>
 <%
 	//회원번호와 아이디 가상으로 설정()
@@ -56,13 +67,15 @@
   			<TR> 
     			<TD align="center" valign="center" height="0"> 
     			<%if(dto.getUserid1().equals(myid)){%>
-      			<b><P align="center"><a href="/homepage/itsme/main2.jsp?id=<%=dto.getUserid2()%>"><%=dto.getUserid2()%></a>
+      			<b><P align="center"><%-- <a href="/homepage/itsme/main2.jsp?id=<%=dto.getUserid2()%>"><%=dto.getUserid2()%></a> --%>
+      			<a href="#" onclick="fn_layer_popup()"><%=dto.getUserid2()%></a>
       			<%if(dao2.news(dto.getUserid2()) != 0){ 
       				int cnt = dao2.news(dto.getUserid2());
       			%>
       			<span class="count-number" style="color:red;background-color:pink"> <%=cnt %></span></P></b>
       			<%}}else{%>
-      			<b><P align="center"><a href="/homepage/itsme/main2.jsp?id=<%=dto.getUserid1()%>"><%=dto.getUserid1()%></a>
+      			<b><P align="center"><%-- <a href="/homepage/itsme/main2.jsp?id=<%=dto.getUserid1()%>"><%=dto.getUserid1()%></a> --%>
+      			<a href="#" onclick="fn_layer_popup()"><%=dto.getUserid1()%></a>
       			<%if(dao2.news(dto.getUserid1()) != 0){ 
       				int cnt = dao2.news(dto.getUserid1());
       			%>
@@ -94,6 +107,10 @@
   </TR>
  
 </TABLE>
+</div>
+<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:100px;z-index:1;visibility:hidden;background-color:white;"> 
+<a href="/homepage/itsme/main2.jsp"><img src="/homepage/images/messagesend.png"></a>
+<a href="/homepage/itsme/main2.jsp"><img src="/homepage/images/viewmember.png"></a>
 </div>
 
 

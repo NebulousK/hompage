@@ -1,46 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
- <head>
-  <title> New Document </title>
-  
-<script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
-<script>
-$(document).ready(function(){
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader(); //ÆÄÀÏÀ» ÀĞ±â À§ÇÑ FileReader°´Ã¼ »ı¼º
-            reader.onload = function (e) { 
-            //ÆÄÀÏ ÀĞ¾îµéÀÌ±â¸¦ ¼º°øÇßÀ»¶§ È£ÃâµÇ´Â ÀÌº¥Æ® ÇÚµé·¯
-                $('#blah').attr('src', e.target.result);
-                //ÀÌ¹ÌÁö TagÀÇ SRC¼Ó¼º¿¡ ÀĞ¾îµéÀÎ File³»¿ëÀ» ÁöÁ¤
-                //(¾Æ·¡ ÄÚµå¿¡¼­ ÀĞ¾îµéÀÎ dataURLÇü½Ä)
-            }                    
-            reader.readAsDataURL(input.files[0]);
-            //File³»¿ëÀ» ÀĞ¾î dataURLÇü½ÄÀÇ ¹®ÀÚ¿­·Î ÀúÀå
-        }
-    }//readURL()--
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script> 
+function fn_layer_popup(){ 
+	var _x = event.clientX + document.body.scrollLeft; //ë§ˆìš°ìŠ¤ë¡œ ì„ íƒí•œê³³ì˜ xì¶•(í™”ë©´ì—ì„œ ì¢Œì¸¡ìœ¼ë¡œë¶€í„°ì˜ ê±°ë¦¬)ë¥¼ ì–»ëŠ”ë‹¤. 
+	var _y = event.clientY + document.body.scrollTop; //ë§ˆìš°ìŠ¤ë¡œ ì„ íƒí•œê³³ì˜ yì¶•(í™”ë©´ì—ì„œ ìƒë‹¨ìœ¼ë¡œë¶€í„°ì˜ ê±°ë¦¬)ë¥¼ ì–»ëŠ”ë‹¤. 
+	var layer = document.getElementById("popup_layer"); 
+	if(_x < 0) _x = 0; //ë§ˆìš°ìŠ¤ë¡œ ì„ íƒí•œ ìœ„ì¹˜ì˜ ê°’ì´ -ê°’ì´ë©´ 0ìœ¼ë¡œ ì´ˆê¸°í™”. (í™”ë©´ì€ 0,0ìœ¼ë¡œ ì‹œì‘í•œë‹¤.) 
+	if(_y < 0) _y = 0; //ë§ˆìš°ìŠ¤ë¡œ ì„ íƒí•œ ìœ„ì¹˜ì˜ ê°’ì´ -ê°’ì´ë©´ 0ìœ¼ë¡œ ì´ˆê¸°í™”. (í™”ë©´ì€ 0,0ìœ¼ë¡œ ì‹œì‘í•œë‹¤.) 
+	layer.style.left = _x+"px"; //ë ˆì´ì–´íŒì—…ì˜ ì¢Œì¸¡ìœ¼ë¡œë¶€í„°ì˜ ê±°ë¦¬ê°’ì„ ë§ˆìš°ìŠ¤ë¡œ í´ë¦­í•œê³³ì˜ ìœ„ì¹˜ê°’ìœ¼ë¡œ ë³€ê²½. 
+	layer.style.top = _y+"px"; //ë ˆì´ì–´íŒì—…ì˜ ìƒë‹¨ìœ¼ë¡œë¶€í„°ì˜ ê±°ë¦¬ê°’ì„ ë§ˆìš°ìŠ¤ë¡œ í´ë¦­í•œê³³ì˜ ìœ„ì¹˜ê°’ìœ¼ë¡œ ë³€ê²½. 
+	layer.style.visibility="visible"; 
+	} 
+</script> 
 
-    //file ¾ç½ÄÀ¸·Î ÀÌ¹ÌÁö¸¦ ¼±ÅÃ(°ªÀÌ º¯°æ) µÇ¾úÀ»¶§ Ã³¸®ÇÏ´Â ÄÚµå
-    $("#imgInp").change(function(){
-        alert(this.value); //¼±ÅÃÇÑ ÀÌ¹ÌÁö °æ·Î Ç¥½Ã
-        readURL(this);
-    });
- });
-</script>
- </head>
+</head>
+<body>
+<div id="popup_layer" style="position:absolute; border:double;top:0px;  left:0px; width:100px; height:50px; z-index:1; visibility:hidden; background-color:white;"> 
 
- <body>
-    <form id="form1">
-       
-        <img id="blah" src="#" alt="your image" />
-         <input type='file' id="imgInp" /><br/>
-    </form>
-    
+</div>
 
-<span id="fileInputForm" style="position:relative; float:left; width:62px; height:18px; overflow:hidden; cursor:pointer; background-image:url('../images/table/add_search.png');">
-<input type="file" id="filename" name="filename" value="" style='position£ºabsolute; margin-left:-10px; width:62px; height:18px; filter:alpha(opacity=0); opacity:0; -moz-opacity:0; cursor:pointer;' onChange="fileUpload()">
-</span>
- </body>
-</html>
+<input type="button" value="click" onclick="fn_layer_popup()"> 
+</body>
+</html> 

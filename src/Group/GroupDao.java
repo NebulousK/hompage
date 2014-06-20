@@ -23,7 +23,6 @@ public class GroupDao {
 			pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
 		} catch (Exception err) {
-			System.out.println("에러");
 			System.out.println(err);
 		}
 	}

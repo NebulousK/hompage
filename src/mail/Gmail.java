@@ -96,13 +96,7 @@ public class Gmail {
 	private static class SMTPAuthenticator extends javax.mail.Authenticator {
 
 		public PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication("djemals11", "djemalsdjemals"); // Google
-																		// id,
-																		// pwd,
-																		// ����)
-																		// @gmail.com
-																		// ��
-																		// �����ϼ���
+			return new PasswordAuthentication("djemals11", "djemalsdjemals"); 
 		}
 	}
 	

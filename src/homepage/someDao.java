@@ -1152,6 +1152,105 @@ public class someDao {
 			}
 			return state;
 		}
+		
+		public ArrayList<someDto> messagelist(String id){
+			connect();
+			String sql ="";
+			ArrayList<someDto> list = new ArrayList<someDto>();
+			try{
+				sql = "select * from message where dear=?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while(rs.next()){
+					someDto g = new someDto();
+					g.setNo(rs.getInt("no"));
+					g.setSender(rs.getString("sender"));
+					g.setDear(rs.getString("dear"));
+					g.setContent(rs.getString("content"));
+					g.setDay(rs.getString("day"));
+					list.add(g);
+				}
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return list;
+		}
+		
+		public ArrayList<someDto> sendmessage(String id){
+			connect();
+			String sql ="";
+			ArrayList<someDto> list = new ArrayList<someDto>();
+			try{
+				sql = "select * from message where sender=?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while(rs.next()){
+					someDto g = new someDto();
+					g.setNo(rs.getInt("no"));
+					g.setSender(rs.getString("sender"));
+					g.setDear(rs.getString("dear"));
+					g.setContent(rs.getString("content"));
+					g.setDay(rs.getString("day"));
+					list.add(g);
+				}
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return list;
+		}
+		
+		public ArrayList<someDto> getmessage(String id, String id2){
+			connect();
+			String sql ="";
+			ArrayList<someDto> list = new ArrayList<someDto>();
+			try{
+				sql = "select * from message where dear=? or sender=? or dear=? or sender=? ";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id);
+				stmt.setString(3, id2);
+				stmt.setString(4, id2);
+				rs = stmt.executeQuery();
+				while(rs.next()){
+					someDto g = new someDto();
+					g.setNo(rs.getInt("no"));
+					g.setSender(rs.getString("sender"));
+					g.setDear(rs.getString("dear"));
+					g.setContent(rs.getString("content"));
+					g.setDay(rs.getString("day"));
+					list.add(g);
+				}
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return list;
+		}
+		
+		public void insertmessage(String id, someDto g){
+			connect();
+			String sql ="";
+			try{
+				sql = "insert into message(sender, dear, content, day, state) values(?,?,?,now(),?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, g.getDear());
+				stmt.setString(3, g.getContent());
+				stmt.setInt(4, 0);
+				stmt.executeUpdate();
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+		}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {

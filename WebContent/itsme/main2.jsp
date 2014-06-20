@@ -1010,7 +1010,6 @@
 		ReplyDto Rdto = new ReplyDto();
 		Rdto = (ReplyDto) Rlist.get(r);
 %>
-	<%System.out.println(Rdto.getContent()); %>
 					<div style="height: 50px;margin-left: 7px" >
 								<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
 					<!-- 프로필 이미지  -->
