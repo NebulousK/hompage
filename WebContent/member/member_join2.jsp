@@ -24,8 +24,6 @@
 <script type = "text/javascript" src = "/homepage/js/ajax.js"></script>
 <script src="/homepage/js/member_join.js"></script>
 
-
-
 </head>
 <body class="size-1140">
    <!-- TOP NAV WITH LOGO -->
@@ -49,9 +47,8 @@
                      <h2>세부정보 입력</h2>
                      <div class="span12">
                         <h3>본인의 세부정보</h3>
-                        <form name="form1" action="/homepage/member/member_proc.jsp" method="post">
+                        <form name="form1" action="/member/join2.me" method="post">
                         <table align="center">
-                        <input type="hidden" id="action" name="action" value="detail"/>
                            <tr>
                               <td style="width: 50px">혈액형</td>
                               <td>

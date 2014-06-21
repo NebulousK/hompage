@@ -20,8 +20,20 @@
  <servlet-name>a</servlet-name>
  <servlet-class>ajax_basic.AjaxServlet</servlet-class>
  </servlet>
+ 
  <servlet-mapping>
  <servlet-name>a</servlet-name>
  <url-pattern>/javascript_ajax_class/AjaxServlet</url-pattern>
  </servlet-mapping>
+ 
+ <servlet>
+ <servlet-name>member</servlet-name>
+ <servlet-class>mvc.memberControl</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+ <servlet-name>member</servlet-name>
+ <url-pattern>*.me</url-pattern>
+ </servlet-mapping>
+ 
 </web-app>

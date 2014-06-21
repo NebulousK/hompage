@@ -194,12 +194,12 @@ function total_graph(f_name,f_value,f_width,f_height,f_align,f_param){
   }
  
  
-  *//**
+  /**
    * 쿠키 설정
    * @param cookieName 쿠키명
    * @param cookieValue 쿠키값
    * @param expireDay 쿠키 유효날짜
-   *//*
+   */
   function hu_setCookie( cookieName, cookieValue, expireDate ) {
     var today = new Date();
     today.setDate( today.getDate() + parseInt( expireDate ) );

@@ -53,8 +53,9 @@
                   <div class="container" style="margin-left: 80px">
                      <h1>회원가입</h1>
                      <br /> <br />
-                     <form id="form1" name="form1" action="member_proc.jsp?action=join" method="post" enctype="multipart/form-data">
-						<!-- 이메일인증 스테이트  --><input type="hidden" name="confirmState" value="false" />
+                     <form id="form1" name="form1" action="/homepage/join.me" method="post" enctype="multipart/form-data">
+						<!-- 이메일인증 스테이트  -->
+						<input type="hidden" name="confirmState" value="false" />
                      <div class="row">
                         <div class="span12">
                            <div class="span6" align="center">
