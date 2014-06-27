@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="homepage.someDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -10,9 +13,14 @@
 <jsp:useBean id="dao" class="homepage.someDao"/>
 <jsp:useBean id="dto" class="homepage.someDto"/>
 <body>
+<%
+	SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
+	Date currentTime = new Date ( );
+	String mTime = mSimpleDateFormat.format ( currentTime );
+%>
 <div id="cont" name="cont">
 <div id="date_area">
-		2014년 6월 17일 (화요일)
+		<%=mTime%> <!-- 2014년 6월 17일 (화요일) -->
 	</div>
 	<%
 		ArrayList g = new ArrayList();
@@ -27,7 +35,7 @@
 		<div class="nick_area">
 			<table border="0" cellpadding="5" cellspacing="0">
 				<tr>
-					<td align="right"><img class='hu_icon' src="http://icon.humoruniv.com:8080/hwiparambbs/data/usericon/6e6562756c6f75736b.jpg" width="25" height="25" style='width:25px;height:25px;' /></td>
+					<td align="right"><img class='hu_icon' src="/homepage/profile/<%=dto.getPhoto() %>" width="25" height="25" style='width:25px;height:25px;' /></td>
 					<td width="5"></td>
 					<td align="left" valign="center">
 											<%=session.getAttribute("id") %>
@@ -55,7 +63,7 @@
 		<div class="nick_area">
 			<table border="0" cellpadding="5" cellspacing="0">
 				<tr>
-					<td align="right"><img class='hu_icon' src="http://icon.humoruniv.com:8080/hwiparambbs/data/usericon/6364733232.jpg" width="25" height="25" style='width:25px;height:25px;' /></td>
+					<td align="right"><img class='hu_icon' src="/homepage/profile/<%=dto.getPhoto() %>" width="25" height="25" style='width:25px;height:25px;' /></td>
 					<td width="5"></td>
 					<td align="left" valign="center">
 											<%=id2 %>

@@ -13,13 +13,11 @@
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css"> 
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">  
-
 <link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/oBwXKrMsLPd.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
 <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" /> 
-  
 <script type="text/javascript" src="/homepage/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
@@ -28,119 +26,15 @@
 <script type="text/javascript" src="/homepage/js/bootstrap.js"></script>
 <link rel="stylesheet" href="/homepage/css/editor.css" type="text/css" charset="utf-8" />
 <script src="/homepage/js/editor_loader2.js" type="text/javascript" charset="utf-8"></script>
-
-<script>
-	//좋아요 자바스크립트
-	function like(no, id){
-		document.Baction.no.value = no;
-		document.Baction.id.value = id;
-		document.Baction.submit();
-	}
-	//좋아요 취소 자바스크립트
-	function unlike(no, id){
-		document.Baction1.no.value = no;
-		document.Baction1.id.value = id;
-		document.Baction1.submit();
-	}
-	//글삭제 자바 스크립트
-	function Bdelete(no){
-		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-			document.Baction2.no.value = no;
-			document.Baction2.submit();
-		}else{   //취소
-		    return;
-		}
-	}
-	//글 수정 자바스크립트
-	function Bupdate(form, id, no){
-		document.updatewindow.postbox1.value = form.postbox1.value;
-		document.updatewindow.no.value = no;
-		document.updatewindow.id.value = id;
-		document.updatewindow.submit();
-	}
-	
-	//수정창 및 댓글
-	$(document).ready(	
-		
-		function(){
-			
-		//댓글창 감추기	
-			$("div").each(function(i){
-					$("div#replydiv"+i).hide();	
-				}
-			);
-		
-		//수정창 감추기	
-			$("div").each(function(i){
-					$("div#testdiv"+i).hide();	
-				}
-			);
-		//수정창 보이기
-			$("mcjsjs").each(function(i) {
-				position = $(window).scrollTop();
-				var no = $("#divNoCheck" + i).val();
-					//alert(no);
-				$("#updateclick" + no).click(function() {
-					$("div#testdiv" + no).show();
-				});
-			});
-		//취소시 수정창 감추기
-			$("mcjsjs").each(function(i) {
-				position = $(this).scrollTop();
-				var no = $("#divNoCheck" + i).val();
-				$("#updateCancel" + no).click(function() {
-				$("div#testdiv" + no).hide();
-			});
-		});
-		//댓글창 보이기 숨기기
-		$("mcjsjs").each(function(i) {
-			var no = $("#divNoCheck" + i).val();
-			$("#replyshow" + no).click(function() {
-				if($("#replydiv" + no).css("display") == "none"){
-				    $("#replydiv" + no).show();
-				} else {
-				    $("#replydiv" + no).hide();
-				}
-			});
-		});
-		
-	});
-	
-	//댓글창 엔터시 row늘리기
-    function setLine( txa ){
-           var line = 0;
-   
-           var new_line = txa.value.split( "\n" ).length + 1 -1;
-           if( new_line < line ) new_line = line;
-
-           txa.rows = new_line;
-    }
-	
-	//댓글지우기
-	function replyDelete(no){
-		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-			document.Raction.no.value = no;
-			document.Raction.submit();
-		}
-		else{
-			return;
-		}
-	}
-	
-	//더보기 클릭시
-	function moreboard(numper){
-	 	document.more.numperpage.value = numper;
-		document.more.submit(); 
-	}
-</script>
+<script src="/homepage/js/jaesung.js" type="text/javascript" charset="utf-8"></script>
+<link type="text/css" rel="stylesheet" href="/homepage/css/jaesung.css" /> 
 <!-- Sample: Saving Contents -->
-						<script type="text/javascript">
+<script type="text/javascript">
 							/* 예제용 함수 */
 							function saveContent(i) {
 								Editor.switchEditor(i);
 								Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.		
 							}
-
 							/**                       
 							 * Editor.save()를 호출한 경우 데이터가 유효한지 검사하기 위해 부르는 콜백함`로
 							 * 상황에 맞게 수정하여 사용한다.
@@ -159,7 +53,6 @@
 									alert('내용을 입력하세요');
 									return false;
 								}
-
 								return true;
 							}
 
@@ -208,39 +101,6 @@
 								return true;
 							}
 </script>
-<style>
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 50px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-     -moz-background-clip: padding;
-          background-clip: padding-box;
-}
-   a.button {
-      -webkit-appearance: button;
-      -moz-appearance: button;
-      appearance: button;
-    }
-</style>
 </head>
 <%
 	//접속중인 아이디
@@ -276,9 +136,9 @@
 							<div style="height:50px"></div> 
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.id}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
-							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update.jsp"'/>
-							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_update2.jsp"'/><br/><br/>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member_update.me"'/>
+							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member_update2.me"'/><br/><br/>
+							<input type="button" value="프로필 사진 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_getout.jsp"'/>
 							<input type="button" value="회원 탈퇴" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_getout.jsp"'/>
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
@@ -345,17 +205,6 @@
 											</ul>
 										</div>
 									</div>
-
-									<!-- 툴바 - 기본 시작 -->
-									<!--
-										@decsription
-										툴바 버튼의 그룹핑의 변경이 필요할 때는 위치(왼쪽, 가운데, 오른쪽) 에 따라 <li> 아래의 <div>의 클래스명을 변경하면 된다.
-										tx-btn-lbg: 왼쪽, tx-btn-bg: 가운데, tx-btn-rbg: 오른쪽, tx-btn-lrbg: 독립적인 그룹
-
-										드롭다운 버튼의 크기를 변경하고자 할 경우에는 넓이에 따라 <li> 아래의 <div>의 클래스명을 변경하면 된다.
-										tx-slt-70bg, tx-slt-59bg, tx-slt-42bg, tx-btn-43lrbg, tx-btn-52lrbg, tx-btn-57lrbg, tx-btn-71lrbg
-										tx-btn-48lbg, tx-btn-48rbg, tx-btn-30lrbg, tx-btn-46lrbg, tx-btn-67lrbg, tx-btn-49lbg, tx-btn-58bg, tx-btn-46bg, tx-btn-49rbg
-									-->
 									<div id="tx_toolbar_basicA" class="tx-toolbar tx-toolbar-basic">
 										<div class="tx-toolbar-boundary">
 											<ul class="tx-bar tx-bar-left">

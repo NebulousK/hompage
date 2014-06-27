@@ -47,7 +47,7 @@
                      <h2>세부정보 입력</h2>
                      <div class="span12">
                         <h3>본인의 세부정보</h3>
-                        <form name="form1" action="/member/join2.me" method="post">
+                        <form name="form1" action="/homepage/join2.me" method="post">
                         <table align="center">
                            <tr>
                               <td style="width: 50px">혈액형</td>
@@ -294,8 +294,7 @@
                   <div class="row">
                      <div class="span12">
                         <div align="center">
-                           <input class="btn-custom" type="button" value="가입 완료"
-                              style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
+                           <input class="btn-custom" type="button" id="sunttt" value="가입 완료" style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
                               class="btn-custom" type="reset" value="취소"
                               style="width: 150px; height: 35px" />
                         </div>

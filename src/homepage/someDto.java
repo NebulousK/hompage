@@ -4,8 +4,8 @@ public class someDto {
 	private int no, hit, like, parent, age, height, height2, weight, weight2, state, zip, zip2, itemID, userID;
 	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4, date, coment, 
 			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2, fashion3,   
-			name, sex, birthday, addr, tel, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion, 
-			confirmState, email, key;
+			name, sex, birthday, addr, tel, tel2, tel3, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion, 
+			confirmState, email, key, email2, birth, birth2, birth3;
 	private float value;
 	
 	public float getValue() {
@@ -375,5 +375,41 @@ public class someDto {
 	}
 	public void setKey(String key) {
 		this.key = key;
+	}
+	public String getEmail2() {
+		return email2;
+	}
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	public String getBirth3() {
+		return birth3;
+	}
+	public void setBirth3(String birth3) {
+		this.birth3 = birth3;
+	}
+	public String getBirth2() {
+		return birth2;
+	}
+	public void setBirth2(String birth2) {
+		this.birth2 = birth2;
 	}  
 }

@@ -27,7 +27,7 @@
 	int friend = dao.fiee((String) session.getAttribute("id"));
 	int img = callme + friend + 3;
 %>
-<h3>Navigation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="logout" onclick='location.href="/homepage/member/member_proc.jsp?action=logout"'/></h3>
+<h3>Navigation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="logout" onclick='location.href="/homepage/logout.me"'/></h3>
 <div style="background-color:#e0e0e0">
 	<li class="menu">
 		${sessionScope.id}님 환영합니다.
@@ -41,7 +41,7 @@
 			<%}%>
 				<li style="width:70px;height:20px;float: left;"><a href="/homepage/someNsome/main.jsp">Call me : <span class="count-number" style="color:red;background-color:pink"><%=callme %></span> </a></li>
 				<li style="width:60px;height:20px;float: left;"><a href="/homepage/friendList/main.jsp">친구 : <span class="count-number" style="color:red;background-color:pink"><%=friend %></span></a></li>
-				<li><a href="/homepage/message/message.jsp" target="_blank" onclick="w=window.open(this.href, 'windowName', 'toolbar=no, scrollbars=yes, resizable=yes, width=500, height=600'); w.focus(); return false;">
+				<li><a href="/homepage/mesageget.me" target="_blank" onclick="w=window.open(this.href, 'windowName', 'toolbar=no, scrollbars=yes, resizable=yes, width=500, height=600'); w.focus(); return false;">
 				쪽지 : <span class="count-number" style="color:red;background-color:pink"><%=friend %></span></a></li>
 			</ul>
 			<%} %>
@@ -53,19 +53,19 @@
 		<li><a href="/homepage/itsme/main.jsp">It's me</a></li>
 		<li><a href="/homepage/newsfeed/main.jsp">뉴스 피드</a></li>
 		<li><a href ="/homepage/friendList/main.jsp">친구 목록</a></li>
-		<li><a href ="/homepage/friendFind/main.jsp">친구 찾기</a></li>
+		<li><a href ="/homepage/find.friend">친구 찾기</a></li>
 		<li class="aside-submenu">
 		<a>Some N Some<!-- <span class="count-number"> 3</span> --></a>
 			<%if(dao.some_some(Integer.parseInt((String)session.getAttribute("no")))){ %>
 			<ul>
-				<li><a href="/homepage/someNsome/menu1/main.jsp">러브 스토리</a></li>
-				<li><a href="/homepage/someNsome/menu2/photo.jsp">사진첩</a></li>
+				<li><a href="/homepage/luvstory.some">러브 스토리</a></li>
+				<li><a href="/homepage/luvphoto.some">사진첩</a></li>
 				<li><a href="/homepage/someNsome/menu3/main.jsp">달력</a></li>
 			</ul>
 			<%}else{ %>
 			<ul>
-				<li><a href="/homepage/someNsome/main2.jsp">Dash</a></li>
-				<li><a href="/homepage/someNsome/main.jsp">call me</a></li>
+				<li><a href="/homepage/dash.some">Dash</a></li>
+				<li><a href="/homepage/call.some">call me</a></li>
 			</ul>
 			<%} %>
 		</li>

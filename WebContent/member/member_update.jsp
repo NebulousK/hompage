@@ -4,7 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Responsive Aside website template</title>
-
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">
@@ -23,27 +22,11 @@
 <script src="/homepage/js/bootstrap.js"></script> 
 <script src="/homepage/js/memberjoin.js"></script>
 <script src="/homepage/js/member_join.js"></script>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
-<%
-	dto = dao.memberget(Integer.parseInt((String)session.getAttribute("no")));
-	String email[] = dto.getEmail().split("@");
-	int first = dto.getAddr().indexOf(" ");
-	int last = dto.getAddr().lastIndexOf("  ");
-	String zip1,zip2,juso,addr = "";
-	String tzip[] = dto.getAddr().substring(0, dto.getAddr().indexOf(" ")).split("-");
-	zip1 = tzip[0];
-	zip2 = tzip[1];
-	String taddr = dto.getAddr().substring(dto.getAddr().indexOf(" ")+1);
-	String tjuso[] = taddr.split(" ");
-	juso = tjuso[0] + " " + tjuso[1] + " " + tjuso[2];
-	for(int i=3; i<tjuso.length; i++){
-		addr += tjuso[i];
-	}
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="dto" value="${requestScope.dto }"></c:set>
 <script>
 	function name() {
-		var check = "<%= dto.getSex()%>";
+		var check = "${dto.sex}";
 		if(check == "man"){
 			document.form1.sex[0].checked = true;
 		}else{
@@ -73,26 +56,17 @@
                   <div class="container" style="margin-left: 80px">
                      <h1>회원 정보 수정</h1>
                      <br /> <br />
-                     <form id="form1" name="form1" action="member_proc.jsp?action=update" method="post" enctype="multipart/form-data">
-                     <input type="hidden" style="width: 150px" maxlength="12" name="id" id="id" value="<%=dto.getId()%>"/>
+                     <form id="form1" name="form1" action="/homepage/mupdate.me" method="post" >
+                     <input type="hidden" style="width: 150px" maxlength="12" name="id" id="id" value="${dto.id}"/>
                      <div class="row">
                         <div class="span12">
-                           <div class="span6" align="center">
-                              <div class="customDiv2" align="center">
-                                 <img id="blah" src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width: 450px; max-height: 460px;" /> 
-                                 <br/><br/> 
-                                 <span id="fileInputForm" style="position:relative; float:left; width:100px; height:30px; overflow:hidden; cursor:pointer; background-image:url('../images/cc.png');">
-                                 <input type="file" id="imgInp" name="imgInp" style='position：absolute; margin-left:-10px; width:62px; height:18px; filter:alpha(opacity=0); opacity:0; -moz-opacity:0; cursor:pointer;'>
-                                 <br/><span id="imgs"></span>
-                                 </span>
-                                 </div>
-                           </div>
+                   
 
-                           <div class="span5" style="margin-right: 0;">
+                           <div class="span10" style="margin-right: 0;">
                               <table align="center">
                                  <tr>
                                     <td>이름</td>
-                                    <td><input type="text" style="width: 150px" name="name" id="name" value="<%=dto.getName()%>"/><br/><span id="nas"></span></td>
+                                    <td><input type="text" style="width: 150px" name="name" id="name" value="${dto.name}"/><br/><span id="nas"></span></td>
                                  </tr>
                                  <tr>
                                     <td>비밀번호</td>
@@ -104,7 +78,7 @@
                                  </tr>
                                  <tr>
                                     <td>e-mail</td>
-                                    <td id="email"><input type=text size=10 id="email1" name="email1" style="width: 100px" onblur="emailcheck()" value="<%=email[0] %>"> @
+                                    <td id="email"><input type=text size=10 id="email1" name="email1" style="width: 100px" onblur="emailcheck()" value="${dto.email}"> @
                                     <select name="email2" id="email2" onChange="javascript:email_write()" style="width:130px;" onblur="emailcheck()">
                                           <option value="a">:: 선택 ::</option>
                                           <option value="chol.com">chol.com</option>
@@ -123,39 +97,35 @@
                                           <option value="yahoo.co.kr">yahoo.co.kr</option>
                                           <option value="etc">직접입력
                                     </select>
-                                    <script language="javascript">document.form1.email2.value=<%=email[1]%>;</script>
+                                    <script language="javascript">document.form1.email2.value='${dto.email2}';</script>
                                     <input type=text size=20 name="email3" id="email3" value="" style="width:130px;display:none;" onblur="emailcheck()"><br/>
                                     <span id="ems"></span>
                                     </td>
                                  </tr>
                                  <tr>
-                                 <%
-                                 	String tel[] = dto.getTel().split("-");
-                                 %>
                                     <td>전화번호</td>
-                                    <td><input type="text" size="4" maxlength="4" style="width: 45px" name="tel" value="<%=tel[0]%>">
-                                       - <input type="text" size="4" maxlength="4" style="width: 45px" name="tel2" value="<%=tel[1]%>">
-                                       - <input type="text" size="4" maxlength="4" style="width: 45px" name="tel3" value="<%=tel[2]%>"><br/><span id="tels"></span></td>
+                                    <td><input type="text" size="4" maxlength="4" style="width: 45px" name="tel" value="${dto.tel }">
+                                       - <input type="text" size="4" maxlength="4" style="width: 45px" name="tel2" value="${dto.tel2 }">
+                                       - <input type="text" size="4" maxlength="4" style="width: 45px" name="tel3" value="${dto.tel3 }"><br/><span id="tels"></span></td>
                                  </tr>
                                  <tr>
                                     <td>주소</td>
                                     <td>
-                                      <input type=text size=3 name="zip1" style="width: 50px" value="<%=zip1 %>" readonly> - 
-                                               <input type=text size=3 name="zip2" style="width: 50px" value="<%=zip2 %>" readonly>
+                                      <input type=text size=3 name="zip1" style="width: 50px" value="${dto.zip }" readonly> - 
+                                               <input type=text size=3 name="zip2" style="width: 50px" value="${dto.zip2 }" readonly>
                                                <a href="javascript:FindZip(0)"><img align="absmiddle" src="/homepage/images/wupeun_bunho.jpg" border="0"></a><br/>
-                                               <input type=text size=50 name="juso" style="width: 250px" maxlength="200" value="<%=juso %>" readonly>
+                                               <input type=text size=50 name="juso" style="width: 250px" maxlength="200" value="${dto.juso1 }" readonly>
                                     </td>
                                  </tr>
                                  <tr>
                                     <td>상세주소</td>
-                                    <td><input type="text" style="width: 250px" name="addr" id="addr" value="<%=addr %>" readonly="readonly"/><br/><span id="ads"></span></td>
+                                    <td><input type="text" style="width: 250px" name="addr" id="addr" value="${dto.addr }" readonly="readonly"/><br/><span id="ads"></span></td>
                                  </tr>
                                  <tr>
-                                 <% String birth[] = dto.getBirthday().split("-"); %>
                                     <td>생년월일</td>
-                                    <td><input type="text" size="5" maxlength="4" style="width: 45px" name="year" value="<%=birth[0]%>">년
-                                    <input type="text" size="4" maxlength="2" style="width: 45px" name="month" value="<%=birth[1]%>">월
-                                    <input type="text" size="4" maxlength="2" style="width: 45px" name="day" value="<%=birth[2]%>">일<br/><span id="bus"></span>
+                                    <td><input type="text" size="5" maxlength="4" style="width: 45px" name="year" value="${dto.birth }">년
+                                    <input type="text" size="4" maxlength="2" style="width: 45px" name="month" value="${dto.birth2 }">월
+                                    <input type="text" size="4" maxlength="2" style="width: 45px" name="day" value="${dto.birth3 }">일<br/><span id="bus"></span>
                                  </tr>
                                  <tr>
                                     <td>성별</td>
@@ -182,7 +152,7 @@
                            <div class="span-cus3"></div>
                            
                            <div class="span-cus">                           
-                              <input type="button" name="exam2" value="수정" class="btn-custom" style="width: 150px; height: 35px" onclick="javascript:Id()" />
+                              <input type="button" id="subtt" name="exam2" value="수정" class="btn-custom" style="width: 150px; height: 35px" onclick="javascript:Id2()" />
                            <!-- <a href="javascript:Id()">가입 완료</a> -->                              
                            </div>                           
                            <div class="span-cus">

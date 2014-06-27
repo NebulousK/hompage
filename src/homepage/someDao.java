@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
@@ -531,7 +532,7 @@ public class someDao {
 				v.add(g);
 			}
 		}catch(Exception err){
-			System.out.println(err);
+			System.out.println("callme" + err);
 		}finally{
 			discon();
 		}
@@ -694,6 +695,51 @@ public class someDao {
 		return g;
 	}
 	
+	public void upsomeboard(int no, String content){
+		connect();
+		String sql;
+		try {
+			sql = "UPDATE `some_board` SET content=? WHERE no=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, content);
+			stmt.setInt(2, no);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}
+	
+	public void delsomeboard(int no){
+		connect();
+		String sql;
+		try {
+			sql = "DELETE FROM `some_board` WHERE no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.executeUpdate();
+
+			sql = "select * from `someboard_plus` where no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				String path = rs.getString("desination");
+				File f = new File(path);
+				f.delete();
+			}
+			sql = "DELETE FROM `someboard_plus` WHERE no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.executeUpdate();
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}
+	
 	public void someplusdel(String name){
 		connect();
 		String sql;
@@ -715,6 +761,26 @@ public class someDao {
 		} finally {
 			discon();
 		}
+	}
+	
+	public someDto getsomeboard(int no){
+		connect();
+		String sql;
+		someDto dto =  new someDto();
+		try {
+			sql = "select no, content from `some_board` where no = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			dto.setNo(rs.getInt("no"));
+			dto.setContent(rs.getString("content"));
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return dto;
 	}
 	
 	public ArrayList<someDto> photo(int no){
@@ -880,32 +946,25 @@ public class someDao {
 		connect();	
 		try {
 			req.setCharacterEncoding("UTF-8");
-			String sql = "update  member set password=?, name=?, sex=?, birthday=?, addr=?, tel=?, photo=?, age=?, `e-mail`=? where no = ?";
-			setPath(req, "profile");
-			setMax(5 * 1024 * 1024);
-			setEncType("UTF-8");
-			multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
+			String sql = "update  member set password=?, name=?, sex=?, birthday=?, addr=?, tel=?, age=?, `e-mail`=? where no = ?";
 			stmt = con.prepareStatement(sql);
-			File f = multi.getFile("imgInp");
 			String email;
-			String password = sha1(multi.getParameter("password"));
-			if (multi.getParameter("email2").equals(null) || multi.getParameter("email2").equals("")) {
-				email = multi.getParameter("email1") + "@" + multi.getParameter("email3");
+			String password = sha1(req.getParameter("password"));
+			if (req.getParameter("email2").equals(null) || req.getParameter("email2").equals("")) {
+				email = req.getParameter("email1") + "@" + req.getParameter("email3");
 			} else {
-				email = multi.getParameter("email1") + "@" + multi.getParameter("email2");
+				email = req.getParameter("email1") + "@" + req.getParameter("email2");
 			}
-			int age = (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(multi.getParameter("year"))) + 1;
+			int age = (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(req.getParameter("year"))) + 1;
 			stmt.setString(1, password);
-			stmt.setString(2, multi.getParameter("name"));
-			stmt.setString(3, multi.getParameter("sex"));
-			stmt.setString(4, multi.getParameter("year") + "." + multi.getParameter("month") + "." + multi.getParameter("day"));
-			stmt.setString(5, multi.getParameter("zip1") + "-" + multi.getParameter("zip2") + " " + multi.getParameter("juso") + " " + multi.getParameter("addr"));
-			stmt.setString(6, multi.getParameter("tel") + "-" + multi.getParameter("tel2") + "-" + multi.getParameter("tel3"));
-			stmt.setString(7, multi.getFilesystemName("imgInp"));
-			stmt.setInt(8, age);
-			stmt.setString(9, email);
-			stmt.setInt(10, no);
-			System.out.println(stmt);
+			stmt.setString(2, req.getParameter("name"));
+			stmt.setString(3, req.getParameter("sex"));
+			stmt.setString(4, req.getParameter("year") + "." + req.getParameter("month") + "." + req.getParameter("day"));
+			stmt.setString(5, req.getParameter("zip1") + "-" + req.getParameter("zip2") + " " + req.getParameter("juso") + " " + req.getParameter("addr"));
+			stmt.setString(6, req.getParameter("tel") + "-" + req.getParameter("tel2") + "-" + req.getParameter("tel3"));
+			stmt.setInt(7, age);
+			stmt.setString(8, email);
+			stmt.setInt(9, no);
 			stmt.executeUpdate();
 		} catch (Exception err) {
 			System.out.println(err);
@@ -964,7 +1023,6 @@ public class someDao {
 			stmt.setString(6, g.getFashion());
 			stmt.setInt(7, no);
 			stmt.executeUpdate();
-			System.out.println(stmt);
 
 			sql = "update  `idealtype` set height=?, hobby=?, blood=?, style=?, weight=?, fashion=?, age=? where no=? ";
 			stmt = con.prepareStatement(sql);
@@ -977,7 +1035,6 @@ public class someDao {
 			stmt.setInt(7, g.getAge());
 			stmt.setInt(8, no);
 			stmt.executeUpdate();
-			System.out.println(stmt);
 		} catch (Exception err) {
 			System.out.println(err);
 		} finally {
@@ -1082,7 +1139,6 @@ public class someDao {
 				stmt.setString(1, id);
 				stmt.setString(2, email);
 				stmt.setInt(3, key);
-				System.out.println(stmt);
 				stmt.executeUpdate();
 				
 			} catch (Exception err) {
@@ -1158,7 +1214,7 @@ public class someDao {
 			String sql ="";
 			ArrayList<someDto> list = new ArrayList<someDto>();
 			try{
-				sql = "select * from message where dear=?";
+				sql = "SELECT * FROM (select * from message order by no desc) as message where dear=? group by dear";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
 				rs = stmt.executeQuery();
@@ -1210,7 +1266,7 @@ public class someDao {
 			String sql ="";
 			ArrayList<someDto> list = new ArrayList<someDto>();
 			try{
-				sql = "select * from message where dear=? or sender=? or dear=? or sender=? ";
+				sql = "select no, sender, dear, content, day, photo from message where dear=? or sender=? or dear=? or sender=?";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
 				stmt.setString(2, id);
@@ -1224,6 +1280,7 @@ public class someDao {
 					g.setDear(rs.getString("dear"));
 					g.setContent(rs.getString("content"));
 					g.setDay(rs.getString("day"));
+					g.setPhoto(rs.getString("photo"));
 					list.add(g);
 				}
 			}catch(Exception err){
@@ -1238,12 +1295,28 @@ public class someDao {
 			connect();
 			String sql ="";
 			try{
-				sql = "insert into message(sender, dear, content, day, state) values(?,?,?,now(),?)";
+				sql = "insert into message(sender, dear, content, day, state, photo) values(?,?,?,now(),?,?)";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
 				stmt.setString(2, g.getDear());
 				stmt.setString(3, g.getContent());
 				stmt.setInt(4, 0);
+				stmt.setString(5, g.getPhoto());
+				stmt.executeUpdate();
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+		}
+		
+		public void delmessage(int id){
+			connect();
+			String sql ="";
+			try{
+				sql = "DELETE FROM `message` WHERE no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, id);
 				stmt.executeUpdate();
 			}catch(Exception err){
 				System.out.println(err);

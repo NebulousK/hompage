@@ -137,9 +137,145 @@ function Id() {
       form1.imgInp.click();
       return false;
    }
-   
+   document.getElementById("subtt").disabled=true;
    form1.submit();
 }
+
+function Id2() {
+	   var num_regx=/^[0-9]*$/;
+	   // 아이디 입력여부 검사
+	   if (document.form1.id.value == "") {
+	      document.getElementById("ids").innerHTML = "<font color='red'>아이디를 입력해 주세요.</font>";
+	      document.form1.id.focus();
+	      return false;
+	   }else {
+	      for (var i = 0; i < document.form1.id.value.length; i++) {
+	         ch = document.form1.id.value.charAt(i);
+	         if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')) {
+	            document.getElementById("ids").innerHTML = "<font color='red'>아이디는 소문자, 숫자만 입력가능합니다.</font>";
+	            document.form1.id.focus();
+	            document.form1.id.select();
+	            
+	            return false;
+	         }
+	      }
+	   }
+	   
+	   if(document.form1.name.value == ""){
+	      document.getElementById("nas").innerHTML = "<font color='red'>이름을 입력해 주세요.</font>";
+	      document.form1.name.focus();
+	      return false;
+	   }
+	   
+	   // 비밀번호 입력여부 체크
+	   if(document.form1.password.value==""){
+	      document.getElementById("pss").innerHTML = "<font color='red'>비밀번호를 입력하지 않았습니다.</font>";
+	      document.form1.password.focus();
+	      return false;
+	   }
+	   
+	   
+	   
+
+	   // 비밀번호 길이 체크(4~8자 까지 허용)
+	   if (document.form1.password.value.length < 6 || document.form1.password2.value.length > 12){
+	      document.getElementById("pss").innerHTML = "<font color='red'>비밀번호를 6~12자까지 입력해주세요.</font>";
+	     //alert ("비밀번호를 4~10자까지 입력해주세요.");
+	     document.form1.password.focus();
+	     document.form1.password.select();
+	     return false;
+	    }
+
+
+	   // 비밀번호와 비밀번호 확인 일치여부 체크
+	   if (document.form1.password.value != document.form1.password2.value){
+	      document.getElementById("pss2").innerHTML = "<font color='red'>비밀번호가 일치하지 않습니다.</font>";
+	    // alert("비밀번호가 일치하지 않습니다");
+	     document.form1.password.value="";
+	     document.form1.password2.value="";
+	     document.form1.password.focus();
+	     return false;
+	   }
+	   
+	   if(document.form1.email1.value == ""){
+	      //alert("정확하게 입력해봐");
+	      document.getElementById("ems").innerHTML = "<font color='red'>Eamil을 제대로 입력해주세요.</font>";
+	      document.form1.email1.focus();
+	      return false;
+	   }
+	   if(document.form1.email3.value == "" && document.form1.email2.value == "a"){
+	      document.getElementById("ems").innerHTML = "<font color='red'>Eamil을 제대로 입력해주세요.</font>";
+	      document.form1.email3.focus();
+	      return false;
+	   } 
+	   
+	   if(document.form1.tel.value == ""){
+	      document.getElementById("tels").innerHTML = "<font color='red'>전화번호를 제대로 입력해주세요.</font>";
+	      document.form1.tel.focus();
+	      return false;
+	   } 
+	   if(document.form1.tel2.value == ""){
+	      document.getElementById("tels").innerHTML = "<font color='red'>전화번호를 제대로 입력해주세요.</font>";
+	      document.form1.tel2.focus();
+	      return false;
+	   }
+	   if(document.form1.tel3.value == ""){
+	      document.getElementById("tels").innerHTML = "<font color='red'>전화번호를 제대로 입력해주세요.</font>";
+	      document.form1.tel3.focus();
+	      return false;
+	   }
+	   if((!num_regx.test(document.form1.tel.value) || !num_regx.test(document.form1.tel2.value) || !num_regx.test(document.form1.tel3.value))) {
+	      document.getElementById("tels").innerHTML = "<font color='red'>숫자만 입력.</font>";
+	      return false;
+	   }
+	   
+
+	   if(document.form1.addr.value == ""){
+	      document.getElementById("ads").innerHTML = "<font color='red'>상세주소를 제대로 입력해주세요.</font>";
+	      document.form1.tel3.focus();
+	      return false;
+	   }
+	   if(document.form1.year.value == ""){
+	      document.getElementById("bus").innerHTML = "<font color='red'>생년월일을 제대로 입력해주세요.</font>";
+	      document.form1.year.focus();
+	      return false;
+	   }
+	   if(document.form1.month.value == ""){
+	      document.getElementById("bus").innerHTML = "<font color='red'>생년월일을 제대로 입력해주세요.</font>";
+	      document.form1.month.focus();
+	      return false;
+	   }
+	   if(document.form1.day.value == ""){
+	      document.getElementById("bus").innerHTML = "<font color='red'>생년월일을 제대로 입력해주세요.</font>";
+	      document.form1.day.focus();
+	      return false;
+	   }
+	   
+	   if((!num_regx.test(document.form1.year.value) || !num_regx.test(document.form1.month.value) || !num_regx.test(document.form1.day.value))) {
+	      document.getElementById("bus").innerHTML = "<font color='red'>숫자만 입력해주세요.</font>";
+	      return false;
+	   }
+	   
+	   if((document.form1.year.value || document.form1.month.value || document.form1.day.value)) {
+	      var d = new Date();
+	      var year =  d.getFullYear();
+	      var year2 =  year - 20;
+	      if(document.form1.year.value > year || document.form1.year.value > year2){
+	         document.getElementById("bus").innerHTML = "<font color='red'>올바른 년도를 입력해주세요.</font>";
+	         return false;
+	      }
+	      if(document.form1.month.value > 12 || document.form1.month.value < 1){
+	         document.getElementById("bus").innerHTML = "<font color='red'>올바른 월을 입력해주세요.</font>";
+	         return false;
+	      }
+	      if(document.form1.day.value > 31 || document.form1.day.value < 0){
+	         document.getElementById("bus").innerHTML = "<font color='red'>올바른 일을 입력해주세요.</font>";
+	         return false;
+	      } 
+	   }
+	   document.getElementById("subtt").disabled=true;
+	   form1.submit();
+	}
 
 function fnSe() {
    var num_regx=/^[0-9]*$/;
@@ -297,6 +433,8 @@ function fnSe() {
       document.getElementsByName("hobby2")[0].focus();
      return false;
    }
+   
+   document.getElementById("subttt").disabled=true;
    form1.submit();
 }
 

@@ -23,39 +23,37 @@
 <script src="/homepage/js/bootstrap.js"></script>
 <script type = "text/javascript" src = "/homepage/js/ajax.js"></script>
 <script src="/homepage/js/member_join.js"></script>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
-<%
-	dto = dao.memberget2(Integer.parseInt((String)session.getAttribute("no")));	
-	String fashion[] = dto.getFashion().split(",");
-	String fashion2[] = dto.getFashion2().split(",");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="dto" value="${requestScope.dto }"></c:set>
+<c:set var="fashion" value="${requestScope.fashion }"></c:set>
+<c:set var="fashion2" value="${requestScope.fashion2 }"></c:set>
 <script>
 function name() {
-	var check = "<%= dto.getBlood()%>";
-	var check2 = "<%=fashion[0]%>";
+	var check = "${dto.blood}";
+	var check2 = "${fashion[0]}";
 	var check3 = null;
-	<%if(fashion.length >= 2){%>
-		check3 = "<%=fashion[1]%>";
-		<%}%>
+	<c:if test="${fn:length(fashion) >=2}">
+		check3 = "${fashion[1]}";
+	</c:if>
 	var check4 = null;
-	<%if(fashion.length >= 3){%>
-		check4 = "<%=fashion[2]%>";
-		<%}%>
-	var check5 = "<%=dto.getStyle()%>";
-	var check6 = "<%=dto.getHobby()%>";
-	var check7 = "<%= dto.getBlood2()%>";
-	var check8 = "<%=fashion2[0]%>";
+	<c:if test="${fn:length(fashion) >=3}">
+	check4 = "${fashion[2]}";
+	</c:if>
+	var check5 = "${dto.style}";
+	var check6 = "${dto.hobby}";
+	var check7 = "${dto.blood2}";
+	var check8 = "${fashion2[0]}";
 	var check9 = null;
-	<%if(fashion2.length >= 2){%>
-		check9 = "<%=fashion2[1]%>";
-		<%}%>
+	<c:if test="${fn:length(fashion2) >=2}">
+		check9 = "${fashion2[1]}";
+	</c:if>
 	var check10 = null;
-	<%if(fashion2.length >= 3){%>
-		check10 = "<%=fashion2[2]%>";
-		<%}%>
-	var check11 = "<%=dto.getStyle2()%>";
-	var check12 = "<%=dto.getHobby2()%>";
+	<c:if test="${fn:length(fashion2) >=3}">
+	check10 = "${fashion2[2]}";
+	</c:if>
+	var check11 = "${dto.style2}";
+	var check12 = "${dto.hobby2}";
 	
 	for(var i=0; i<4; i++){
 		if(document.form1.blood[i].value == check)
@@ -114,9 +112,8 @@ function name() {
                      <h2>세부정보 입력</h2>
                      <div class="span12">
                         <h3>본인의 세부정보</h3>
-                        <form name="form1" action="/homepage/member/member_proc.jsp" method="post">
+                        <form name="form1" action="/homepage/mupdate2.me" method="post">
                         <table align="center">
-                        <input type="hidden" id="action" name="action" value="update2"/>
                            <tr>
                               <td style="width: 50px">혈액형</td>
                               <td>
@@ -134,7 +131,7 @@ function name() {
                               <td>신장</td>
                               <td>
                                  <div>
-                                    <input type="text" id="height" name="height" value="<%=dto.getHeight() %>" maxlength="3" />Cm
+                                    <input type="text" id="height" name="height" value="${dto.height}" maxlength="3" />Cm
                                     <span id="hes"></span>
                                  </div>
                               </td>
@@ -143,7 +140,7 @@ function name() {
                               <td>체중</td>
                               <td>
                                  <div>
-                                    <input type="text" id="weight" name="weight" value="<%=dto.getWeight() %>" maxlength="3" />Kg
+                                    <input type="text" id="weight" name="weight" value="${dto.weight}" maxlength="3" />Kg
                                     <span id="wes"></span>
                                  </div>
                               </td>
@@ -253,7 +250,7 @@ function name() {
                               <td>최대 나이</td>
                               <td>
                                  <div>
-                                    <input type="text" name="age" value="<%=dto.getAge() %>" maxlength="2"/>살
+                                    <input type="text" name="age" value="${dto.age}" maxlength="2"/>살
                                     <br/><span id="age2"></span>
                                  </div>
                               </td>
@@ -262,7 +259,7 @@ function name() {
                               <td>최소 신장</td>
                               <td>
                                  <div>
-                                    <input type="text" name="height2" value="<%=dto.getHeight2() %>" maxlength="3"/>Cm
+                                    <input type="text" name="height2" value="${dto.height2}" maxlength="3"/>Cm
                                     <br/><span id="hes2"></span>
                                  </div>
                               </td>
@@ -271,7 +268,7 @@ function name() {
                               <td>최대 체중</td>
                               <td>
                                  <div>
-                                    <input type="text" name="weight2" value="<%=dto.getWeight2() %>" maxlength="3"/>Kg
+                                    <input type="text" name="weight2" value="${dto.weight2}" maxlength="3"/>Kg
                                     <br/><span id="wes2"></span>
                                  </div>
                               </td>
@@ -362,8 +359,7 @@ function name() {
                   <div class="row">
                      <div class="span12">
                         <div align="center">
-                           <input class="btn-custom" type="button" value="수정 완료"
-                              style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
+                           <input class="btn-custom" type="button" value="수정 완료" id="subttt" style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
                               class="btn-custom" type="reset" value="취소"
                               style="width: 150px; height: 35px" onclick="history.back()" />
                         </div>

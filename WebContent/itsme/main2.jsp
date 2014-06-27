@@ -13,13 +13,11 @@
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css"> 
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">  
-
 <link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/oBwXKrMsLPd.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
 <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" /> 
-  
 <script type="text/javascript" src="/homepage/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
@@ -27,8 +25,8 @@
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
 <script type="text/javascript" src="/homepage/js/bootstrap.js"></script>
 <link rel="stylesheet" href="/homepage/css/editor.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="/homepage/css/jaesung.css" type="text/css" charset="utf-8" />
 <script src="/homepage/js/editor_loader2.js" type="text/javascript" charset="utf-8"></script>
-
 <script>
 	//좋아요 자바스크립트
 	function like(no, id){
@@ -133,39 +131,6 @@
 		document.more.submit(); 
 	}
 </script>
-<style>
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 50px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  *border-right-width: 2px;
-  *border-bottom-width: 2px;
-  -webkit-border-radius: 6px;
-     -moz-border-radius: 6px;
-          border-radius: 6px;
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  -webkit-background-clip: padding-box;
-     -moz-background-clip: padding;
-          background-clip: padding-box;
-}
-   a.button {
-      -webkit-appearance: button;
-      -moz-appearance: button;
-      appearance: button;
-    }
-</style>
 </head>
 <jsp:useBean id="dao" class="homepage.someDao" />
 <jsp:useBean id="dto" class="homepage.someDto" />

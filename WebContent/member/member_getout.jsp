@@ -13,13 +13,11 @@
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css"> 
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">  
-
- <link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/oBwXKrMsLPd.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
- <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
- <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" /> 
-  
+<link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" /> 
 <script type="text/javascript" src="/homepage/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
@@ -48,11 +46,10 @@
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
 <!--============================================================================= 글쓰기 시작 -->
-				<form name="a" id="a" action="/homepage/member/member_proc.jsp" method="post">
+				<form name="a" id="a" action="/homepage/getout.me" method="post">
 					<div style="text-align:center;height:500px;width:100%">
 						<div style="margin:0 auto;width:750px;text-align:left;">
-						<input type="hidden" name="action" id="action" value="getout">
-							본인 확인을 위해 비밀번호를 다시 입력해주세요 : <input type="text" name="password" id="password">
+							본인 확인을 위해 비밀번호를 다시 입력해주세요 : <input type="password" name="password" id="password">
 							&nbsp;&nbsp;&nbsp;<input type="submit" value="회원 탈퇴"/>
 						</div> 
 					</div>

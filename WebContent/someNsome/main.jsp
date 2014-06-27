@@ -1,8 +1,6 @@
-<%@page import="homepage.someDto"%>
-<%@page import="java.util.Vector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +31,7 @@
 	}
 </script>
 </head>
-<% 
-	Vector g = dao.callme(Integer.parseInt((String)session.getAttribute("no")));
-%>
+<c:set var="g" value="${requestScope.g }"></c:set>
 <body>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -59,42 +55,37 @@
 				</aside>
 				<!-- CONTENT -->
 				<section class="s-12 l-7">
-					<%
-						if(g.size() > 0){
-							for(int i=0; i<g.size();i++){
-								dto = (homepage.someDto) g.get(i);
-					%>
-					<form action="someProc.jsp" method="post">
+					<c:if test="${fn:length(g) > 0}">
+						<c:forEach var="dto" items="${g}">
+					<form action="/homepage/callup.some" method="post">
 						<div align="center">
 							<div style="width: 530px; text-align: left;">
 								<div class="row">
-									<input type="hidden" name="action" id="action" value="callme" />
-									<input type="hidden" name="userID" id="userID" value="<%=dto.getUserID()%>"/>
-									<input type="hidden" name="itemID" id="itemID" value="<%=dto.getItemID()%>"/>
+									<input type="hidden" name="userID" id="userID" value="${dto.userID}"/>
+									<input type="hidden" name="itemID" id="itemID" value="${dto.itemID}"/>
 									<input type="hidden" name="state" id="state" value=""/>
 									<h1>나에게 대쉬한 이성</h1>
 									<p>&nbsp;</p>
 									<div style="float: left;"> 
-									<img src="/homepage/profile/<%=dto.getPhoto() %>" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
+									<img src="/homepage/profile/${dto.photo}" style="max-width: 263px; max-height: 368px; width: auto; height: auto; text-align: center" />
 									</div>
 									<div style="float: left;width: 287px;height: 340px">
-									
 											<ol style="font-size: 13pt;">
-												<li class="customLi">이름 : <%=dto.getName() %></li>
-												<li class="customLi">나이 : <%=dto.getAge() %></li>
-												<li class="customLi">혈액형 : <%=dto.getBlood() %></li>
-												<li class="customLi">키 : <%=dto.getHeight() %></li>
-												<li class="customLi">몸무게 : <%=dto.getWeight() %></li>
-												<li class="customLi">지역 : <%=dto.getAddr() %></li>
-												<li class="customLi">성격 : <%=dto.getStyle() %></li>
-												<li class="customLi">스타일 : <%=dto.getFashion() %></li>
-												<li class="customLi">취미 : <%=dto.getHobby() %></li>
+												<li class="customLi">이름 : ${dto.name}</li>
+												<li class="customLi">나이 : ${dto.age}</li>
+												<li class="customLi">혈액형 : ${dto.blood}</li>
+												<li class="customLi">키 : ${dto.height}</li>
+												<li class="customLi">몸무게 : ${dto.weight}</li>
+												<li class="customLi">지역 : ${dto.addr}</li>
+												<li class="customLi">성격 : ${dto.style}</li>
+												<li class="customLi">스타일 : ${dto.fashion}</li>
+												<li class="customLi">취미 : ${dto.hobby}</li>
 											</ol>
 									</div>
 									<div style="clear: both; height: 10px"></div>
 									
 									<div style="float: left;">
-									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" readonly="readonly"><%=dto.getComent() %></textarea>
+									<textarea name="coment" style="width: 500px; height: 150px; resize: none;" readonly="readonly">${dto.coment}</textarea>
 									</div>
 									<div style="clear: both;"></div>
 								</div>
@@ -106,15 +97,15 @@
 							<input type="button" style="width: 250px; height: 50px; font-size: 15pt; resize: none;" class="btn-custom" value="싫어!!!" onclick="like(this.form,2)" />
 						</div>
 					</form> 
-					<%		}
-						}else{		
-					%>
+					</c:forEach>
+					</c:if>
+					<c:if test="${fn:length(g) == 0}">
 						<div align="center">
 						<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 							<font size="5">온라인 상에서도 인기가 없네 하아....</font><br/><br/> 
 							<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 						</div>
-					<%} %>
+					</c:if>
 				</section>
 				<!-- ASIDE NAV 2 -->
 				<aside class="s-12 l-five">

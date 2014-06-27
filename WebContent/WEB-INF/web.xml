@@ -36,4 +36,24 @@
  <url-pattern>*.me</url-pattern>
  </servlet-mapping>
  
+ <servlet>
+ <servlet-name>some</servlet-name>
+ <servlet-class>mvc.someControl</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+ <servlet-name>some</servlet-name>
+ <url-pattern>*.some</url-pattern>
+ </servlet-mapping>
+ 
+  <servlet>
+ <servlet-name>friend</servlet-name>
+ <servlet-class>mvc.friendControl</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+ <servlet-name>friend</servlet-name>
+ <url-pattern>*.friend</url-pattern>
+ </servlet-mapping>
+ 
 </web-app>

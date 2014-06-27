@@ -61,6 +61,9 @@
 					</div>
 				</form>
 				</section>
+				<script type='text/javascript'>
+					setTimeout("location.href='/homepage/index.html'",3000);
+				</script>
 				<!-- ASIDE NAV 2 -->
 				<%-- <aside class="s-12 l-five">
 					<jsp:include page="/Friend.jsp"/>

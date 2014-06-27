@@ -30,6 +30,4 @@ public class FriendDto {
 	public void setFriends(String friends) {
 		this.friends = friends;
 	}
-	
-	
 }

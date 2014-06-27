@@ -1,6 +1,6 @@
-<%@page import="homepage.someDto"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,27 +13,31 @@
 <script src="/homepage/js/memoajax.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" href="/homepage/css/memo.css" media="all"/>
+<script>
+$(document).ready(function() {
+	$('input').keyup(function(e){
+    	if(e.keyCode == 13){
+			document.getElementById("textttt").value = " ";
+    	}
+	});
+});
+</script>
 </head>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
-<%
-	ArrayList g = new ArrayList();
-	String id2 = request.getParameter("id");
-%>
+<c:set var="id2" value="${requestScope.id2}" />
 <body id="body" style="background-color:#E0F4F8;" onload="ajax_renew_loop()">
 <div id="top_area" style="position:relative;">
 <table width="98%" bgcolor="#E0F4F8" border="0" cellpadding="0" cellspacing="10" style="border:5px solid #4DB9D0;">
 	<tr>
 		<td width="140" align="center">
-			<iframe src="" width="140" height="115" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:1px solid #777;"></iframe>
+			<img src="/homepage/profile/${requestScope.g.photo}" width="140" height="115" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:1px solid #777;"></img>
 		<a href="javascript:memo_deny();"><img src="/homepage/images/memo_deny.gif" width="80" height="22" align="absmiddle" title="쪽지차단"></a>
 		</td>
 		<td valign="top">
 			<table border="0" cellpadding="0" cellspacing="5">
 				<tr>
-					<td align="right"><img class='hu_icon' src="http://icon.humoruniv.com:8080/hwiparambbs/data/usericon/6e6562756c6f75736b.jpg" width="25" height="25" style='width:25px;height:25px;' /></td>
+					<td align="right"></td>
 					<td align="left" valign="center">
-						<b><font color="blue"><span style="cursor:pointer;cursor:hand" onclick="pong2('nebulousk', 'ponnt1234');"><span class=hu_nick_txt>nebulousk</span>
+						<b><font color="blue"><span style="cursor:pointer;cursor:hand" onclick="pong2('nebulousk', 'ponnt1234');"><span class=hu_nick_txt>${id2}</span>
 						<div id="ponnt1234" name="ponnt1234" style="position:absolute;visibility:visible;z-index:100;"></div></span></font></b>
 					</td>
 					<td align="left">
@@ -56,7 +60,7 @@
 	<!-- 내용 부분 끝 -->
 </div>
 <form id="renew" name="renew" method="post" action="/homepage/message/renew.jsp" target="hidden_frame1">
-	<input type="hidden" name="id2" id="id2" value="<%=id2%>">
+	<input type="hidden" name="id2" id="id2" value="${id2}">
 </form>
 <form id="end_form" name="end_form" method="get" action="memo_end.html" target="hidden_frame2">
 	<input type="hidden" name="you_hex" value="6e6562756c6f75736b">
@@ -66,7 +70,7 @@
 	<input type="hidden" id="singo_number" name="number" value="">
 </form>
 
-<form id="del_form" name="del_form" method="get" action="memo_del.html" target="hidden_frame2">
+<form id="del_form" name="del_form" method="post" action="/homepage/mesagedel.me" target="hidden_frame2">
 	<input type="hidden" id="del_number" name="number" value="">
 </form>
 
@@ -74,8 +78,8 @@
 	<input type="hidden" name="you_hex" value="6e6562756c6f75736b">
 </form>
 
-<iframe name="hidden_frame1" width="0" height="0" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=0 src="/homepage/message/renew.jsp?id2=<%=id2%>"></iframe>
-<iframe name="hidden_frame2" width="0" height="0" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=0 src="/homepage/message/messageproc.jsp"></iframe>
+<iframe name="hidden_frame1" width="0" height="0" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=0 src=""></iframe> <!-- /homepage/message/renew.jsp?id2=${id2} -->
+<iframe name="hidden_frame2" width="0" height="0" marginwidth=0 marginheight=0 hspace=0 vspace=0 frameborder=0 scrolling=0 src=""></iframe>
 
 
 <div id="input_area">
@@ -83,12 +87,10 @@
 	<label for="chat_type2" style="cursor:pointer;">채팅형 입력창  (엔터키로 내용 바로 전송)</label>
 	&nbsp;
 	<input type="radio" id="chat_type1" name="chat_type" value="" OnClick="javascript:change_normal();"> <label for="chat_type1" style="cursor:pointer;"> 텍스트형 입력창 </label>
-	<form id="form" name="form" method="post" action="messageproc.jsp" target="hidden_frame2" OnSubmit="return submit_check();">
-		<input type="hidden" name="action" value="m-insert" AUTOCOMPLETE="off">
-		<input type="hidden" name="dear" value="<%=id2 %>" AUTOCOMPLETE="off">
-		<input type="hidden" name="sender" value="${sessionScope.id}" AUTOCOMPLETE="off">
+	<form id="form" name="form" method="post" action="/homepage/memseagesend.me" target="hidden_frame2" OnSubmit="return submit_check();" >
+		<input type="hidden" name="dear" value="${id2}" AUTOCOMPLETE="off">
 		<div id="input_text">
-			<input type="text" id="text" class="input" name="content" style="ime-mode:active;" AUTOCOMPLETE="off" >
+			<input type="text" id="textttt" class="input" name="content" style="ime-mode:active;" AUTOCOMPLETE="off" >
 		</div>
 		<div id="input_textarea" style="display:none;">
 			<textarea id="textarea" class="input" name="content" rows="5" style="ime-mode:active;"></textarea>
@@ -181,9 +183,9 @@
 		}
 	}
 	function ajax_renew_loop(){
-		$("#main").load("/homepage/message/renew.jsp?id2=<%=id2%> #cont");
+		$("#main").load("/homepage/message/renew.jsp?id2=${id2} #cont");
+		setTimeout("ajax_renew_loop();",3111);
 	}
-
 </script>
 
 <script>
@@ -192,6 +194,7 @@
 	go_bottom();
 	setTimeout("ajax_renew_loop();",4111);
 </script>
+
 <script>
 	var chat_type = 2;
 	var chat_opt = hu_getCookie('chat_opt_cook');

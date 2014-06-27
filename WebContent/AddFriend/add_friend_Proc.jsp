@@ -15,13 +15,9 @@
 		groupDto.setGroup(mygroup);
 		groupDto.setMyid(myid);
 		groupDto.setUserid(userid);
-	
 	//模备 眠啊茄 备缝积己
 	dao.addGroupFriend(groupDto);
-	
 	//Vector list=(Vector)dao.getCompleteGroup(myid);
-	
-	
 	/* //GroupDto dto= dao.();
 	dao.addGroupFriend(); */
 	response.sendRedirect("../AddFriend.jsp");

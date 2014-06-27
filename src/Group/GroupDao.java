@@ -2,15 +2,22 @@ package Group;
 
 import homepage.DBConnectionMgr;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import javax.annotation.PreDestroy;
 import javax.naming.InitialContext;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import Member.FriendDto;
 import Member.MemberDto;
 public class GroupDao {
 	private Connection con;
@@ -23,18 +30,21 @@ public class GroupDao {
 			pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
 		} catch (Exception err) {
+			System.out.println("에러");
 			System.out.println(err);
 		}
 	}
 	public void freeCon(){
 		pool.freeConnection(con, stmt, rs);
 	}
+	
+	//지역검색
 	public Vector area_Print(String area){
+		
 		Vector list=new Vector();
 		String sql="";
 		try{	
-			sql = "select * from member where addr" + 
-					" like '%" + area + "%'";
+			sql = "select * from member where addr" + " like '%" + area + "%'";
 			stmt=con.prepareStatement(sql);
 			rs=stmt.executeQuery();
 			while(rs.next()){
@@ -88,10 +98,12 @@ public class GroupDao {
 		
 		String sql="";
 		try{
-			sql="update freind set friends='true' where userid1=? and userid2=?";
+			sql="update freind set friends='true' where userid1=? and userid2=? OR userid2=? and userid1=?";
 			stmt=con.prepareStatement(sql);
 			stmt.setString(1,userid1);
 			stmt.setString(2,userid2);
+			stmt.setString(3,userid1);
+			stmt.setString(4,userid2);
 			stmt.executeUpdate();
 		}catch(Exception err){
 			System.out.println(sql);
@@ -232,9 +244,9 @@ public class GroupDao {
 	return friend_list;
 	}
 	
-	public String check_Friend(String myid,String userid2){
-		String check="";
+	public String check_Friend( String myid, String userid2 ){
 		String sql="";
+		String check="";
 		try{
 			sql="select * from freind where userid1=? and userid2=? and friends='false'";
 			stmt=con.prepareStatement(sql);
@@ -256,13 +268,15 @@ public class GroupDao {
 						stmt.setString(4,userid2);
 						rs=stmt.executeQuery();
 						if(rs.next()){
-							check="3";
+							check="three";
 						}
 					} else {
-						check="2";
+						check="two";
+						System.out.println("[DAO]check"+check);
 					}
 				} else {
-					check="1";	
+					check="one";	
+					System.out.println("[DAO]check"+check);
 				}
 		}catch(Exception err){
 			System.out.println("check_Friend:"+err);
@@ -271,9 +285,12 @@ public class GroupDao {
 		}
 		return check;
 	}
-		public Vector getFriends(String myid){
-			Vector friendList =new Vector();
-			String sql;
+		
+	
+	
+	public Vector getFriends(String myid){
+		Vector friendList =new Vector();
+		String sql;
 			try{
 				sql="select * from freind where (userid1=? or userid2=? ) and friends=?";
 				stmt=con.prepareStatement(sql);
@@ -451,22 +468,22 @@ public class GroupDao {
 				freeCon();
 			}	
 	}
-	public Vector getResearchFriendList( String keyField, String research){
+	public Vector getResearchFriendList(String keyField, String research){
 			Vector list=new Vector();
 			String sql="";
 			try{
 				if(keyField==null||keyField.isEmpty()||keyField.equals("null")){
 					sql="select * from member";
 				} else {
-					sql = "select * from member where " +  research + 
-							" like'" +keyField + "%'";
+					sql = "select * from member where " +  research +  " like'" +keyField + "%'";
 				}
 				stmt=con.prepareStatement(sql);
 				rs=stmt.executeQuery();
 				while(rs.next()){
 					MemberDto dto =new MemberDto();
+					String addr[] = rs.getString("addr").split(" ");
 					dto.setNo(rs.getInt("no"));
-					dto.setAddr(rs.getString("addr"));
+					dto.setAddr(addr[1] + " " + addr[2]);
 					dto.setBirthday(rs.getString("birthday"));
 					dto.setId(rs.getString("id"));
 					dto.setName(rs.getString("name"));

@@ -1,7 +1,7 @@
 <%@page import="Group.GroupDto"%>
 <%@page import="Group.GroupDao"%>
 <%@page import="Member.MemberDto"%>
-<%@page import="Group.FriendDto"%>
+<%@page import="Member.FriendDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <html>
 <head>
@@ -32,7 +32,7 @@ function go_addFriend(this_form){
 
 </script>
 <%
-	String myid=(String) session.getAttribute("id");;
+	String myid=(String) session.getAttribute("id");
 %>
 </head>
 <body class="size-1140">
@@ -64,17 +64,28 @@ function go_addFriend(this_form){
 								<table
 									class="table table-bordered table-hover table-condensed table-striped">
 									<tbody>
+								
+								
+										<%-- 
+										
+										<c:forEach var="dto" items="${ses.sc.list}"
+										>${dto.number }
+										
+										--%>
 										<%
 											Vector rList=new Vector();
 											GroupDao dao=new GroupDao();
 											rList=dao.Request_List(myid, "false");
-											System.out.println("rList.size()"+rList.size());
+										
+										%>
+								<% 
 											for(int i=0;i<rList.size();i++){
 												MemberDto mdto=new MemberDto();
 												mdto=(MemberDto)rList.get(i);
 												String addr[] = mdto.getAddr().split(" ");
 										%>
-										<form method="post" action="../AddFriend/List_Add_Friend.jsp">
+										<form method="post" action="/homepage/Controller">
+											<input type="hidden" name="command" value="Friend_List_add"/>
 											<input type="hidden" name="userid1" value="<%=myid%>"/> 
 											<input type="hidden" name="userid2" value="<%=mdto.getId()%>"/> 
 											 <tr>
@@ -91,7 +102,6 @@ function go_addFriend(this_form){
 										</form>
 										<%
 									}
-								
 										%>
 									</tbody>
 								</table>
@@ -114,12 +124,13 @@ function go_addFriend(this_form){
 										for(int i=0;i<list.size();i++) {
 											MemberDto dto=(MemberDto)list.get(i);
 								%>
-										<form action="../Delete_Group/List_Delete_Friend.jsp" method="post">
-										<%if(!dto.getId().equals(myid)){ 
-											System.out.println("i size() - price - count:"+i);
+											<form method="post" action="/homepage/Controller">
+											<input type="hidden" name="command" value="Friend_List_delete"/>
+											<%if(!dto.getId().equals(myid)){ 
+												System.out.println("i size() - price - count:"+i);
 											%>
-										 <input type="hidden" name="myid" value="<%=myid%>"/>
-										 <input type="hidden" name="userid2" value="<%=dto.getId()%>"/>
+										 	<input type="hidden" name="myid" value="<%=myid%>"/>
+										 	<input type="hidden" name="userid2" value="<%=dto.getId()%>"/>
 												<tr>
 												 <td width="50" style="word-break: break-all">
 												<img src="/homepage/profile/<%=dto.getPhoto()%>" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>

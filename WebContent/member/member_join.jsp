@@ -165,7 +165,7 @@
                            <div class="span-cus3"></div>
                            
                            <div class="span-cus">                           
-                              <input type="button" name="exam2" value="가입 완료" class="btn-custom" style="width: 150px; height: 35px" onclick="javascript:Id()" />
+                              <input type="button" id="subtt" name="exam2" value="가입 완료" class="btn-custom" style="width: 150px; height: 35px" onclick="javascript:Id();" />
                            <!-- <a href="javascript:Id()">가입 완료</a> -->                              
                            </div>                           
                            <div class="span-cus">

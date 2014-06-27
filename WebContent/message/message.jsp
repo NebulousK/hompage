@@ -12,11 +12,8 @@
 <script src="/homepage/js/jquery.tools.min.js"></script>
 <script src="/homepage/js/path.js"></script>
 </head>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
-<%
-	ArrayList g = dao.messagelist((String) session.getAttribute("id"));
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <body id="note_bg">
 	<!-- div -->
 	<div align="center">
@@ -81,18 +78,15 @@
 											<input type="hidden" name="slave" value="" /> 
 											<input type="hidden" name="move_no" value="" />
 											<tbody>
-											<%
-												if(g.size() > 0){
-													for(int i=0; i<g.size(); i++){
-														dto = (homepage.someDto) g.get(i);
-											%> 
+											<c:if test="${fn:length(g) > 0}">
+											<c:forEach var="dto" items="${requestScope.g}">
 												<tr class="list_line">
 													<td><input type="checkbox" name=del[] value="43631469" /></td>
 													<td class="note_info" title="네~^^">
 														<p class="note_old">
-															<a href="/zboard/member_memo.php?exec=view&no=43631469&page=1&search_type=&keyword=&memo_type=inbox" class="btn_show">
+															<a href="/homepage/memseage.me?id=${dto.sender}" class="btn_show">
 															<div style="width:200px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">
-															<%=dto.getContent() %>	
+															${dto.content}	
 															</div>
 															</a>
 														</p>
@@ -102,18 +96,16 @@
 															<img src="/homepage/images/note_search_icon.gif" width="8px" height="8px" />
 													</a> 
 													<a href="javascript:void(window.open('/zboard/view_info2.php?member_no=6574','view_info','width=400,height=510,toolbar=no,scrollbars=yes'))">
-													<%=dto.getSender() %>
+													${dto.sender}
 													</a>
-													<td class="date"><%=dto.getDate().substring(5) %></td>
-													<td class="user_old" width="39px"><%=dto.getState() %></td>
+													<td class="date" width="60px">${dto.day.substring(5)}</td>
+													<td class="user_old" width="39px">${dto.state }</td>
 												</tr>
 												<tr>
 													<td colspan="4" class="board-line"></td>
 												</tr>
-											<%			
-													}
-												}
-											%> 
+											</c:forEach>
+											</c:if>
 											</tbody>
 									</table>
 								</div>

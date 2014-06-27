@@ -1,5 +1,4 @@
 <%@page import="Group.GroupDto"%>
-<%@page import="Group.FriendDto"%>
 <%@page import="Group.GroupDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>

@@ -1,5 +1,6 @@
-<%@page import="homepage.someDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,24 +16,20 @@
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
 <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
-
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script> 
-
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.poptrox.min.js"></script>
-<script src="js/config.js"></script>
-<script src="js/skel.min.js"></script> 
-<link type="text/css" rel="stylesheet" href="photo.css" />    
-
+<script src="/homepage/someNsome/menu2/js/jquery.min.js"></script>
+<script src="/homepage/someNsome/menu2/js/jquery.poptrox.min.js"></script>
+<script src="/homepage/someNsome/menu2/js/config.js"></script>
+<script src="/homepage/someNsome/menu2/js/skel.min.js"></script> 
+<link type="text/css" rel="stylesheet" href="/homepage/someNsome/menu2/photo.css" />    
 <script>
 function photoup() 
 {window.open("photoup.jsp", "", "scrollbars=no,width=500,height=500");}
 </script>
-<jsp:useBean id="dao" class="homepage.someDao"/>
-<jsp:useBean id="dto" class="homepage.someDto"/>
+<c:set var="g" value="${requestScope.g }"></c:set>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -59,28 +56,17 @@ function photoup()
 		<div id="main">
 				<div id="reel">
 					<!-- Thumb Items -->
-					<%
-						ArrayList<someDto> g = dao.photo(Integer.parseInt((String)session.getAttribute("no")));
-						if(g.size() < 0){
-							System.out.println("??");
-					%>
+					<c:if test="${fn:length(g) == 0}">
+						<div>사진이 없습니다.</div>
+					</c:if>
+					<c:if test="${fn:length(g) > 0}">
+						<c:forEach var="dto" items="${g}">
 						<article class="item thumb" data-width="250">
 							<h2>You really got me</h2>
-							<a href="/homepage/profile/3.jpg"><img src="/homepage/profile/3.jpg" alt="" ></a>
+						 <a href="/homepage/upload/${dto.filename}"><img src="/homepage/upload/${dto.filename}" alt="" ></a> 
 						</article>
-					<%
-						}else{
-							for(int i=0; i<g.size(); i++){
-							dto =(someDto)g.get(i);
-					%>
-						<article class="item thumb" data-width="250">
-							<h2>You really got me</h2>
-						 <a href="/homepage/upload/<%=dto.getFilename()%>"><img src="/homepage/upload/<%=dto.getFilename()%>" alt="" ></a> 
-						</article>
-					<%
-							}
-						}
-					%>
+						</c:forEach>
+					</c:if>
 				</div>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
