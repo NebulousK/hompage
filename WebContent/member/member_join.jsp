@@ -23,7 +23,7 @@
 <script src="/homepage/js/bootstrap.js"></script> 
 <script src="/homepage/js/memberjoin.js"></script>
 <script src="/homepage/js/member_join.js"></script>
-<script src="ajax.js"></script>
+<script src="/homepage/js/ajax.js"></script>
 </head>
 <body class="size-1140">
    <!-- TOP NAV WITH LOGO -->

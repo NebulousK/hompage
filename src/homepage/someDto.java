@@ -5,7 +5,7 @@ public class someDto {
 	private String id, content, day, filename, desination, filesize, filetype, fileurl,juso1, juso2, juso3, juso4, date, coment, 
 			regist_day, userid1, userid2, friends, blood, hobby, style, password, blood2, hobby2, fashion2, style2, fashion3,   
 			name, sex, birthday, addr, tel, tel2, tel3, photo, sender, dear, myid,group, userid, man_ID,woman_ID, start_Day, end_Day, fashion, 
-			confirmState, email, key, email2, birth, birth2, birth3;
+			confirmState, email, key, email2, birth, birth2, birth3, title, start, end;
 	private float value;
 	
 	public float getValue() {
@@ -411,5 +411,23 @@ public class someDto {
 	}
 	public void setBirth2(String birth2) {
 		this.birth2 = birth2;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
 	}  
 }

@@ -122,6 +122,10 @@ public class memberControl extends HttpServlet {
 				session.setAttribute("sex", a[2]);
 				session.setAttribute("photo", a[3]);
 				session.setAttribute("name", a[4]);
+				int b = dao.some_some2(Integer.parseInt(a[1]));
+				if(b != 0){
+					session.setAttribute("some", b);
+				}
 				nextPage = "/main.jsp";
 			}
 		}
@@ -265,6 +269,22 @@ public class memberControl extends HttpServlet {
 			String photo = dao.profileup(req, Integer.parseInt((String)session.getAttribute("no")));
 			session.setAttribute("photo", photo);
 			nextPage = "/member/close.html";
+		}
+		
+		else if(action.equals("/cel.me")){
+			ArrayList g = dao.celendar((int)session.getAttribute("some"));
+			req.setAttribute("g", g);
+			nextPage = "/someNsome/menu3/main.jsp";
+		}
+		
+		else if(action.equals("/celin.me")){
+			dao.celendarin((int)session.getAttribute("some"), (String)req.getParameter("id"), (String)req.getParameter("title"), (String)req.getParameter("start"), (String)req.getParameter("end"));
+			return;
+		}
+		
+		else if(action.equals("/celdel.me")){
+			dao.celendardel(Integer.parseInt((String)req.getParameter("no")));
+			return;
 		}
 		
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다

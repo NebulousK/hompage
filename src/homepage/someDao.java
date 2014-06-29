@@ -596,6 +596,29 @@ public class someDao {
 		return false;
 	}
 	
+	public int some_some2(int no){
+		connect();
+		String sql ="";
+		int a = 0;
+		try{
+			sql = "select * from `some_some` where man_ID = ? or woman_ID = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			if(rs.getInt("state") == 1){
+				a = rs.getInt("no");
+				return a;
+			}
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+		return a;
+	}
+	
 	public String[] up(HttpServletRequest req) {
 		connect();
 		String file[] = new String[5];
@@ -1346,7 +1369,64 @@ public class someDao {
 			}
 			return photo;
 		}
-	
+
+		public void celendarin(int no, String id, String title, String Start, String end) {
+			connect();
+			String sql = "INSERT INTO `calendar`(`couple`, `id`, `title`, `start`, `end`) VALUES (?,?,?,?,?)";
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.setString(2, id);
+				stmt.setString(3, title);
+				stmt.setString(4, Start);
+				stmt.setString(5, end);
+				stmt.executeUpdate();
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+		}
+		
+		public void celendardel(int no) {
+			connect();
+			String sql = "DELETE FROM `calendar` WHERE no = ?";
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.executeUpdate();
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+		}
+		
+		public ArrayList<someDto> celendar(int no) {
+			connect();
+			String sql = "select * from calendar where `couple` = ?";
+			ArrayList<someDto> dto = new ArrayList<someDto>();
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					someDto g = new someDto();
+					g.setNo(rs.getInt("no"));
+					g.setId(rs.getString("id"));
+					g.setTitle(rs.getString("title"));
+					g.setStart(rs.getString("start"));
+					g.setEnd(rs.getString("end"));
+					dto.add(g);
+				}
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			return dto;
+		}
+		
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;

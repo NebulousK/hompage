@@ -60,7 +60,7 @@
 			<ul>
 				<li><a href="/homepage/luvstory.some">러브 스토리</a></li>
 				<li><a href="/homepage/luvphoto.some">사진첩</a></li>
-				<li><a href="/homepage/someNsome/menu3/main.jsp">달력</a></li>
+				<li><a href="/homepage/cel.me">달력</a></li>
 			</ul>
 			<%}else{ %>
 			<ul>
