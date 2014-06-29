@@ -1,23 +1,18 @@
-<%@page import="Group.GroupDto"%>
-<%@page import="Group.GroupDao"%>
-<%@page import="Member.MemberDto"%>
-<%@page import="Member.FriendDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Responsive Aside website template</title>
-
 <link type="text/css" rel="stylesheet" href="/homepage/css/components.css">
 <link type="text/css" rel="stylesheet" href="/homepage/css/responsee.css"> 
 <link type="text/css" rel="stylesheet" href="/homepage/css/template-style.css">  
-
- <link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/luYzpvna9qk.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/oBwXKrMsLPd.css" />  
 <link type="text/css" rel="stylesheet" href="/homepage/css/k4p1J0mZLFW.css" />
- <link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
- <link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/u4n0TOW16uV.css" />  
+<link type="text/css" rel="stylesheet" href="/homepage/css/aO5MXY7tAfJ.css" />  
 <script type="text/javascript" src="/homepage/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
@@ -29,11 +24,14 @@
 function go_addFriend(this_form){
 	this_form.submit();
 }
-
+function goPOPUP2(id) { 
+	 window.open('','target_name2','scrollbars=yes,toolbar=yes,resizable=yes,width=500,height=800');
+	 formex2.action = "/homepage/memseage.me"; // 팝업화면을 호출할 페이지 또는 파일명 
+ 	 formex2.id.value = id;                      // form에서 넘겨주는 seq값 
+	 formex2.target = "target_name2";             // window.open 에서 선언한 target name 
+	 formex2.submit(); 
+} 
 </script>
-<%
-	String myid=(String) session.getAttribute("id");
-%>
 </head>
 <body class="size-1140">
 	<!-- TOP NAV WITH LOGO -->
@@ -64,48 +62,25 @@ function go_addFriend(this_form){
 								<table
 									class="table table-bordered table-hover table-condensed table-striped">
 									<tbody>
-								
-								
-										<%-- 
-										
-										<c:forEach var="dto" items="${ses.sc.list}"
-										>${dto.number }
-										
-										--%>
-										<%
-											Vector rList=new Vector();
-											GroupDao dao=new GroupDao();
-											rList=dao.Request_List(myid, "false");
-										
-										%>
-								<% 
-											for(int i=0;i<rList.size();i++){
-												MemberDto mdto=new MemberDto();
-												mdto=(MemberDto)rList.get(i);
-												String addr[] = mdto.getAddr().split(" ");
-										%>
-										<form method="post" action="/homepage/Controller">
-											<input type="hidden" name="command" value="Friend_List_add"/>
-											<input type="hidden" name="userid1" value="<%=myid%>"/> 
-											<input type="hidden" name="userid2" value="<%=mdto.getId()%>"/> 
+										<c:forEach var="dto" items="${requestScope.dto}">
+										<form method="post" action="/homepage/ListAdd.friend">
+											<input type="hidden" name="userid1" value="${sessionScope.id}"/> 
+											<input type="hidden" name="userid2" value="${dto.id}"/> 
 											 <tr>
 												<td width="50" style="word-break: break-all">
-												<img src="/homepage/profile/<%=mdto.getPhoto()%>" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
-													<a href="/homepage/itsme/main2.jsp?id=<%=mdto.getName()%>"> <%=mdto.getName()%></a></td>
+												<img src="/homepage/profile/${dto.photo }" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
+													<a href="/homepage/itsme/main2.jsp?id=${dto.name}">${dto.name}</a></td>
 													<td width="50" style="word-break: break-all">
 													 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<h6><%=addr[1] + " " + addr[2]%></h6></td>
+													<h6>${dto.addr }</h6></td>
 												 	<td width="50" style="word-break: break-all">
 												 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												<input type="button" value="수락" onclick="go_addFriend(this.form)"/>&nbsp;&nbsp;<input type="button" value="취소"/>								
 											</tr>
 										</form>
-										<%
-									}
-										%>
+										</c:forEach>
 									</tbody>
 								</table>
-
 								<br />
 								<hr />
 							</div>
@@ -119,37 +94,24 @@ function go_addFriend(this_form){
 								<!-- 내 아이디 및 친구 아이디 -->				
 								<table class="table table-bordered table-hover table-condensed table-striped">
 									<tbody>		
-								<%
-									Vector list=dao.friend_List(myid);
-										for(int i=0;i<list.size();i++) {
-											MemberDto dto=(MemberDto)list.get(i);
-								%>
-											<form method="post" action="/homepage/Controller">
-											<input type="hidden" name="command" value="Friend_List_delete"/>
-											<%if(!dto.getId().equals(myid)){ 
-												System.out.println("i size() - price - count:"+i);
-											%>
-										 	<input type="hidden" name="myid" value="<%=myid%>"/>
-										 	<input type="hidden" name="userid2" value="<%=dto.getId()%>"/>
+									<c:forEach var="g" items="${requestScope.g}">
+											<form method="post" action="/homepage/Listdel.friend">
+											<c:if test="${!g.id.equals(sessionScope.id)}">
+										 	<input type="hidden" name="myid" value="${sessionScope.id}"/>
+										 	<input type="hidden" name="userid2" value="${g.id}"/>
 												<tr>
 												 <td width="50" style="word-break: break-all">
-												<img src="/homepage/profile/<%=dto.getPhoto()%>" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
-											 	<a href="/homepage/itsme/main2.jsp?id=<%=dto.getId()%>"><%=dto.getId()%></a></td>
-											
+												<img src="/homepage/profile/${g.photo}" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
+											 	<a href="/homepage/itsme/main2.jsp?id=${g.id}">${g.id}</a></td>	
 											 <td width="50" style="word-break: break-all" align="right">
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											 <input type="submit" value="친구삭제" /> <input type="button" value="쪽지" /></td>
+											 <input type="submit" value="친구삭제" /> 
+												<input type="button" value="쪽지 보내기" onclick="goPOPUP2('${g.id}')"/></td>
 										</tr> 
 									</form>
-								<%		}else if(dto.getId().equals("myid")){
-									
-											break;	
-									
-									}
-								}%>
+									</c:if>
+									<c:if test="${g.id.equals(sessionScope.id)}">	
+									</c:if>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -167,6 +129,10 @@ function go_addFriend(this_form){
 	<footer class="box">
 		<jsp:include page="/footer.html"/>
 	</footer>
-
+	<form name="formex2" id="formex2" method="post">
+    <input type="hidden" name="id" id="id">
+    </form>
+<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:50px;z-index:1;visibility:hidden;background-color:white;"> 
+</div>
 </body>
 </html>

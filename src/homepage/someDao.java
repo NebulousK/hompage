@@ -1324,6 +1324,28 @@ public class someDao {
 				discon();
 			}
 		}
+		
+		public String profileup(HttpServletRequest req, int no) {
+			connect();
+			String photo = null;
+			setPath(req, "profile");
+			setMax(5 * 1024 * 1024);
+			setEncType("UTF-8");
+			String sql = "UPDATE `member` SET `photo`=? WHERE no = ?";
+			try {
+				multi = new MultipartRequest(req, path, max, encType, new DefaultFileRenamePolicy());
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, multi.getFilesystemName("upload_file"));
+				stmt.setInt(2, no);
+				photo = multi.getFilesystemName("upload_file");
+				stmt.executeUpdate();
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			return photo;
+		}
 	
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {

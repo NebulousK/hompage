@@ -23,10 +23,10 @@ public class Friend_FindCommand implements ICommand{
 		
 		if( myid==null || myid.equals("null")|| myid.isEmpty() ){
 				
-			list=dao.getResearchFriendList(keyField, research);
+			list=dao.getResearchFriendList(keyField, research, null);
 		}else{
 			
-			list=dao.getResearchFriendList(myid, "id");
+			list=dao.getResearchFriendList(myid, "id", null);
 		}
 		//Session 
 		

@@ -39,8 +39,9 @@ public class GroupDao {
 	}
 	
 	//지역검색
-	public Vector area_Print(String area){
-		
+	public Vector area_Print(String area, String myid){
+		ResultSet rs2;
+		PreparedStatement stmt2;
 		Vector list=new Vector();
 		String sql="";
 		try{	
@@ -49,14 +50,38 @@ public class GroupDao {
 			rs=stmt.executeQuery();
 			while(rs.next()){
 				MemberDto dto =new MemberDto();
-				dto.setNo(rs.getInt("no"));
+			/*	dto.setNo(rs.getInt("no"));
 				dto.setAddr(rs.getString("addr"));
 				dto.setBirthday(rs.getString("birthday"));
 				dto.setId(rs.getString("id"));
 				dto.setName(rs.getString("name"));
 				dto.setPhoto(rs.getString("photo"));
 				dto.setSex(rs.getString("sex"));
+				dto.setTel(rs.getString("tel"));*/
+				String addr[] = rs.getString("addr").split(" ");
+				dto.setNo(rs.getInt("no"));
+				dto.setAddr(addr[1] + " " + addr[2]);
+				dto.setBirthday(rs.getString("birthday"));
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setPassword(rs.getString("password"));
+				dto.setPhoto(rs.getString("photo"));
+				dto.setSex(rs.getString("sex"));
 				dto.setTel(rs.getString("tel"));
+				if(!myid.equals(rs.getString("id"))){
+				String sql2 = "select * from freind where (userid1=? and userid2=?) or (userid1=? and userid2=?)";
+				stmt2 = con.prepareStatement(sql2);
+				stmt2.setString(1, myid);
+				stmt2.setString(2, rs.getString("id"));
+				stmt2.setString(3, rs.getString("id"));
+				stmt2.setString(4, myid);
+				rs2 = stmt2.executeQuery();
+				if(rs2.next()){
+				dto.setCheck(rs2.getString("friends"));
+				}else{
+					dto.setCheck("not");
+				}
+				}
 				list.add(dto);
 			}
 		}catch(Exception err){
@@ -125,7 +150,8 @@ public class GroupDao {
 			rs=stmt.executeQuery();
 		while(rs.next()){
 				MemberDto dto=new MemberDto();
-				dto.setAddr(rs.getString("addr"));
+				String addr[] = rs.getString("addr").split(" ");
+				dto.setAddr(addr[1] + " " + addr[2]);
 				dto.setBirthday(rs.getString("birthday"));
 				dto.setId(rs.getString("id"));
 				dto.setName(rs.getString("name"));
@@ -173,7 +199,6 @@ public class GroupDao {
 			System.out.println(sql);
 			System.out.println("createGroup:"+err);
 		} finally {
-			
 			freeCon();
 		}		
 	}
@@ -272,11 +297,9 @@ public class GroupDao {
 						}
 					} else {
 						check="two";
-						System.out.println("[DAO]check"+check);
 					}
 				} else {
 					check="one";	
-					System.out.println("[DAO]check"+check);
 				}
 		}catch(Exception err){
 			System.out.println("check_Friend:"+err);
@@ -468,14 +491,16 @@ public class GroupDao {
 				freeCon();
 			}	
 	}
-	public Vector getResearchFriendList(String keyField, String research){
+	public Vector getResearchFriendList(String keyField, String research, String myid){
 			Vector list=new Vector();
 			String sql="";
+			ResultSet rs2;
+			PreparedStatement stmt2;
 			try{
 				if(keyField==null||keyField.isEmpty()||keyField.equals("null")){
 					sql="select * from member";
 				} else {
-					sql = "select * from member where " +  research +  " like'" +keyField + "%'";
+					sql = "select * from member where " +  research +  " like'%" +keyField + "%'";
 				}
 				stmt=con.prepareStatement(sql);
 				rs=stmt.executeQuery();
@@ -491,6 +516,20 @@ public class GroupDao {
 					dto.setPhoto(rs.getString("photo"));
 					dto.setSex(rs.getString("sex"));
 					dto.setTel(rs.getString("tel"));
+					if(!myid.equals(rs.getString("id"))){
+					String sql2 = "select * from freind where (userid1=? and userid2=?) or (userid1=? and userid2=?)";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, myid);
+					stmt2.setString(2, rs.getString("id"));
+					stmt2.setString(3, rs.getString("id"));
+					stmt2.setString(4, myid);
+					rs2 = stmt2.executeQuery();
+					if(rs2.next()){
+					dto.setCheck(rs2.getString("friends"));
+					}else{
+						dto.setCheck("not");
+					}
+					}
 					list.add(dto);
 				}
 			}catch(Exception err){

@@ -20,7 +20,6 @@
  <servlet-name>a</servlet-name>
  <servlet-class>ajax_basic.AjaxServlet</servlet-class>
  </servlet>
- 
  <servlet-mapping>
  <servlet-name>a</servlet-name>
  <url-pattern>/javascript_ajax_class/AjaxServlet</url-pattern>
@@ -30,7 +29,6 @@
  <servlet-name>member</servlet-name>
  <servlet-class>mvc.memberControl</servlet-class>
  </servlet>
- 
  <servlet-mapping>
  <servlet-name>member</servlet-name>
  <url-pattern>*.me</url-pattern>
@@ -40,7 +38,6 @@
  <servlet-name>some</servlet-name>
  <servlet-class>mvc.someControl</servlet-class>
  </servlet>
- 
  <servlet-mapping>
  <servlet-name>some</servlet-name>
  <url-pattern>*.some</url-pattern>
@@ -50,7 +47,6 @@
  <servlet-name>friend</servlet-name>
  <servlet-class>mvc.friendControl</servlet-class>
  </servlet>
- 
  <servlet-mapping>
  <servlet-name>friend</servlet-name>
  <url-pattern>*.friend</url-pattern>

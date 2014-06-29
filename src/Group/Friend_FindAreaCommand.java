@@ -19,7 +19,7 @@ public class Friend_FindAreaCommand implements ICommand{
 
 		String area=req.getParameter("area");
 		String acheck=req.getParameter("acheck");	
-		Vector alist=dao.area_Print(area);
+		Vector alist=dao.area_Print(area, null);
 		//Session 
 		 req.setAttribute("acheck", acheck);
 		 req.setAttribute("area", alist);

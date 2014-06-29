@@ -28,6 +28,10 @@
 <script src="/homepage/js/editor_loader2.js" type="text/javascript" charset="utf-8"></script>
 <script src="/homepage/js/jaesung.js" type="text/javascript" charset="utf-8"></script>
 <link type="text/css" rel="stylesheet" href="/homepage/css/jaesung.css" /> 
+<script>
+function image() 
+{window.open("/homepage/member/image.html", "", "scrollbars=no,width=500,height=500");}
+</script>
 <!-- Sample: Saving Contents -->
 <script type="text/javascript">
 							/* 예제용 함수 */
@@ -138,7 +142,7 @@
 							<p><span style="font-size: 24pt;"><b><span style="font-family: Gulim, 굴림, AppleGothic, sans-serif;">${sessionScope.name}</span><span style="font-size: 24pt; font-family: Gulim, 굴림, AppleGothic, sans-serif;">﻿</span></b></span></p>
 							<input type="button" value="프로필 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member_update.me"'/>
 							<input type="button" value="세부 정보 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member_update2.me"'/><br/><br/>
-							<input type="button" value="프로필 사진 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_getout.jsp"'/>
+							<input type="button" value="프로필 사진 수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='javascript:image()'/>
 							<input type="button" value="회원 탈퇴" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='location.href="/homepage/member/member_getout.jsp"'/>
 						</div>
 				<!--============================================================================= 글쓰기 시작 -->
@@ -1558,6 +1562,7 @@
 	<footer class="box">
 		<jsp:include page="/footer.html"/>
 	</footer>
-
+<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:50px;z-index:1;visibility:hidden;background-color:white;"> 
+</div>
 </body>
 </html>

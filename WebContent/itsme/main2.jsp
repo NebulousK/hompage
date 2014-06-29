@@ -1055,6 +1055,7 @@
 	<footer class="box">
 		<jsp:include page="/footer.html"/>
 	</footer>
-
+<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:50px;z-index:1;visibility:hidden;background-color:white;"> 
+</div>
 </body>
 </html>

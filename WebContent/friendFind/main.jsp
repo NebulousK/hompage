@@ -1,5 +1,3 @@
-<%@page import="Group.Controller"%>
-<%@page import="Group.GroupDto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <html>
@@ -33,6 +31,16 @@
 		//alert("friendRequest불렀따..");
 		this_form.submit();
 	}
+
+	function goPOPUP2(id) { 
+	 	 window.open('','target_name2','scrollbars=yes,toolbar=yes,resizable=yes,width=500,height=800');
+	 	 formex2.action = "/homepage/memseage.me"; // 팝업화면을 호출할 페이지 또는 파일명 
+	  	 formex2.id.value = id;                      // form에서 넘겨주는 seq값 
+	 	 formex2.target = "target_name2";             // window.open 에서 선언한 target name 
+	 	 formex2.submit(); 
+	} 
+	
+	
 </script>
 <link href="bootstrap.css" rel="stylesheet" />
 </head>
@@ -62,14 +70,13 @@
 					<div class="span12">	
 					<%--  ${requestScope.testList}--%>	
 					<!-- 넘겨주는 변수 값 : id,name 그리고 textField 값 검색공간 -->
-					<form action="/homepage/Controller" method="post" name="research">
-						<input type="hidden" name="command" value="Friend_Find"/>
+					<form action="/homepage/findf.friend" method="post" name="research">
 						<input type="hidden" name="myid" value="myid"/>
 						<div class="span12">
 							<div class="navbar-form" align="center"
 								style="margin-left: 0px; margin-right: 20px">
 								<!-- 모양이 둥근 것  -->
-								<input type="text" name="keyField" value="<%-- <%=searchVal%> --%>" style="width: 90%;" class="input-medium search-query" /> &nbsp;&nbsp;
+								<input type="text" name="keyField" value="" style="width: 90%;" class="input-medium search-query" /> &nbsp;&nbsp;
 								<!-- 전송버튼 모양 적용한것-->
 								&nbsp;&nbsp;<input type="button" name="smt" value="검색" class="btn" onclick="check()"/>
 							</div>
@@ -83,7 +90,7 @@
 					</form>
 						
 					<!--지역 검색 공간  넘겨주는 변수값: area acheck-->				
-					<form action="/homepage/Controller" method="post" name="area">
+					<form action="/homepage/finda.friend" method="post" name="area">
 						<input type="hidden" name="command" value="Friend_FindArea"/>
 						<input type="hidden" name="acheck" value="true"/>
 						<div class="navbar-form pull-left">
@@ -104,14 +111,14 @@
 					<th>사진</th>
 					<th>이름</th>
 					<th>사는 곳</th>
-					<th>action</th>
+					<th>친구 요청</th>
+					<th>쪽지</th>
 				</tr>
 				</thead>
 					<tbody>          
 					<c:forEach var="dto" items="${requestScope.dto}">     
 					<tr>
-					<form name="FriendRequest" method="post" action="/homepage/Controller">
-					<input type="hidden" name="command" value="Friend_Request"/>
+					<form name="FriendRequest" method="post" action="/homepage/findadd.friend">
 					<input type="hidden" name="no" value="${dto.no}"/>
 					<input type="hidden" name="id" value="${dto.id}"/>
 					<input type="hidden" name="name" value="${dto.name}"/>
@@ -125,34 +132,19 @@
 					<td><a href="#"><img src="/homepage/profile/${dto.photo}" style="width:40px;height:40px"></a></td>				
 					<td>${dto.name}</td>
 					<td><font size="1">${dto.addr}</font></td>
-				<%-- 	<%
-					String check=dao.check_Friend(myid, adto.getId());
-					if(check.equals("one")){
-					%>
-					<td><span>친구요청 중입니다.</span>
-					<%
-					}else if(check.equals("two")){
-					%>	
-					<td><span>친구요청응답에 응답하세요.</span>
-					<% 
-					}else if(check.equals("three")){
-					%>
-					<td><span>이미 친구 입니다.</span>
-					<%
-					}else if(myid.equals(adto.getId())){
-					%>
-					<td><span>저입니다.</span>
-					<%
-					} else {
-					%>
+					<c:if test='${dto.check == "true"}'>
+					<td><span>이미 친구 입니다.</span></td>
+					<td><input type="button" value="쪽지 보내기" onclick="goPOPUP2('${dto.id}')"/></td>
+					</c:if>
+					<c:if test='${dto.check == "false"}'>
+					<td><span>친구요청 중입니다.</span></td>
+					<td><input type="button" value="쪽지 보내기" onclick="goPOPUP2('${dto.id}')"/></td>
+					</c:if>
+					<c:if test='${dto.check == "not"}'>
 					<td><input type="button" value="친구요청" onclick="friendRequest(this.form)"/></td>
-			        <%
-					}				 
-					%>
-					</form>	
-				<%
-					}
-				%>	 --%>
+					<td><input type="button" value="쪽지 보내기" onclick="goPOPUP2('${dto.id}')"/></td>
+					</c:if>
+					</form>	 
 				</c:forEach>	
 				</tr>
 				</tbody>
@@ -171,5 +163,10 @@
 <footer class="box">
 <jsp:include page="../footer.html" />
 </footer>
+ <form name="formex2" id="formex2" method="post">
+    <input type="hidden" name="id" id="id">
+    </form>
+<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:50px;z-index:1;visibility:hidden;background-color:white;"> 
+</div>
 </body>
 </html>

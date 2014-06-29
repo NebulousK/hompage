@@ -52,7 +52,7 @@
 	<ul>
 		<li><a href="/homepage/itsme/main.jsp">It's me</a></li>
 		<li><a href="/homepage/newsfeed/main.jsp">뉴스 피드</a></li>
-		<li><a href ="/homepage/friendList/main.jsp">친구 목록</a></li>
+		<li><a href ="/homepage/List.friend">친구 목록</a></li>
 		<li><a href ="/homepage/find.friend">친구 찾기</a></li>
 		<li class="aside-submenu">
 		<a>Some N Some<!-- <span class="count-number"> 3</span> --></a>

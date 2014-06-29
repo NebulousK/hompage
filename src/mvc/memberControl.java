@@ -261,6 +261,12 @@ public class memberControl extends HttpServlet {
 			nextPage = "/message/message.jsp";
 		}
 		
+		else if(action.equals("/imageup.me")){
+			String photo = dao.profileup(req, Integer.parseInt((String)session.getAttribute("no")));
+			session.setAttribute("photo", photo);
+			nextPage = "/member/close.html";
+		}
+		
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다
 		view.forward(req, resp);// req의 모든정보를얘가 던져주는곳  다음 페이지에서 request.getattribute("a")를 하면 마가나온다	
 	}	

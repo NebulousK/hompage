@@ -2,7 +2,7 @@ package Member;
 
 public class MemberDto {
 	private int no;
-	private String password, name, sex, birthday, addr, tel, photo, id;
+	private String password, name, sex, birthday, addr, tel, photo, id, check;
 
 	public String getPassword() {
 		return password;
@@ -74,6 +74,14 @@ public class MemberDto {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getCheck() {
+		return check;
+	}
+
+	public void setCheck(String check) {
+		this.check = check;
 	}
 
 }

@@ -6,42 +6,42 @@
 <jsp:useBean id="dao2" class="homepage.someDao" />
 <jsp:useBean id="dao" class="Group.GroupDao"/>
 <script>
-	$(document).on("click",function(e) { 
-		if($(e.target).parents(".aside-nav").size() == 0) { 
-			var layer = document.getElementById("popup_layer"); 
-			layer.style.visibility="hidden"; 
-			} 
-		}); 
-	
-	function getMousePosition(evt, currentObj, userID){
-    	var x, y;
-    	if(evt.pageX){
-        	x = evt.pageX - currentObj.offsetLeft;
-        	y = evt.pageY - currentObj.offsetTop;
-    	}
-    	else if (evt.clientX){
-        	x = evt.clientX + document.body.scrollLeft - document.body.clientLeft - currentObj.offsetLeft;
-        	y = evt.clientY + document.body.scrollTop - document.body.clientTop - currentObj.offsetTop;
-    	}
-    	if(document.body.parentElement && document.body.parentElement.clientLeft){
-        	var b = document.body.parentElement;
-        	x += b.scrollLeft - b.clientLeft;
-        	y += b.scrollTop - b.clientTop;
-    	}
+$(document).on("click",function(e) { 
+	if($(e.target).parents(".aside-nav").size() == 0) { 
 		var layer = document.getElementById("popup_layer"); 
-		layer.innerHTML = "<a href='#' onclick=goPOPUP(\'"+ userID +"\')><img src='/homepage/images/messagesend.png'></a><a href='/homepage/itsme/main2.jsp?'><img src='/homepage/images/viewmember.png'></a>";
-    	layer.style.left =  x - 1000 + "px"; //레이어팝업의 좌측으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
-		layer.style.top = y - 100 +"px"; //레이어팝업의 상단으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
-		layer.style.visibility="visible"; 
-	}
+		layer.style.visibility="hidden"; 
+		} 
+	}); 
 
-	function goPOPUP(id) { 
-	 	 window.open('','target_name','scrollbars=yes,toolbar=yes,resizable=yes,width=500,height=800');
-	 	 form.action = "/homepage/memseage.me"; // 팝업화면을 호출할 페이지 또는 파일명 
-	  	 form.id.value = id;                      // form에서 넘겨주는 seq값 
-	 	 form.target = "target_name";             // window.open 에서 선언한 target name 
-	 	 form.submit(); 
-	} 
+function getMousePosition(evt, currentObj, userID){
+	var x, y;
+	if(evt.pageX){
+    	x = evt.pageX - currentObj.offsetLeft;
+    	y = evt.pageY - currentObj.offsetTop;
+	}
+	else if (evt.clientX){
+    	x = evt.clientX + document.body.scrollLeft - document.body.clientLeft - currentObj.offsetLeft;
+    	y = evt.clientY + document.body.scrollTop - document.body.clientTop - currentObj.offsetTop;
+	}
+	if(document.body.parentElement && document.body.parentElement.clientLeft){
+    	var b = document.body.parentElement;
+    	x += b.scrollLeft - b.clientLeft;
+    	y += b.scrollTop - b.clientTop;
+	}
+	var layer = document.getElementById("popup_layer"); 
+	layer.innerHTML = "<a href='#' onclick=goPOPUP(\'"+ userID +"\')><img src='/homepage/images/messagesend.png'></a><a href='/homepage/itsme/main2.jsp?'><img src='/homepage/images/viewmember.png'></a>";
+	layer.style.left =  x + 70 + "px"; //레이어팝업의 좌측으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
+	layer.style.top = y + 15 +"px"; //레이어팝업의 상단으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
+	layer.style.visibility="visible";  
+}
+
+function goPOPUP(id) { 
+ 	 window.open('','target_name','scrollbars=yes,toolbar=yes,resizable=yes,width=500,height=800');
+ 	 formex.action = "/homepage/memseage.me"; // 팝업화면을 호출할 페이지 또는 파일명 
+  	 formex.id.value = id;                      // form에서 넘겨주는 seq값 
+ 	 formex.target = "target_name";             // window.open 에서 선언한 target name 
+ 	 formex.submit(); 
+} 
 </script>
 <%
 	boolean check=false;
@@ -54,7 +54,7 @@
  <TABLE width="115" border="0" cellspacing="1" cellpadding="1" height="1">
   <TR>
     <TD align="center" valign="center" height="0">친구목록<hr/></TD>
-    <form name="form" id="form" method="post">
+    <form name="formex" id="formex" method="post">
     <input type="hidden" name="id" id="id">
     </form>
   </TR>
@@ -104,8 +104,7 @@
  
 </TABLE>
 </div>
-<div id="popup_layer" style="position:absolute;border:double;top:0px;left:0px;width:100px;height:50px;z-index:1;visibility:hidden;background-color:white;"> 
-</div>
+
 
 
 

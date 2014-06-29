@@ -41,13 +41,60 @@ public class friendControl extends HttpServlet{
 		
 		if(action.equals("/find.friend")){
 			String myid=(String)session.getAttribute("id");
-			//내 아아디로 친구정보 가져오기(mydto)
-			Vector my=(Vector)dao.getResearchFriendList(myid,"id");
-			//검색해서 나온 결과(list)
-			Vector list=(Vector)dao.getResearchFriendList(null, null);
+			Vector list=(Vector)dao.getResearchFriendList(null, null, myid);
 			req.setAttribute("dto", list);
 			nextPage = "/friendFind/main.jsp";
 		}
+		else if(action.equals("/findadd.friend")){
+			String myid=req.getParameter("myid");
+			String id=req.getParameter("id");
+			int no=Integer.parseInt(req.getParameter("no"));
+			String bool="false";
+			dao.Friend_request(myid,id,bool);
+			nextPage = "/find.friend";
+		}
+		else if(action.equals("/findf.friend")){
+			Vector list=null;
+			String myid=(String)session.getAttribute("id");
+			String keyField=req.getParameter("keyField");
+			String research=req.getParameter("research");
+			list=dao.getResearchFriendList(keyField, research, myid);
+			req.setAttribute("dto", list);
+			nextPage = "/friendFind/main.jsp";
+		}
+		else if(action.equals("/finda.friend")){
+			String area=req.getParameter("area");
+			String acheck=req.getParameter("acheck");	
+			String myid=(String)session.getAttribute("id");
+			Vector alist=dao.area_Print(area, myid);
+			req.setAttribute("acheck", acheck);
+			req.setAttribute("dto", alist);
+			nextPage = "/friendFind/main.jsp";
+		}
+		
+		else if(action.equals("/List.friend")){
+			String myid=(String) session.getAttribute("id");
+			Vector rList=dao.Request_List(myid, "false");
+			Vector list=dao.friend_List(myid);
+			req.setAttribute("dto", rList);
+			req.setAttribute("g", list);
+			nextPage = "/friendList/main.jsp";
+		}
+		
+		else if(action.equals("/ListAdd.friend")){
+			String userid1=req.getParameter("userid1");
+			String userid2=req.getParameter("userid2");
+			dao.accept_Friend(userid1, userid2);	
+			nextPage = "/List.friend";
+		}
+		
+		else if(action.equals("/Listdel.friend")){
+			String myid=req.getParameter("myid");
+			String userid2=req.getParameter("userid2");
+			dao.list_Friend_Delete(myid,userid2);
+			nextPage = "/List.friend";
+		}
+		
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다
 		view.forward(req, resp);// req의 모든정보를얘가 던져주는곳  다음 페이지에서 request.getattribute("a")를 하면 마가나온다	
 	}
