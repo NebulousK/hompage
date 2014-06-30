@@ -254,7 +254,7 @@ function image()
 				<!--============================================================================= 글쓰기 시작 -->
 				<div class="_4-u2 mbm" style="border: 0px">
 						<div id="main_border_down" style="width: 580px;">
-							<form name="tx_editor_formA" id="tx_editor_formA" action="Post_proc.jsp" method="post" accept-charset="utf-8">
+							<form name="tx_editor_formA" id="tx_editor_formA" action="/homepage/post.board" method="post" accept-charset="utf-8">
 								<div id="board_title">
 								<input type="hidden" name="action" id="action" value="insert">
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">

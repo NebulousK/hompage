@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function check_id(){
+		if(document.getElementById("adminid").value == ""){
+			alert("관리자 아이디를 입력하세요");
+		}
+		else if(document.getElementById("adminpw").value == ""){
+			alert("관리자 비밀번호를 입력하세요");
+		}
+		document.form1.submit();	
+	}
+</script>
 </head>
-<body>
-<html>
-<head>
-<title>CRAFART</title>
-<META HTTP-EQUIV="content-type" content="text/html; charset=utf-8">
-</head>
-<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red" onLoad="focusIt()">
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
 <br><br><br><br><br><br><br><br><br><br>
 <center>
 <form name="form1" action="/homepage/admin.admin" method="post">
@@ -32,12 +35,12 @@
 		    </tr>
 				<tr>
 					<td width="106" valign="middle" align="right">&nbsp;<img src="/homepage/images/id.gif" width="20" height="16" border="0"></td>
-					<td width="212" valign='center'>&nbsp;<input type="text" name="adminid" maxlength="12" size="14"></td>
+					<td width="212" valign='center'>&nbsp;<input type="text" name="adminid" id="adminid" maxlength="12" size="14"></td>
 				</tr>
 		    <tr>
 					<td width="106" valign="middle" align="right">&nbsp;<img src="/homepage/images/pw.gif" width="75" height="16" border="0"></td>
 					<td width="212" valign='center'>
-	                &nbsp;<input type="password" name="adminpw" maxlength="12" size="14">
+	                &nbsp;<input type="password" name="adminpw" id="adminpw" maxlength="12" size="14">
 					</td>
 		    </tr>
 				<tr>

@@ -110,6 +110,16 @@ public class boardControl extends HttpServlet{
 			nextPage = "/itsme/main2.jsp";
 		}
 		
+		else if(action.equals("/post.board")){
+			String content = req.getParameter("content");
+			String id = req.getParameter("id");
+			//System.out.println(content);
+			dto2.setId(id);
+			dto2.setContent(content);
+			dao.insertBoard(dto2); 
+			nextPage = "/main.board"; 
+		}
+		
 		RequestDispatcher view = req.getRequestDispatcher(nextPage);
 		view.forward(req, resp);
 	}

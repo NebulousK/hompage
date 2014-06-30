@@ -54,8 +54,6 @@ public class BoardDao {
 			stmt.setString(1, Bdto.getId());
 			stmt.setString(2, Bdto.getContent());
 			stmt.executeUpdate();
-			//System.out.println(stmt);
-			//System.out.println(Bdto.getContent());
 		} catch (SQLException e) {
 			System.out.println("insertBoard() : " + e);
 		}

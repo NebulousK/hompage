@@ -1428,25 +1428,23 @@ public class someDao {
 		}
 		
 		//id 찾기
-				public someDto getId(String name, String email) {
-					connect();
-					String sql = "select * from member where name= ? and `e-mail`= ?";
-					someDto dto = new someDto();
-					try {
-						stmt = con.prepareStatement(sql);
-						stmt.setString(1, name);
-						stmt.setString(2, email);
-						rs = stmt.executeQuery();
-						System.out.println(stmt);
+		public someDto getId(String name, String email) {
+			connect();
+			String sql = "select * from member where name= ? and `e-mail`= ?";
+			someDto dto = new someDto();
+			try {
+					stmt = con.prepareStatement(sql);
+					stmt.setString(1, name);
+					stmt.setString(2, email);
+					rs = stmt.executeQuery();
+					System.out.println(stmt);
 						
-						while(rs.next()){
-							dto.setId(rs.getString("id"));
-							dto.setName(rs.getString("name"));
-							dto.setBirthday(rs.getString("birthday"));
-							dto.setEmail(rs.getString("e-mail"));
-						}
-						//System.out.println(name);
-						//System.out.println(email);
+					while(rs.next()){
+						dto.setId(rs.getString("id"));
+						dto.setName(rs.getString("name"));
+						dto.setBirthday(rs.getString("birthday"));
+						dto.setEmail(rs.getString("e-mail"));
+					}
 						System.out.println(dto.getId());
 					} catch (Exception err) {
 						System.out.println(err);
@@ -1457,11 +1455,11 @@ public class someDao {
 				}
 				
 				//비번 찾기
-				public someDto getPw(String id, String email) {
-					connect();
-					String sql = "select * from member where id= ? and `e-mail`= ?";
-					someDto dto = new someDto();
-					try {
+		public someDto getPw(String id, String email) {
+				connect();
+				String sql = "select * from member where id= ? and `e-mail`= ?";
+				someDto dto = new someDto();
+				try {
 						stmt = con.prepareStatement(sql);
 						stmt.setString(1, id);
 						stmt.setString(2, email);
@@ -1473,9 +1471,6 @@ public class someDao {
 							dto.setName(rs.getString("name"));
 							dto.setEmail(rs.getString("e-mail"));
 						}
-						//System.out.println(name);
-						//System.out.println(email);
-						//System.out.println(dto.getId());
 					} catch (Exception err) {
 						System.out.println(err);
 					} finally {
@@ -1485,9 +1480,9 @@ public class someDao {
 				}
 				
 				//비번바꾸기
-				public void updatePw(String id, String pw, String email){
-					connect();
-					String sql = "update member set password = ? where id= ? and `e-mail`= ?";
+		public void updatePw(String id, String pw, String email){
+				connect();
+				String sql = "update member set password = ? where id= ? and `e-mail`= ?";
 					try {
 						
 						stmt = con.prepareStatement(sql);
@@ -1504,6 +1499,11 @@ public class someDao {
 					}
 					
 				}
+		
+		public void admin(String id, String pw){
+			connect();
+			String sql ="select * from ";
+		}
 		
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {

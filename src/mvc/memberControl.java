@@ -126,7 +126,7 @@ public class memberControl extends HttpServlet {
 				if(b != 0){
 					session.setAttribute("some", b);
 				}
-				nextPage = "/main.jsp";
+				nextPage = "/main.board";
 			}
 		}
 		
