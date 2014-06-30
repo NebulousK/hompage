@@ -129,7 +129,7 @@
 					<input type="hidden" name="photo" value="${dto.photo}"/>
 					<input type="hidden" name="check" value="true"/>
 					<input type="hidden" name="myid" value="${sessionScope.id}"/>
-					<td><a href="#"><img src="/homepage/profile/${dto.photo}" style="width:40px;height:40px"></a></td>				
+					<td><a href="/homepage/how.board?id=${dto.id}"><img src="/homepage/profile/${dto.photo}" style="width:40px;height:40px"></a></td>				
 					<td>${dto.name}</td>
 					<td><font size="1">${dto.addr}</font></td>
 					<c:if test='${dto.check == "true"}'>

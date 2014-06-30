@@ -4,9 +4,9 @@
 function email_write()
 {var form = document.form1;var email = form.email2.value;
  if (email == "etc")
- {document.all("email2").style.display = "none";document.all("email3").style.display = "";form.email3.focus();}
+ {document.getElementById("email2").style.display = "none";document.getElementById("email3").style.display = "";form.getElementById("email3").focus();}
  else
- {document.all("email2").style.display = "";}return;}
+ {document.getElementById("email2").style.display = "";}return;}
 
 function FindZip(zip_kind) 
 {window.open("zipcode.jsp?zip_kind="+zip_kind, "", "scrollbars=no,width=500,height=250");}

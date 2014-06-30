@@ -1,8 +1,6 @@
-<%@page import="homepage.someDto"%>
-<%@page import="homepage.board.ReplyDto"%>
-<%@page import="homepage.board.BoardDto"%>
-<%@page import="homepage.board.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -29,6 +27,114 @@
 <script src="/homepage/js/jaesung.js" type="text/javascript" charset="utf-8"></script>
 <link type="text/css" rel="stylesheet" href="/homepage/css/jaesung.css" /> 
 <script>
+//좋아요 ajax
+function like(no, id, index){
+	var params = "no="+ no +"&id="+id+"&command=LIKE";
+	$("#inlikeunlike"+index).remove();"<span id=inlikeunlike"+index+"></span>";
+	$("#likeunlike"+index).append("<span id=inlikeunlike"+index+"><a href='javascript:unlike("+no+", \"${sessionScope.id}\", "+index+")' class='default_message' name='unlike' id='unlike'>좋아요 취소</a></span>");
+	var cnt = $("#likecnt"+index).text() * 1 + 1;
+	document.getElementById("likecnt"+index).innerHTML = cnt;
+	sendRequest("/homepage/board.action", params, callback, "GET");
+}
+//좋아요 취소 ajax
+function unlike(no, id, index){
+	var params = "no="+ no +"&id="+id+"&command=UNLIKE";
+	$("#inlikeunlike"+index).remove();
+	$("#likeunlike"+index).append("<span id=inlikeunlike"+index+"><a href='javascript:like("+no+", \"${sessionScope.id}\", "+index+")' class='default_message' name='like' id='like'>좋아요</a></span>");
+	var cnt = $("#likecnt"+index).text() * 1 - 1;
+	document.getElementById("likecnt"+index).innerHTML = cnt;
+	sendRequest("/homepage/board.action", params, callback, "GET");
+}
+//좋아요 callback
+function callback(){
+	if(XMLreq.readyState == 4){
+		if(XMLreq.status == 200){
+			//alert(XMLreq.status);
+		}
+		else{
+			alert(XMLreq.status);
+		}
+	}
+}
+//댓글 리스트 불러오기
+function getreplylist(no, id, index){
+	$("#replydiv"+index).load("/homepage/newsfeed/replyproc.jsp?no="+no+"&id="+id+"&index="+index);
+}
+
+//댓글 등록
+function replypostJS(form){
+	var no = form.no.value;
+	var id = form.id.value;
+	var index = form.index.value;
+	form.submit();
+	setTimeout("getreplylist("+no+"," +"'"+id+"',"+ index+")", 1000*0.2);
+	
+}
+
+//댓글지우기
+function replyDelete(Rno, id, index, Bno){
+	if (confirm("정말 삭제하시겠습니까??") == true){ //확인
+		
+		document.Raction.no.value = Rno;
+		document.Raction.submit();
+		
+		setTimeout("getreplylist("+Rno+"," +"'"+id+"',"+ index+")", 1000*0.2);
+		
+	}
+	else{
+		return;
+	}
+}
+
+
+//글삭제 자바 스크립트
+function Bdelete(no, index){
+	if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+		
+		var params = "no="+no+"&command=DELETE";
+		$("#maindiv"+index).remove();
+		sendRequest("/homepage/board.action", params, callback, "GET");
+	}else{   //취소
+	    return;
+	}
+}
+
+//글 수정 자바스크립트
+function Bupdate(form, id, no){
+	document.updatewindow.postbox1.value = form.postbox1.value;
+	document.updatewindow.no.value = no;
+	document.updatewindow.id.value = id;
+	document.updatewindow.submit();
+}
+
+//댓글창 엔터시 row늘리기
+function setLine( txa ){
+       var line = 0;
+       var new_line = txa.value.split( "\n" ).length + 1 -1;
+       if( new_line < line ) new_line = line;
+       txa.rows = new_line;
+}
+var cnt = 5;
+function addup(num){
+	$("div#sujung" + num).load("/homepage/itsme/update.jsp?no=" + num);
+}
+
+$(document).ready(function() {
+	//스크롤 이벤트 발생 시
+	$(window).scroll(function() {
+		var scrollHeight = $(window).scrollTop() + $(window).height();
+		var documentHeight = $(document).height(); 
+        if (scrollHeight == documentHeight) { 
+		 			cnt++;
+		 			$('div#lastPostsLoader').html('<img src="/homepage/images/cc.png">');
+				$.post("/homepage/re.board?num="+cnt,
+						function(data){
+							if (data != "") {$("div#start:last").after(data); }
+							$('div#lastPostsLoader').empty();
+			}); 
+		 	} 
+	});
+});
 function image() 
 {window.open("/homepage/member/image.html", "", "scrollbars=no,width=500,height=500");}
 </script>
@@ -148,9 +254,9 @@ function image()
 				<!--============================================================================= 글쓰기 시작 -->
 				<div class="_4-u2 mbm" style="border: 0px">
 						<div id="main_border_down" style="width: 580px;">
-							<form name="tx_editor_formA" id="tx_editor_formA" action="/homepage/newsfeed/Post_proc.jsp" method="post" accept-charset="utf-8">
+							<form name="tx_editor_formA" id="tx_editor_formA" action="Post_proc.jsp" method="post" accept-charset="utf-8">
 								<div id="board_title">
-								<input type="hidden" name="action" id="action" value="me">
+								<input type="hidden" name="action" id="action" value="insert">
 								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
 								<input type="hidden" name="no" id="no" value="${sessionScope.no}">
 									<!-- 타이틀 -->
@@ -711,38 +817,18 @@ function image()
 							});	
 						</script>
 					</div>
-<!-- ------------------------------------------------------------------글 쓰기 끝------------------------------------------------------------------------- -->
-	<!-- ==================================================================내용 시작=========================================================================== -->
-<%
-	BoardDao Bdao = new BoardDao();
-	
-	//글목록 벡터
-	Vector list= new Vector();
-	//글목록
-	
-	list = Bdao.getBoardList2(connectid);
-	//like 한 아이디 벡터
-	Vector vlike = new Vector();
-	//like 여부 확인 변수
-	int flag = 0;
-	
-	
-	int totalrecord = list.size();
-	int numperpage = 0;
-	if(request.getParameter("numperpage") == null || request.getParameter("numperpage").isEmpty() || request.getParameter("numperpage").equals("null")){
-		numperpage = 5;
-	}
-	else{
-		numperpage = Integer.parseInt(request.getParameter("numperpage"));
-	}
-	
-	//리스트 뿌려지는 부분
-	for(int i=0; i<numperpage;i++){
-		if(totalrecord == i)
-			break;
-		someDto Bdto = (someDto) list.get(i);
-%>
-	<div>
+ <!-- ------------------------------------------------------------------글 쓰기 끝------------------------------------------------------------------------- -->
+<!-- ==================================================================내용 시작=========================================================================== -->
+<!-- jstl DB연결 -->
+<sql:setDataSource var="ds"
+     url="jdbc:mysql://127.0.0.1:3306/sns?dbname?useUnicode=true&characterEncoding=utf8&&characterSetResults=utf8&autoReconnect=true"
+     driver="com.mysql.jdbc.Driver"
+     user="scott" password="tiger"/>
+
+<!-- 리스트 반복문 시작 -->
+<c:forEach var="list" varStatus="status" items="${boardlist}" begin="0" end="5" step="1">
+	<div id="start" name="start">
+	<div id="maindiv${status.index }">
 		<div class="_4-u2 mbm _5jmm _5pat _5v3q _5sq8 _5x16" id="u_ps_0_0_m">
 			<div class="userContentWrapper _5pcr _3ccb">
 				<div class="_4r_y">
@@ -760,46 +846,43 @@ function image()
 							<table style="border: 0px;width: 554px">
 								<tr>
 									<td style="border: 0px;width: 55px; padding: 0px;margin: 0px;">
-								<a class="_5pb8 _5v9u _29h _303" href="/homepage/profile/<%=Bdto.getPhoto()%>">
-					<!-- 프로필 이미지  -->
-					<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Bdto.getPhoto()%>" alt="" align="middle" /></a>
+								<a class="_5pb8 _5v9u _29h _303" href="/homepage/itsme/main2.jsp?id=${list.id}">
+									<!-- 프로필 이미지  -->
+								<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/${list.photo}" alt="" align="middle" /></a>
 									</td>
 									<td style="border: 0px;text-align: left;">
 										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%= Bdto.getId() %></a></span><br/>
+										<a href="/homepage/how.board?id=${list.id}"  style="font-size: 14px;">${list.id}</a></span><br/>
 										<div class="_5pcp" style="margin-top: 5px">
-										<span><%= Bdto.getDay()%></span>
+										<span>${list.day}</span>
 										</div>
 									</td>
-							<!-- 수정 드롭다운 메뉴 (자기글이 아니면 권한X) 접속한 아이디와 글쓴아이디 비교  -->
+							<!-- 수정 드롭다운 메뉴-->
 									<td style="border: 0px;text-align: right;">
-<%
-	//글쓴 아이디와 접속한 아이디 비교
-	if(Bdto.getId().equals(connectid)){
-%>
+<!-- 수정권한있는지 여부 -->
+<c:if test="${list.id.equals(sessionScope.id)}">
 										<div class="dropdown">
   											<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
     										<b class="caret"></b>
   											</a>
  											<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 												<li style="text-align: center;font-size: 12px;line-height: 25px;">
-												<span id="updateclick<%=i%>">수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정</span></li>
-												<mcjsjs><input type="hidden" id="divNoCheck<%=i %>" value="<%=i%>"/></mcjsjs>
-												<input type="hidden" id="boardId" value="<%=Bdto.getId() %>" />
-												<input type="hidden" id="connectId" value="<%=connectid %>" />
+												<span id="updateclick${list.no}" onclick="addup(${list.no})">수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정</span></li>
+												<mcjsjs><input type="hidden" id="divNoCheck${status.index}" value="${status.index}"/></mcjsjs>
+												<input type="hidden" id="boardId" value="${list.id}" />
+												<input type="hidden" id="connectId" value="${sessionScope.id}>" />
 												<li style="text-align: center;font-size: 12px;line-height: 25px">
-												<span onclick="Bdelete(<%=Bdto.getNo()%>)">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</span></li>
+												<span onclick="Bdelete(${list.no},${status.index})">삭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제</span></li>
 											</ul>
 										</div>
-<%
-	}
-%>									</td>
+</c:if>
+									</td>
 											</tr>
 							</table>
 										</div>
 									</h5>
 									<div class="_5pcp">
-										<span><%= Bdto.getDay()%></span>
+										<span>${list.day}</span>
 									</div>
 								</div>
 							</div>
@@ -807,748 +890,101 @@ function image()
 					</div>
 				</div>
 <!-- 수정창 생성  -->		
-<div class="_55d0" id="testdiv<%=i%>">
-<form name="tx_editor_form<%=i %>" id="tx_editor_form<%=i %>" action="/homepage/newsfeed/like_proc.jsp" method="post" accept-charset="utf-8">
-						<div id="board_title">
-								<input type="hidden" name="command" value="UPDATE"/>			
-								<input type="hidden" name="id" id="id" value="${sessionScope.id}">
-								<input type="hidden" name="no" value="<%=Bdto.getNo()%>"/>
-									<!-- 타이틀 -->
-								</div>
-								<div id='blnk2' style="height: 0px;">&nbsp;&nbsp;&nbsp;</div>
-								<!-- 에디터 컨테이너 시작 -->
-								<div id="tx_trex_container<%=i %>" class="tx-editor-container">
-									<!-- 사이드바 -->
-									<div id="tx_sidebar<%=i %>" class="tx-sidebar">
-										<div class="tx-sidebar-boundary">
-											<!-- 사이드바 / 첨부 -->
-											<ul class="tx-bar tx-bar-left tx-nav-attach">
-												<!-- 이미지 첨부 버튼 시작 -->
-												<!-- @decsription <li></li> 단위로 위치를 이동할 수 있다.-->
-												<li class="tx-list">
-													<div unselectable="on" id="tx_image<%=i %>" class="tx-image tx-btn-trans">
-														<a href="javascript:;" title="사진" class="tx-text">사진</a>
-													</div>
-												</li>
-												<!-- 이미지 첨부 버튼 끝 -->
-												<li class="tx-list">
-													<div unselectable="on" id="tx_file<%=i %>" class="tx-file tx-btn-trans">
-														<a href="javascript:;" title="파일" class="tx-text">파일</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" id="tx_media<%=i %>" class="tx-media tx-btn-trans">
-														<a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a>
-													</div>
-												</li>
-												<li class="tx-list tx-list-extra">
-													<div unselectable="on" class="tx-btn-nlrbg tx-extra">
-														<a href="javascript:;" class="tx-icon" title="버튼 더보기">버튼
-															더보기</a>
-													</div>
-													<ul class="tx-extra-menu tx-menu" style="left: -48px;" unselectable="on">
-														<!-- @decsription 일부 버튼들을 빼서 레이어로 숨기는 기능을 원할 경우 이 곳으로 이동시킬 수 있다.-->
-													</ul>
-												</li>
-											</ul>
-											<!-- 사이드바 / 우측영역 -->
-											<ul class="tx-bar tx-bar-right">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-lrbg tx-fullscreen" id="tx_fullscreen<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="넓게쓰기 (Ctrl+M)">넓게쓰기</a>
-													</div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-right tx-nav-opt">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-switchtoggle" id="tx_switchertoggle<%=i %>">
-														<a href="javascript:;" title="에디터 타입">에디터</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
+<div id="sujung${list.no}" name="sujung${list.no}">
 
-									<!-- 툴바 - 기본 시작 -->
-									<!--
-										@decsription
-										툴바 버튼의 그룹핑의 변경이 필요할 때는 위치(왼쪽, 가운데, 오른쪽) 에 따라 <li> 아래의 <div>의 클래스명을 변경하면 된다.
-										tx-btn-lbg: 왼쪽, tx-btn-bg: 가운데, tx-btn-rbg: 오른쪽, tx-btn-lrbg: 독립적인 그룹
-
-										드롭다운 버튼의 크기를 변경하고자 할 경우에는 넓이에 따라 <li> 아래의 <div>의 클래스명을 변경하면 된다.
-										tx-slt-70bg, tx-slt-59bg, tx-slt-42bg, tx-btn-43lrbg, tx-btn-52lrbg, tx-btn-57lrbg, tx-btn-71lrbg
-										tx-btn-48lbg, tx-btn-48rbg, tx-btn-30lrbg, tx-btn-46lrbg, tx-btn-67lrbg, tx-btn-49lbg, tx-btn-58bg, tx-btn-46bg, tx-btn-49rbg
-									-->
-									<div id="tx_toolbar_basic<%=i %>" class="tx-toolbar tx-toolbar-basic">
-										<div class="tx-toolbar-boundary">
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div id="tx_fontfamily<%=i %>" unselectable="on" class="tx-slt-70bg tx-fontfamily">
-														<a href="javascript:;" title="글꼴">굴림</a>
-													</div>
-													<div id="tx_fontfamily_menu<%=i %>" class="tx-fontfamily-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-slt-42bg tx-fontsize" id="tx_fontsize<%=i %>">
-														<a href="javascript:;" title="글자크기">9pt</a>
-													</div>
-													<div id="tx_fontsize_menu<%=i %>" class="tx-fontsize-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-font">
-
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-lbg tx-bold" id="tx_bold<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="굵게 (Ctrl+B)">굵게</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-underline" id="tx_underline<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="밑줄 (Ctrl+U)">밑줄</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-italic" id="tx_italic<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="기울임 (Ctrl+I)">기울임</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-strike" id="tx_strike<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="취소선 (Ctrl+D)">취소선</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-slt-tbg tx-forecolor" id="tx_forecolor<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="글자색">글자색</a>
-														<a href="javascript:;" class="tx-arrow" title="글자색 선택">글자색
-															선택</a>
-													</div>
-													<div id="tx_forecolor_menu<%=i %>"
-														class="tx-menu tx-forecolor-menu tx-colorpallete" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-slt-brbg tx-backcolor" id="tx_backcolor<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="글자 배경색">글자
-															배경색</a> <a href="javascript:;" class="tx-arrow"
-															title="글자 배경색 선택">글자 배경색 선택</a>
-													</div>
-													<div id="tx_backcolor_menu<%=i %>"
-														class="tx-menu tx-backcolor-menu tx-colorpallete" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-align">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-lbg tx-alignleft" id="tx_alignleft<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="왼쪽정렬 (Ctrl+,)">왼쪽정렬</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-aligncenter" id="tx_aligncenter<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="가운데정렬 (Ctrl+.)">가운데정렬</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-alignright" id="tx_alignright<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="오른쪽정렬 (Ctrl+/)">오른쪽정렬</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-rbg tx-alignfull" id="tx_alignfull<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="양쪽정렬">양쪽정렬</a>
-													</div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-tab">
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-lbg 	tx-indent"
-														id="tx_indent<%=i %>">
-														<a href="javascript:;" title="들여쓰기 (Tab)" class="tx-icon">들여쓰기</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-rbg 	tx-outdent"
-														id="tx_outdent<%=i %>">
-														<a href="javascript:;" title="내어쓰기 (Shift+Tab)"
-															class="tx-icon">내어쓰기</a>
-													</div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-list">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-slt-31lbg tx-lineheight"
-														id="tx_lineheight<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="줄간격">줄간격</a>
-														<a href="javascript:;" class="tx-arrow" title="줄간격">줄간격
-															선택</a>
-													</div>
-													<div id="tx_lineheight_menu<%=i %>"
-														class="tx-lineheight-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-slt-31rbg tx-styledlist"
-														id="tx_styledlist<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="리스트">리스트</a>
-														<a href="javascript:;" class="tx-arrow" title="리스트">리스트
-															선택</a>
-													</div>
-													<div id="tx_styledlist_menu<%=i %>"
-														class="tx-styledlist-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-etc">
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-lbg 	tx-emoticon"
-														id="tx_emoticon<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="이모티콘">이모티콘</a>
-													</div>
-													<div id="tx_emoticon_menu<%=i %>" class="tx-emoticon-menu tx-menu"
-														unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-bg 	tx-link"
-														id="tx_link<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="링크 (Ctrl+K)">링크</a>
-													</div>
-													<div id="tx_link_menu<%=i %>" class="tx-link-menu tx-menu"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-bg 	tx-specialchar"
-														id="tx_specialchar<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="특수문자">특수문자</a>
-													</div>
-													<div id="tx_specialchar_menu<%=i %>"
-														class="tx-specialchar-menu tx-menu"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-bg 	tx-table"
-														id="tx_table<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="표만들기">표만들기</a>
-													</div>
-													<div id="tx_table_menu<%=i %>" class="tx-table-menu tx-menu"
-														unselectable="on">
-														<div class="tx-menu-inner">
-															<div class="tx-menu-preview"></div>
-															<div class="tx-menu-rowcol"></div>
-															<div class="tx-menu-deco"></div>
-															<div class="tx-menu-enter"></div>
-														</div>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-rbg tx-horizontalrule"
-														id="tx_horizontalrule<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="구분선">구분선</a>
-													</div>
-													<div id="tx_horizontalrule_menu<%=i %>"
-														class="tx-horizontalrule-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div unselectable="on"
-														class="		 tx-btn-lbg 	tx-richtextbox" id="tx_richtextbox<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="글상자">글상자</a>
-													</div>
-													<div id="tx_richtextbox_menu<%=i %>"
-														class="tx-richtextbox-menu tx-menu">
-														<div class="tx-menu-header">
-															<div class="tx-menu-preview-area">
-																<div class="tx-menu-preview"></div>
-															</div>
-															<div class="tx-menu-switch">
-																<div class="tx-menu-simple tx-selected">
-																	<a><span>간단 선택</span></a>
-																</div>
-																<div class="tx-menu-advanced">
-																	<a><span>직접 선택</span></a>
-																</div>
-															</div>
-														</div>
-														<div class="tx-menu-inner"></div>
-														<div class="tx-menu-footer">
-															<img class="tx-menu-confirm"
-																src="/homepage/images/icon/editor/btn_confirm.gif?rv=1.0.1"
-																alt="" /> <img class="tx-menu-cancel" hspace="3"
-																src="/homepage/images/icon/editor/btn_cancel.gif?rv=1.0.1"
-																alt="" />
-														</div>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-bg 	tx-quote"
-														id="tx_quote<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="인용구 (Ctrl+Q)">인용구</a>
-													</div>
-													<div id="tx_quote_menu<%=i %>" class="tx-quote-menu tx-menu"
-														unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-bg 	tx-background"
-														id="tx_background<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="배경색">배경색</a>
-													</div>
-													<div id="tx_background_menu<%=i %>"
-														class="tx-menu tx-background-menu tx-colorpallete"
-														unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-rbg 	tx-dictionary"
-														id="tx_dictionary<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="사전">사전</a>
-													</div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left tx-group-undo">
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-lbg 	tx-undo"
-														id="tx_undo<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="실행취소 (Ctrl+Z)">실행취소</a>
-													</div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="		 tx-btn-rbg 	tx-redo"
-														id="tx_redo<%=i %>">
-														<a href="javascript:;" class="tx-icon"
-															title="다시실행 (Ctrl+Y)">다시실행</a>
-													</div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-right">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-nlrbg tx-advanced"
-														id="tx_advanced<%=i %>">
-														<a href="javascript:;" class="tx-icon" title="툴바 더보기">툴바
-															더보기</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<!-- 툴바 - 기본 끝 -->
-									<!-- 툴바 - 더보기 시작 -->
-									<div id="tx_toolbar_advanced<%=i %>"
-										class="tx-toolbar tx-toolbar-advanced">
-										<div class="tx-toolbar-boundary">
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div class="tx-tableedit-title"></div>
-												</li>
-											</ul>
-
-											<ul class="tx-bar tx-bar-left tx-group-align">
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-lbg tx-mergecells"
-														id="tx_mergecells<%=i %>">
-														<a href="javascript:;" class="tx-icon2" title="병합">병합</a>
-													</div>
-													<div id="tx_mergecells_menu<%=i %>"
-														class="tx-mergecells-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-bg tx-insertcells"
-														id="tx_insertcells<%=i %>">
-														<a href="javascript:;" class="tx-icon2" title="삽입">삽입</a>
-													</div>
-													<div id="tx_insertcells_menu<%=i %>"
-														class="tx-insertcells-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div unselectable="on" class="tx-btn-rbg tx-deletecells"
-														id="tx_deletecells<%=i %>">
-														<a href="javascript:;" class="tx-icon2" title="삭제">삭제</a>
-													</div>
-													<div id="tx_deletecells_menu<%=i %>"
-														class="tx-deletecells-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-
-											<ul class="tx-bar tx-bar-left tx-group-align">
-												<li class="tx-list">
-													<div id="tx_cellslinepreview<%=i %>" unselectable="on"
-														class="tx-slt-70lbg tx-cellslinepreview">
-														<a href="javascript:;" title="선 미리보기"></a>
-													</div>
-													<div id="tx_cellslinepreview_menu<%=i %>"
-														class="tx-cellslinepreview-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div id="tx_cellslinecolor<%=i %>" unselectable="on"
-														class="tx-slt-tbg tx-cellslinecolor">
-														<a href="javascript:;" class="tx-icon2" title="선색">선색</a>
-
-														<div class="tx-colorpallete" unselectable="on"></div>
-													</div>
-													<div id="tx_cellslinecolor_menu<%=i %>"
-														class="tx-cellslinecolor-menu tx-menu tx-colorpallete"
-														unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div id="tx_cellslineheight<%=i %>" unselectable="on"
-														class="tx-btn-bg tx-cellslineheight">
-														<a href="javascript:;" class="tx-icon2" title="두께">두께</a>
-
-													</div>
-													<div id="tx_cellslineheight_menu<%=i %>"
-														class="tx-cellslineheight-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div id="tx_cellslinestyle<%=i %>" unselectable="on"
-														class="tx-btn-bg tx-cellslinestyle">
-														<a href="javascript:;" class="tx-icon2" title="스타일">스타일</a>
-													</div>
-													<div id="tx_cellslinestyle_menu<%=i %>"
-														class="tx-cellslinestyle-menu tx-menu" unselectable="on"></div>
-												</li>
-												<li class="tx-list">
-													<div id="tx_cellsoutline<%=i %>" unselectable="on"
-														class="tx-btn-rbg tx-cellsoutline">
-														<a href="javascript:;" class="tx-icon2" title="테두리">테두리</a>
-
-													</div>
-													<div id="tx_cellsoutline_menu<%=i %>"
-														class="tx-cellsoutline-menu tx-menu" unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div id="tx_tablebackcolor<%=i %>" unselectable="on"
-														class="tx-btn-lrbg tx-tablebackcolor"
-														style="background-color: #9aa5ea;">
-														<a href="javascript:;" class="tx-icon2" title="테이블 배경색">테이블
-															배경색</a>
-													</div>
-													<div id="tx_tablebackcolor_menu<%=i %>"
-														class="tx-tablebackcolor-menu tx-menu tx-colorpallete"
-														unselectable="on"></div>
-												</li>
-											</ul>
-											<ul class="tx-bar tx-bar-left">
-												<li class="tx-list">
-													<div id="tx_tabletemplate<%=i %>" unselectable="on"
-														class="tx-btn-lrbg tx-tabletemplate">
-														<a href="javascript:;" class="tx-icon2" title="테이블 서식">테이블
-															서식</a>
-													</div>
-													<div id="tx_tabletemplate_menu<%=i %>"
-														class="tx-tabletemplate-menu tx-menu tx-colorpallete"
-														unselectable="on"></div>
-												</li>
-											</ul>
-
-										</div>
-									</div>
-									<!-- 툴바 - 더보기 끝 -->
-									<!-- 편집영역 시작 -->
-									<!-- 에디터 Start -->
-									<div id="tx_canvas<%=i %>" class="tx-canvas">
-										<div id="tx_loading<%=i %>" class="tx-loading">
-											<div>
-												<img src="/homepage/images/icon/editor/loading2.png" width="113" height="21" align="absmiddle" />
-											</div>
-										</div>
-										<div id="tx_canvas_wysiwyg_holder<%=i %>" class="tx-holder"
-											style="display: block;">
-											<iframe id="tx_canvas_wysiwyg<%=i %>" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0"></iframe>
-										</div>
-										<div class="tx-source-deco">
-											<div id="tx_canvas_source_holder<%=i %>" class="tx-holder">
-												<textarea id="tx_canvas_source<%=i %>" rows="30" cols="30"></textarea>
-											</div>
-										</div>
-										<div id="tx_canvas_text_holder<%=i %>" class="tx-holder">
-											<textarea id="tx_canvas_text<%=i %>" rows="30" cols="30"></textarea>
-										</div>
-									</div>
-									<!-- 높이조절 Start -->
-									<div id="tx_resizer<%=i %>" class="tx-resize-bar">
-										<div class="tx-resize-bar-bg"></div>
-										<img id="tx_resize_holder<%=i %>" src="/homepage/images/icon/editor/skin/01/btn_drag01.gif" width="58" height="12" unselectable="on" alt="" />
-									</div>
-									
-									<!-- 편집영역 끝 -->
-									<!-- 첨부박스 시작 -->
-									<!-- 파일첨부박스 Start -->
-									<div id="tx_attach_div<%=i %>" class="tx-attach-div">
-										<div id="tx_attach_txt<%=i %>" class="tx-attach-txt">파일 첨부</div>
-										<div id="tx_attach_box<%=i %>" class="tx-attach-box">
-											<div class="tx-attach-box-inner">
-												<div id="tx_attach_preview<%=i %>" class="tx-attach-preview">
-													<p></p>
-													<img src="/homepage/images/icon/editor/pn_preview.gif"
-														width="147" height="108" unselectable="on" />
-												</div>
-												<div class="tx-attach-main">
-													<div id="tx_upload_progress<%=i %>" class="tx-upload-progress">
-														<div>0%</div>
-														<p>파일을 업로드하는 중입니다.</p>
-													</div>
-													<ul class="tx-attach-top">
-														<li id="tx_attach_delete<%=i %>" class="tx-attach-delete"><a>전체삭제</a></li>
-														<li id="tx_attach_size<%=i %>" class="tx-attach-size">파일: <span
-															id="tx_attach_up_size<%=i %>" class="tx-attach-size-up"></span>/<span
-															id="tx_attach_max_size<%=i %>"></span>
-														</li>
-														<li id="tx_attach_tools<%=i %>" class="tx-attach-tools"></li>
-													</ul>
-													<ul id="tx_attach_list<%=i %>" class="tx-attach-list"></ul>
-												</div>
-											</div>
-										</div>
-									</div>
-									<!-- 첨부박스 끝 -->
-								</div>
-								<!-- 에디터 컨테이너 끝 -->
-							</form>
-							<div id="board_right<%=i %>" style="height: 30px">
-							<%-- <a href="#" onclick='saveContent(<%=i%>)'> <img src="/homepage/images/write.gif" align=right border=0></a> --%>
-							 <div style="text-align: right;height: 15px">
-							<input type="button" value="수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='saveContent(<%=i%>)'/>
-							<mcjsjs><input type="button" value="취소" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" id="updateCancel<%=i%>"/></mcjsjs>
-							</div>
-							<!-- </div> -->
-							<!-- </div> -->
-						</div>
-						
-						<textarea id="load_contents_source<%=i %>" style="display:none;"><%=Bdto.getContent() %></textarea>
-						
-							<script type="text/javascript">
-							var config<%=i %> = {
-								txHost : '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */
-								txPath : '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) /xxx/xxx/ */
-								txService : 'sample', /* 수정필요없음. */
-								txProject : 'sample', /* 수정필요없음. 프로젝트가 여러개일 경우만 수정한다. */
-								initializedId : "<%=i %>", /* 대부분의 경우에 빈문자열 */
-								wrapper : "tx_trex_container<%=i %>", /* 에디터를 둘러싸고 있는 레이어 이름(에디터 컨테이너) */
-								form : 'tx_editor_form<%=i %>' + "", /* 등록하기 위한 Form 이름 */				
-								txIconPath : "/homepage/images/icon/editor/", /*에디터에 사용되는 이미지 디렉터리, 필요에 따라 수정한다. */
-								txDecoPath : "/homepage/images/deco/contents/", /*본문에 사용되는 이미지 디렉터리, 서비스에서 사용할 때는 완성된 컨텐츠로 배포되기 위해 절대경로로 수정한다. */
-								canvas : {
-									initHeight : 150, // 높이
-									styles : {
-										color : "#123456", /* 기본 글자색 */
-										fontFamily : "굴림", /* 기본 글자체 */
-										fontSize : "10pt", /* 기본 글자크기 */
-										backgroundColor : "#fff", /*기본 배경색 */
-										lineHeight : "1.5", /*기본 줄간격 */
-										padding : "8px" /* 위지윅 영역의 여백 */
-									},
-									showGuideArea : false
-								},
-								events : {
-									preventUnload : false
-								},
-								sidebar : {
-									attacher: {
-									    image: {
-									           objattr: {
-									        	   width: 450,
-									        	   height : 450
-									        	   }
-									           }
-									    },
-									attachbox : {
-										show : true
-									}
-								},
-								size : {
-									contentWidth : 580 /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
-								}
-							};
-							
-	
-	
-							EditorJSLoader.ready(function(Editor) {
-								 new Editor(config<%=i %>);
-								Editor.getCanvas().observeJob(Trex.Ev.__CANVAS_PANEL_DELETE_SOMETHING, function (ev) {
-								    // 데이터중에 존재하지 stage에 존재하지 않는 entry는 박스에서 바로 제거
-								    var attachBox = Editor.getAttachBox();
-								    attachBox.datalist.each(function (entry) {
-								        if (entry.type === "image"  && entry.existStage === false ) {
-								            entry.execRemove();
-								            enrty = null;
-								        }
-								    });
-								    attachBox.refreshPreview();
-								});   
-								Editor.getToolbar().observeJob(Trex.Ev.__TOOL_CLICK, function (type) {
-								    Editor.switchEditor("<%=i%>");
-								});
-							});	
-						</script>
 </div>
-<!-- </form> --> <!-- =========================================================================끝 --> 
-				
-				
+<!-- </form> --> 
+<!-- =========================================================================끝 --> 
 				<div class="_5pbx userContent">
-					<p><%= Bdto.getContent() %></p>
+					<p>${list.content}</p>
 				</div>
 				<div>
 					<div>
-						<!-- 글에 포함된 사진  -->
-						<!-- <div class="mtm">
-							<div class="_5cq3" id="u_ps_0_0_o">
-								<a class="_4-eo" href="#" rel="theater" style="width: 470px;">
-								<div class="_46-h _4-ep" style="width: 470px; height: 352px;" id="u_ps_0_0_p">
-										<img class="_46-i img" src="https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-frc3/t1.0-9/q71/s480x480/10275928_759045664127399_7768173795641478267_n.jpg"
-											style="left: -5px; top: 0px;" alt="&#xbd84;&#xc2dd;."
-											width="480" height="360" />
-									</div></a>
-							</div>
-						</div> -->
 					</div>
 				</div>
-				<!-- <form  method="post" action="like_proc.jsp"  name="boardaction"> -->
-			<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="boardaction">
-					
 					<div class="clearfix">
 						<div class="_5pcp _5vsi lfloat _ohe">
-<%
-	//like를 한 아이디인지 여부
-	vlike = Bdao.board_likeSelect(Bdto.getNo());
 
-	for(int j=0; j<vlike.size();j++){
-		String likeid =(String) vlike.get(j);
-		if(connectid.equals(likeid)){
-			flag = 1;
-			break;
-		}
-		else{
-			flag = 0;
-		}
-	}
-%>
+<!-- 좋아요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+<span id="likeunlike${status.index}">
+<span id="inlikeunlike${status.index}">
+<sql:query var="likeboard" dataSource="${ds}">
+ select id from board_like where board_no=?
+<sql:param value="${list.no}"/>
+</sql:query>
 
-<%
-	if(flag == 0){
-%>							
-					 			<a href="javascript:like(<%=Bdto.getNo()%>, '<%=connectid %>')" class="default_message" name="like">좋아요</a>
-<%
-	}
-	else{
-%>
-								<a href="javascript:unlike(<%=Bdto.getNo()%>, '<%=connectid %>')" class="default_message" name="unlike">좋아요 취소</a>
-<%
-		flag = 0;
-	}
-%>						
-							
-							· <mcjsjs><span class="default_message" name="reply" id="replyshow<%=i%>" style="cursor:pointer;">댓글</span></mcjsjs>
-							<mcjsjs><input type="hidden" id="divNoCheck<%=i %>" value="<%=i%>"/></mcjsjs>
+<c:set var="doneLoop" value="false"/>
+<c:set var="flag" value="0"/>
+
+<!-- 좋아요 판별 flag변경  -->
+<c:forEach var="like" items="${likeboard.rows}">
+	<c:if test="${not doneLoop}"> 
+		<c:choose>
+			<c:when test="${like.id.equals(sessionScope.id)}">
+				<c:set var="flag" value="1"/>
+				<c:set var="doneLoop" value="true"/>
+			</c:when>
+			<c:otherwise>
+				<c:set var="flag" value="0"/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</c:forEach>
+
+<!-- flag이용한 좋아요 판별  -->
+<c:if test="${1 == flag}">
+	<a href="javascript:unlike(${list.no}, '${sessionScope.id}', ${status.index})" class="default_message" name="unlike" id="unlike${status.index}">좋아요 취소</a>
+</c:if>
+<c:if test="${0 == flag}">
+	<a href="javascript:like(${list.no}, '${sessionScope.id}', ${status.index})" class="default_message" name="like" id="like${status.index}">좋아요</a>
+</c:if>
+</span>
+</span>
+
+							· <mcjsjs><span class="default_message" name="reply" id="replyshow${status.index}" style="cursor:pointer;" 
+										onclick="getreplylist(${list.no}, '${sessionScope.id}', ${status.index})">
+										댓글</span></mcjsjs>
+							<mcjsjs><input type="hidden" id="divNoCheck${status.index}" value="${status.index}"/></mcjsjs>
 							 · <a class="uiBlingBox feedbackBling">
-							 <i class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text"><%=Bdto.getLike() %></span>
+							 <i class="img sp_p5WkkL41GeK sx_408c76"></i><span class="text" id="likecnt${status.index}">${list.like}</span>
 							</a>
 						</div>
 					</div>
-				<!-- 	<div class="uiUfi UFIContainer _5pc9 _5vsj _5v9k" id="u_ps_0_0_1b"></div> -->
-				</form>
 			</div>
 <!-- 댓글 디자인  -->
-			<form method="post" action="/homepage/newsfeed/like_proc.jsp" >
-			<div id="replydiv<%=i%>" style="background-color: #E6FFFF;">
-			<input type="hidden" name="command" id="command" value="REPLYPOST"> 
-			<input type="hidden" name="no" id="no" value="<%=Bdto.getNo()%>"/>
-			<input type="hidden" name="id" value="<%=connectid%>"/>
-				<hr/>
-					<div class="_3dp _29k" ">
-						<div>
-							<div class="_6a">
-								<div class="_6a _6b" style="margin-left: 7px" >
-									<h5 class="_5pbw">
-										<div class="fwn fcg">
-										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%=connectid%></a>&nbsp;&nbsp;
-										<textarea name="content" cols="" rows="1" class="DOMControl_placeholder uiTextareaAutogrow input autofocus mentionsTextarea textInput" onKeyDown="setLine(this)" style="width: 393px; resize:none;"></textarea>&nbsp;&nbsp;
-										<button value="1" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" type="submit">댓글</button>
-										</span>
-										<br/><br/>
-										</div></h5>
-										</div>
-			</form>	
-<%
-	//댓글 반복문
-	Vector Rlist = Bdao.getReplyList(Bdto.getNo());
-
-	for(int r = 0; r<Rlist.size();r++){
-		ReplyDto Rdto = new ReplyDto();
-		Rdto = (ReplyDto) Rlist.get(r);
-%>
-					<div style="height: 50px;margin-left: 7px" >
-								<a class="_5pb8 _5v9u _29h _303" href="https://www.facebook.com/jooj.kim?fref=nf">
-					<!-- 프로필 이미지  -->
-					<img class="_s0 _5xib _5sq7 _rw img" src="/homepage/profile/<%=Rdto.getPhoto() %>" alt="" align="middle" style="width: 40px;height: 40px" /></a>
-										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%= Rdto.getId() %></a>&nbsp;&nbsp;</span><span><%=Rdto.getContent() %></span>&nbsp;&nbsp;&nbsp;&nbsp;
-<%
-	//댓글 작성자 아이디 접속 아이디와 비교
-	if(Rdto.getId().equals(connectid)){
-%>
-										<a href="#" onclick="replyDelete(<%=Rdto.getNo()%>)">...삭제</a>
-<%
-	}
-%>							
-										<br/>
-										<div class="_5pcp" style="margin-top: 5px">
-										<span><%=Rdto.getRegist_day() %></span>
-										</div>
-									</h5>
-									</div>
-					
-<%
-	}
-	//댓글 반복문 끝
-%>
-						</div>
-					<!-- 리스트div  -->			
+<div id="replydiv${status.index}" style="background-color: #E6FFFF;">
+		<!-- 댓글load부분  -->
+</div>
 					</div>
 				</div>
-
-			</div>
-		</div>
+<!--글 리스트div  -->		
 	</div>
-<%
-	}
-	//리스트 for문 끝
-%>
+</c:forEach>
 
-<div align="center"><span style="cursor: pointer;" onclick="moreboard(<%=numperpage+5%>)">..더보기</span></div>
+</div>
+		
+	<!-- 리스트 for문 끝 -->
+<div id="lastPostsLoader"></div>
+
 
 <!-- like 스크립트를 위한 폼 시작  -->
-<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction">
-	<input type="hidden" name="command" value="LIKE" />
-	
-	<input type="hidden" name="no" />
-	<input type="hidden" name="id" />
-</form>
-<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction1">
-	<input type="hidden" name="command" value="UNLIKE" />
-	
-	<input type="hidden" name="no" />
-	<input type="hidden" name="id" />
-</form>
-<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Baction2">
-	<input type="hidden" name="command" value="DELETE" />
-	
-	<input type="hidden" name="no" />
-</form>
-<form action="/homepage/newsfeed/like_proc.jsp" method="post" name="Raction">
-	<input type="hidden" name="command" value="REPLYDELETE" />
+<iframe name="junsong" width="0" height="0" src=""></iframe>
+<iframe name="sakje" width="0" height="0" src=""></iframe>
 
+<form action="/homepage/board.action" method="post" name="Baction1">
+	<input type="hidden" name="command" value="UNLIKE" />
+	<input type="hidden" name="no" />
+	<input type="hidden" name="id" />
+</form>
+<form action="/homepage/board.action" method="post" name="Raction" target="sakje">
+	<input type="hidden" name="command" value="REPLYDELETE" />
 	<input type="hidden" name="no" />
 </form>
 <form action="main.jsp" method="post" name="more">
 	<input type="hidden" name="numperpage"/>
 </form>
 <!-- like 스크립트를 위한 끝  -->
+
 				</section>
 <!-- -----------------------------=========================================================내용끝 ============================================== -->
 				<!-- ASIDE NAV 2 -->

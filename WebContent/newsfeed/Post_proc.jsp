@@ -18,7 +18,6 @@
 		action = request.getParameter("action");
 	}
 	//System.out.println(content);
-
 	Bdto.setId(id);
 	Bdto.setContent(content);
 	Bdao.insertBoard(Bdto); 

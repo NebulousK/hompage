@@ -29,7 +29,7 @@ function getMousePosition(evt, currentObj, userID){
     	y += b.scrollTop - b.clientTop;
 	}
 	var layer = document.getElementById("popup_layer"); 
-	layer.innerHTML = "<a href='#' onclick=goPOPUP(\'"+ userID +"\')><img src='/homepage/images/messagesend.png'></a><a href='/homepage/itsme/main2.jsp?'><img src='/homepage/images/viewmember.png'></a>";
+	layer.innerHTML = "<a href='#' onclick=goPOPUP(\'"+ userID +"\')><img src='/homepage/images/messagesend.png'></a><a href='/homepage/how.board?id="+ userID +"'><img src='/homepage/images/viewmember.png'></a>";
 	layer.style.left =  x + 70 + "px"; //레이어팝업의 좌측으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
 	layer.style.top = y + 15 +"px"; //레이어팝업의 상단으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
 	layer.style.visibility="visible";  
@@ -65,13 +65,13 @@ function goPOPUP(id) {
   			<TR> 
     			<TD align="center" valign="center" height="0"> 
     			<%if(dto.getUserid1().equals(myid)){%>
-      			<b><P align="center"><a href="#" onclick="getMousePosition(event, this,'<%=dto.getUserid2()%>' )"><%=dto.getUserid2()%></a>
+      			<b><P align="center"><span  onclick="getMousePosition(event, this,'<%=dto.getUserid2()%>' )" style="cursor:pointer"><%=dto.getUserid2()%></span>
       			<%if(dao2.news(dto.getUserid2()) != 0){ 
       				int cnt = dao2.news(dto.getUserid2());
       			%>
       			<span class="count-number" style="color:red;background-color:pink"> <%=cnt %></span></P></b>
       			<%}}else{%>
-      			<b><P align="center"><a href="#" onclick="getMousePosition(event, this, '<%=dto.getUserid1()%>' )"><%=dto.getUserid1()%></a>
+      			<b><P align="center"><span  onclick="getMousePosition(event, this, '<%=dto.getUserid1()%>' )" style="cursor:pointer"><%=dto.getUserid1()%></span>
       			<%if(dao2.news(dto.getUserid1()) != 0){ 
       				int cnt = dao2.news(dto.getUserid1());
       			%>

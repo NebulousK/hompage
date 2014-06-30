@@ -37,7 +37,7 @@
 	 	BoardDto Bdto = new BoardDto();
 		Bdto.setContent(content);
 		Bdto.setNo(no);
-		Bdao.boardUpdate(Bdto); 
+		Bdao.boardUpdate(1,null); 
 		response.sendRedirect("main.jsp");
 	}
 	else if(command.equals("REPLYPOST")){

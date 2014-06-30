@@ -52,4 +52,32 @@
  <url-pattern>*.friend</url-pattern>
  </servlet-mapping>
  
+ <servlet>
+ <servlet-name>admin</servlet-name>
+ <servlet-class>mvc.adminControl</servlet-class>
+ </servlet>
+ <servlet-mapping>
+ <servlet-name>admin</servlet-name>
+ <url-pattern>*.admin</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+     <servlet-name>boardd</servlet-name>
+     <servlet-class>mvc.boardControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+     <servlet-name>boardd</servlet-name>
+     <url-pattern>*.board</url-pattern>
+  </servlet-mapping>
+ 
+ 
+ <servlet>
+     <servlet-name>board</servlet-name>
+     <servlet-class>homepage.board.BoardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+     <servlet-name>board</servlet-name>
+     <url-pattern>/board.action</url-pattern>
+  </servlet-mapping>
+ 
 </web-app>

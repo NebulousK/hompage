@@ -1,26 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script> 
-function fn_layer_popup(){ 
-	var _x = event.clientX + document.body.scrollLeft; //마우스로 선택한곳의 x축(화면에서 좌측으로부터의 거리)를 얻는다. 
-	var _y = event.clientY + document.body.scrollTop; //마우스로 선택한곳의 y축(화면에서 상단으로부터의 거리)를 얻는다. 
-	var layer = document.getElementById("popup_layer"); 
-	if(_x < 0) _x = 0; //마우스로 선택한 위치의 값이 -값이면 0으로 초기화. (화면은 0,0으로 시작한다.) 
-	if(_y < 0) _y = 0; //마우스로 선택한 위치의 값이 -값이면 0으로 초기화. (화면은 0,0으로 시작한다.) 
-	layer.style.left = _x+"px"; //레이어팝업의 좌측으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
-	layer.style.top = _y+"px"; //레이어팝업의 상단으로부터의 거리값을 마우스로 클릭한곳의 위치값으로 변경. 
-	layer.style.visibility="visible"; 
-	} 
-</script> 
+<a href='javascript:unlike("+dto.getNo())+", \'"+ id +"\', ${status.index})\' class='default_message' name='unlike' id='unlike${status.index}'>좋아요 취소</a>
 
-</head>
-<body>
-<div id="popup_layer" style="position:absolute; border:double;top:0px;  left:0px; width:100px; height:50px; z-index:1; visibility:hidden; background-color:white;"> 
-
+<c:if test='${0 == flag}'>
+<a href='javascript:like(${list.no}, \'${sessionScope.id}\', ${status.index})' class='default_message' name='like' id='like${status.index}'>좋아요</a>
+</c:if>
+</span>
+</span>
+· <mcjsjs><span class='default_message' name='reply' id='replyshow${status.index}' style='cursor:pointer;'
+onclick='getreplylist(${list.no}, \'${sessionScope.id}\', ${status.index})'>
+댓글</span></mcjsjs>
+<mcjsjs><input type='hidden' id='divNoCheck${status.index}' value='${status.index}'/></mcjsjs>
+· <a class='uiBlingBox feedbackBling'>
+<i class='img sp_p5WkkL41GeK sx_408c76'></i><span class='text' id='likecnt${status.index}'>${list.like}</span>
+</a>
 </div>
-
-<input type="button" value="click" onclick="fn_layer_popup()"> 
-</body>
-</html> 
+</div>
+</div>
+<div id='replydiv${status.index}' style='background-color: #E6FFFF;'>
+</div>
+</div>
+</div>
+</div>

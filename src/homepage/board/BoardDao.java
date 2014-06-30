@@ -254,12 +254,12 @@ public class BoardDao {
 		}
 	}
 	//글 수정
-	public void boardUpdate(BoardDto Bdto){
+	public void boardUpdate(int no, String content){
 		try {
 			String sql = "update board set content = ?, day = now() where no=?";
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, Bdto.getContent());
-			stmt.setInt(2, Bdto.getNo());
+			stmt.setString(1, content);
+			stmt.setInt(2, no);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("boardUpdate() : " + e);
@@ -295,7 +295,7 @@ public class BoardDao {
 		
 		try {
 /*			String sql = "select * from board where id=? order by no desc";*/
-			String sql = "select a.no, a.parent, a.id, a.content, a.regist_day , b.photo FROM `borad_ripple` a INNER JOIN member b ON a.id = b.id  where a.parent = ? order by no desc";
+			String sql = "select a.no, a.parent, a.id, a.content, a.regist_day , b.photo FROM `borad_ripple` a INNER JOIN member b ON a.id = b.id  where a.parent = ? order by a.no desc";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
@@ -436,5 +436,52 @@ public class BoardDao {
 		} finally {
 			freeCon();
 		}
+	}
+	
+	//id 찾기
+	public someDto getId(String name, String email) {
+		String sql = "select * from member where name= ? and `e-mail`= ?";
+		someDto dto = new someDto();
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, name);
+			stmt.setString(2, email);
+			rs = stmt.executeQuery();
+			System.out.println(stmt);
+			
+			while(rs.next()){
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setBirthday(rs.getString("birthday"));
+				dto.setEmail(rs.getString("e-mail"));
+			}
+			//System.out.println(name);
+			//System.out.println(email);
+			System.out.println(dto.getId());
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			freeCon();
+		}
+		return dto;
+	}
+	
+	public someDto getboard(int no){
+		String sql = "select * from board where no = ?";
+		someDto dto = new someDto();
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			dto.setNo(rs.getInt("no"));
+			dto.setContent(rs.getString("content"));
+			dto.setId(rs.getString("id"));
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			freeCon();
+		}
+		return dto;
 	}
 }

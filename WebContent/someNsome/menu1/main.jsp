@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="/homepage/css/editor.css" type="text/css" charset="utf-8" />
 <script src="/homepage/js/editor_loader.js" type="text/javascript" charset="utf-8"></script>
 <link type="text/css" rel="stylesheet" href="/homepage/css/jaesung.css" />
+<script src="/homepage/js/jaesung.js" type="text/javascript" charset="utf-8"></script>
 <script>
 	var cnt = 5;
 	function addup(num){
@@ -734,7 +735,7 @@
 									</td>
 									<td style="border: 0px;text-align: left;">
 										<span class="fwb fcg">
-										<a href="/homepage/itsme/main2.jsp?id=${dto.id}" style="font-size: 14px;">${dto.id}</a></span><br/>
+										<a href="/homepage/how.board?id=${dto.id}" style="font-size: 14px;">${dto.id}</a></span><br/>
 										<div class="_5pcp" style="margin-top: 5px">
 										<span>${dto.day}</span>
 										</div>
@@ -796,10 +797,6 @@
 	</form>
 </c:forEach>
 <div id="lastPostsLoader"></div>
-<div align="center"><span style="cursor: pointer;" onclick="moreboard(${requestScope.numperpage + 5})">..더보기</span></div>
-<!-- <form name="more" id="more" action="/homepage/luvstory.some">
-<input type="hidden" name="numperpage" id="numperpage"/>
-</form> -->
 				</section>
 <!-- -----------------------------=========================================================내용끝 ============================================== -->
 				<!-- ASIDE NAV 2 -->

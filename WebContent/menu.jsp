@@ -50,8 +50,8 @@
 &nbsp;
 <div class="aside-nav">
 	<ul>
-		<li><a href="/homepage/itsme/main.jsp">It's me</a></li>
-		<li><a href="/homepage/newsfeed/main.jsp">뉴스 피드</a></li>
+		<li><a href="/homepage/itsme.board">It's me</a></li>
+		<li><a href="/homepage/main.board">뉴스 피드</a></li>
 		<li><a href ="/homepage/List.friend">친구 목록</a></li>
 		<li><a href ="/homepage/find.friend">친구 찾기</a></li>
 		<li class="aside-submenu">

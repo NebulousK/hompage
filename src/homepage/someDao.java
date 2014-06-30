@@ -1427,6 +1427,84 @@ public class someDao {
 			return dto;
 		}
 		
+		//id 찾기
+				public someDto getId(String name, String email) {
+					connect();
+					String sql = "select * from member where name= ? and `e-mail`= ?";
+					someDto dto = new someDto();
+					try {
+						stmt = con.prepareStatement(sql);
+						stmt.setString(1, name);
+						stmt.setString(2, email);
+						rs = stmt.executeQuery();
+						System.out.println(stmt);
+						
+						while(rs.next()){
+							dto.setId(rs.getString("id"));
+							dto.setName(rs.getString("name"));
+							dto.setBirthday(rs.getString("birthday"));
+							dto.setEmail(rs.getString("e-mail"));
+						}
+						//System.out.println(name);
+						//System.out.println(email);
+						System.out.println(dto.getId());
+					} catch (Exception err) {
+						System.out.println(err);
+					} finally {
+						discon();
+					}
+					return dto;
+				}
+				
+				//비번 찾기
+				public someDto getPw(String id, String email) {
+					connect();
+					String sql = "select * from member where id= ? and `e-mail`= ?";
+					someDto dto = new someDto();
+					try {
+						stmt = con.prepareStatement(sql);
+						stmt.setString(1, id);
+						stmt.setString(2, email);
+						rs = stmt.executeQuery();
+						System.out.println(stmt);
+						
+						while(rs.next()){
+							dto.setId(rs.getString("id"));
+							dto.setName(rs.getString("name"));
+							dto.setEmail(rs.getString("e-mail"));
+						}
+						//System.out.println(name);
+						//System.out.println(email);
+						//System.out.println(dto.getId());
+					} catch (Exception err) {
+						System.out.println(err);
+					} finally {
+						discon();
+					}
+					return dto;
+				}
+				
+				//비번바꾸기
+				public void updatePw(String id, String pw, String email){
+					connect();
+					String sql = "update member set password = ? where id= ? and `e-mail`= ?";
+					try {
+						
+						stmt = con.prepareStatement(sql);
+						stmt.setString(1, sha1(pw));
+						stmt.setString(2, id);
+						stmt.setString(3, email);
+						stmt.executeUpdate();
+						
+					} catch (SQLException e) {
+						System.out.println("updatePw : " + e);
+					}
+					finally{
+						discon();
+					}
+					
+				}
+		
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;

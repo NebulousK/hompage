@@ -43,7 +43,6 @@ public class AjaxServlet extends HttpServlet {
     	try{
         	pool = DBConnectionMgr.getInstance();
 			con = (Connection) pool.getConnection();
-			
 			String sql = "select `e-mail` from member";
 			stmt = con.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -59,11 +58,11 @@ public class AjaxServlet extends HttpServlet {
         	for(String id : ids){
         		if(id.equals(gotId)){
         			// 응답 메세지 1 : 이미 등록된 ID 입니다.
-        			result = "<font color='red'>이미 등록된 email 입니다.</font>";
+        			result = "<font color='red'>이미 등록된 email 입니다.</font></font><input type='hidden' name='cooo' id='cooo' value='1'/>";
         			break;
         		}else{
         			// 응답 메세지 2 : 사용할 수 있는 ID 입니다.
-        			result = "<font color='green'>사용할 수 있는 email 입니다.</font>";
+        			result = "<font color='green'>사용할 수 있는 email 입니다.</font><input type='hidden' name='cooo' id='cooo' value='0'/>";
         		}
         	}
         	out.println(result);
@@ -100,11 +99,11 @@ public class AjaxServlet extends HttpServlet {
         	for(String id : ids){
         		if(id.equals(gotId)){
         			// 응답 메세지 1 : 이미 등록된 ID 입니다.
-        			result = "<font color='red'>이미 등록된 ID 입니다.</font>";
+        			result = "<font color='red'>이미 등록된 ID 입니다.</font><input type='hidden' name='cooo2' id='cooo2' value='1'/>";
         			break;
         		}else{
         			// 응답 메세지 2 : 사용할 수 있는 ID 입니다.
-        			result = "<font color='green'>사용할 수 있는 ID 입니다.</font>";
+        			result = "<font color='green'>사용할 수 있는 ID 입니다.</font><input type='hidden' name='cooo2' id='cooo2' value='1'/>";
         		}
         	}
         	out.println(result);

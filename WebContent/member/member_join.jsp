@@ -92,8 +92,8 @@
                                  </tr>
                                  <tr>
                                     <td>e-mail</td>
-                                    <td id="email"><input type=text size=10 name="email1" style="width: 100px"> @
-                                    <select name="email2" onChange="javascript:email_write()" style="width:130px;">
+                                    <td id="email"><input type=text size=10 id="email1" name="email1" style="width: 100px"> @
+                                    <select name="email2" id="email2" onChange="javascript:email_write()" style="width:130px;" onblur="emailcheck()">
                                           <option value="a" selected>:: 선택 ::</option>
                                           <option value="chol.com">chol.com</option>
                                           <option value="dreamwiz.com">dreamwiz.com</option>
@@ -110,9 +110,10 @@
                                           <option value="paran.com">paran.com</option>
                                           <option value="yahoo.co.kr">yahoo.co.kr</option>
                                           <option value="etc">직접입력
-                                    </select><br/>
+                                    </select>
+                                    <input type=text size=20 name="email3" id="email3" value="" style="width:120px;display:none;" onblur="emailcheck()"><br/>
+                                    <span id="ems"></span><br/>
                                     <span>가입과 동시에 인증메일 발송. 정확히 기재해주세요.</span>
-                                    <input type=text size=20 name="email3" value="" style="width:130px;display:none;"><br/><span id="ems"></span>
                                     </td>
                                  </tr>
                                  <tr>

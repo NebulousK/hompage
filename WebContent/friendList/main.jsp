@@ -69,7 +69,7 @@ function goPOPUP2(id) {
 											 <tr>
 												<td width="50" style="word-break: break-all">
 												<img src="/homepage/profile/${dto.photo }" alt="그림이 없습니다." style="widht:40px;height:40px;margin-right:10px"/>
-													<a href="/homepage/itsme/main2.jsp?id=${dto.name}">${dto.name}</a></td>
+													<a href="/homepage/how.board?id=${dto.name}">${dto.name}</a></td>
 													<td width="50" style="word-break: break-all">
 													 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 													<h6>${dto.addr }</h6></td>

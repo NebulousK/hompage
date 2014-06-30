@@ -137,6 +137,14 @@ function Id() {
       form1.imgInp.click();
       return false;
    }
+   if(document.getElementById("cooo").value == 1){
+	   document.getElementById("ems").innerHTML = "<font color='red'>Email을 확인해주세요.</font>";
+	   return false;
+   }
+   if(document.getElementById("cooo2").value == 1){
+	   document.getElementById("ids").innerHTML = "<font color='red'>ID가 중복됩니다.</font>";
+	   return false;
+   }
    document.getElementById("subtt").disabled=true;
    form1.submit();
 }
@@ -475,15 +483,15 @@ function emailcheck(){
         return false;
     }
     if(email2 == "etc"){
-    		email = email1 + email3;
+    		email = email1 + "@" + email3;
     }else{
-    	email = email1 + email2; 
+    	email = email1 + "@" + email2; 
     }
     var queryString = "command=emailcheck&email="+ email;
         // 1. XMLHttpReqeust 객체 생성
         createXhr();
         // 2. 이벤트 핸들러 등록
-        xhr.onreadystatechange = callback;  // callback 함수를 등록
+        xhr.onreadystatechange = callback2;  // callback 함수를 등록
         // 3. open()를 통해 요청관련 설정을 설정
         xhr.open("POST", "/homepage/javascript_ajax_class/AjaxServlet", true);
         // 4. Header에 contentType 지정 - post
@@ -499,6 +507,22 @@ function callback(){
             /*alert(resTxt);*/
             if(resTxt.indexOf(id)){
             	document.getElementById("ids").innerHTML = resTxt;
+            }else{
+            	document.getElementById("ids").innerHTML = resTxt;
+            }
+        }else{
+            alert("요청 처리가 정상적으로 되지 않았습니다.\n"+xhr.status);
+        }
+    }
+}
+
+function callback2(){
+    if(xhr.readyState==4){      // 응답을 다 받은 경우
+        if(xhr.status == 200){  // 응답코드가 200인 경우 - 정상인 경우
+            var resTxt = xhr.responseText;  // 서버가 보낸 응답 text
+            /*alert(resTxt);*/
+            if(resTxt.indexOf(id)){
+            	document.getElementById("ems").innerHTML = resTxt;
             }else{
             	document.getElementById("ems").innerHTML = resTxt;
             }
