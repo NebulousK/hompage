@@ -19,6 +19,7 @@
 <body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
 <br><br><br><br><br><br><br><br><br><br>
 <center>
+<script> document.write(menu());</script>
 <form name="form1" action="/homepage/admin.admin" method="post">
 <table  bordercolor="purple" border width='330' cellpadding='4' cellspacing='0'>
 	<tr>

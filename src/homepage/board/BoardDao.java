@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.naming.Context;
@@ -481,5 +482,49 @@ public class BoardDao {
 			freeCon();
 		}
 		return dto;
+	}
+	
+	public ArrayList<someDto> admingetboard(){
+		String sql = "select * from board";
+		ArrayList<someDto> g = new ArrayList<someDto>();
+		try {
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				someDto dto = new someDto();
+				dto.setNo(rs.getInt("no"));
+				dto.setContent(rs.getString("content"));
+				dto.setId(rs.getString("id"));
+				dto.setDay(rs.getString("day"));
+				g.add(dto);
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			freeCon();
+		}
+		return g;
+	}
+	
+	public ArrayList<someDto> segetboard(String search, String value){
+		String sql = "select * from board where "+ search +" Like '%"+value+"%'";
+		ArrayList<someDto> g = new ArrayList<someDto>();
+		try {
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				someDto dto = new someDto();
+				dto.setNo(rs.getInt("no"));
+				dto.setContent(rs.getString("content"));
+				dto.setId(rs.getString("id"));
+				dto.setDay(rs.getString("day"));
+				g.add(dto);
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			freeCon();
+		}
+		return g;
 	}
 }

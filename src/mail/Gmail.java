@@ -55,30 +55,21 @@ public class Gmail {
 			// session = Session.getDefaultInstance(p);
 			MimeMessage msg = new MimeMessage(session);
 			//키값 생성
-			
-		
-			//System.out.println(key);
-			//System.out.println(id);
-			String message = "http://localhost:8080/homepage/mailConfirm.jsp?id="+id+"&key="+key+"&email="+email;
+	
+			String message = "http://192.168.10.31/homepage/mailConfirm.jsp?id="+id+"&key="+key+"&email="+email;
 			msg.setSubject("Some N Some 인증메일");
 			Address fromAddr = new InternetAddress("djemals11@gmail.com"); //보내는 사람 이메일주소
 			
 			System.out.println(email);
 			msg.setFrom(fromAddr);
 			Address toAddr = new InternetAddress(email); //
-																		// �����ּ�
 			msg.addRecipient(Message.RecipientType.TO, toAddr);
 			msg.setContent(message, "text/plain;charset=KSC5601");
-			//System.out.println("Message: " + msg.getContent());
 			Transport.send(msg);
-			//System.out.println("Gmail SMTP������ �̿��� ���Ϻ����� ����");
-			
 			//키값및 정보 db 저장
 			someDao Sdao = new someDao();
 			Sdao.insertEmailConfirm(id, key, email);
 		} catch (Exception mex) { // Prints all nested (chained) exceptions as
-									// well
-			System.out.println("Gmail ����" + mex);
 			mex.printStackTrace();
 		}
 		
@@ -119,16 +110,12 @@ public class Gmail {
 			String message = "인증번호는 "+key1+" 입니다.";
 			msg.setSubject("Some N Some 인증메일");
 			Address fromAddr = new InternetAddress("djemals11@gmail.com"); //보내는 사람 이메일주소
-			
-			//System.out.println(email);
+	
 			msg.setFrom(fromAddr);
 			Address toAddr = new InternetAddress(email); //받는 사람 이메일
-																		// �����ּ�
 			msg.addRecipient(Message.RecipientType.TO, toAddr);
 			msg.setContent(message, "text/plain;charset=KSC5601");
-			//System.out.println("Message: " + msg.getContent());
 			Transport.send(msg);
-			//System.out.println("Gmail SMTP������ �̿��� ���Ϻ����� ����");
 			
 			//키값 세션에 저장
 			HttpSession session1 = req.getSession();
@@ -136,8 +123,6 @@ public class Gmail {
 			session1.setAttribute("key", key1);
 			session1.setAttribute("findid", id);
 		} catch (Exception mex) { // Prints all nested (chained) exceptions as
-									// well
-			System.out.println("Gmail ����" + mex);
 			mex.printStackTrace();
 		}
 		
@@ -159,14 +144,6 @@ public class Gmail {
 
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication("djemals11", "djemalsdjemals"); // Google
-																		// id,
-																		// pwd,
-																		// ����)
-																		// @gmail.com
-																		// ��
-																		// �����ϼ���
 		}
 	}
-	
-	
 }

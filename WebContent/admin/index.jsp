@@ -6,10 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script>
+function ref(){
+	topFrame.location.href="/homepage/member.admin";
+}
+function ref2(){
+	topFrame.location.href="/homepage/board.admin";
+}
+</script>
 </head>
+
 <frameset rows="0,100%" frameborder="NO" border="0" framespacing="0">
-	<frame src=""  name="mainFrame" scrolling="NO" noresize>
-	<frame src="login.jsp" name="topFrame">
+	<frame src=""  name="mainFrame" id="mainFrame" scrolling="NO" noresize>
+	<frame src="login.jsp" name="topFrame" id="topFrame">
 </frameset>
 
 <noframes>

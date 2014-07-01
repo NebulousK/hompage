@@ -965,6 +965,60 @@ public class someDao {
 		return g;
 	}
 	
+	public someDto membergetid(String id){
+		someDto g = new someDto();
+		connect();
+		try{
+		String sql ="select * from member where id = ? ";
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, id);
+		rs = stmt.executeQuery();
+		rs.next();
+		g.setNo(rs.getInt("no"));
+		g.setId(rs.getString("id"));
+		g.setName(rs.getString("name"));
+		g.setEmail(rs.getString("e-mail"));
+		g.setTel(rs.getString("tel"));
+		g.setAddr(rs.getString("addr"));
+		g.setBirthday(rs.getString("birthday"));
+		g.setSex(rs.getString("sex"));
+		g.setPhoto(rs.getString("photo"));
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+		return g;
+	}
+	
+	public someDto membergetname(String name){
+		someDto g = new someDto();
+		connect();
+		try{
+		String sql ="select * from member where name = ? ";
+		stmt = con.prepareStatement(sql);
+		stmt.setString(1, name);
+		rs = stmt.executeQuery();
+		rs.next();
+		g.setNo(rs.getInt("no"));
+		g.setId(rs.getString("id"));
+		g.setName(rs.getString("name"));
+		g.setEmail(rs.getString("e-mail"));
+		g.setTel(rs.getString("tel"));
+		g.setAddr(rs.getString("addr"));
+		g.setBirthday(rs.getString("birthday"));
+		g.setSex(rs.getString("sex"));
+		g.setPhoto(rs.getString("photo"));
+	} catch (SQLException e) {
+		System.out.println("getBoardList() : " + e);
+	}
+	finally{
+		discon();
+	}
+		return g;
+	}
+	
 	public void memberupdate(HttpServletRequest req, int no){
 		connect();	
 		try {
@@ -1500,9 +1554,130 @@ public class someDao {
 					
 				}
 		
-		public void admin(String id, String pw){
+		public String admin(String id, String pw){
 			connect();
-			String sql ="select * from ";
+			String set = null;
+			String sql ="select * from admin where id=?";
+			try {
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				if (!rs.next()) {
+					set = "b";
+				} else {
+					if (!sha1(pw).equals(rs.getString("passwd"))) {
+						set = "a";
+					} else {
+						set = "c";
+					}
+				}
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			return set;
+		}
+		
+		public ArrayList<someDto> admember(){
+			connect();
+			ArrayList<someDto> dto = new ArrayList<someDto>();
+			try{
+			String sql ="select * from member";
+			stmt = con.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				someDto g = new someDto();
+				g.setNo(rs.getInt("no"));
+				g.setId(rs.getString("id"));
+				g.setName(rs.getString("name"));
+				g.setEmail(rs.getString("e-mail"));
+				g.setTel(rs.getString("tel"));
+				g.setAddr(rs.getString("addr"));
+				g.setBirthday(rs.getString("birthday"));
+				g.setSex(rs.getString("sex"));
+				g.setPhoto(rs.getString("photo"));
+				dto.add(g);
+			}
+		} catch (SQLException e) {
+			System.out.println("getBoardList() : " + e);
+		}
+		finally{
+			discon();
+		}
+			return dto;
+		}
+		
+		public boolean admindel(int no){
+			connect();	
+			String id = "";
+			try {
+				String sql = "select * from member where no=?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				rs = stmt.executeQuery();
+				rs.next();
+				id = rs.getString("id");
+				
+				sql = "DELETE FROM `board_image` WHERE no in (select no from board where id = ?)  ";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM board where id = ? ";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.executeUpdate();
+
+				sql = "DELETE FROM `borad_ripple` WHERE id = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM idealtype where no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM freind where userid1 = ? or userid2 =?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM `join` where userID = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM `m_profile` where no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.executeUpdate();
+				
+				sql = "DELETE FROM member where no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.executeUpdate();
+				
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			return false;
 		}
 		
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>

@@ -116,9 +116,7 @@ public class someControl extends HttpServlet{
 			dao.some_board(dto);
 			nextPage = "/luvstory.some";
 		}
-		
-		else if(action.equals("/luvstoryupdate.some")){}
-		
+			
 		else if(action.equals("/renew.some")){
 			ArrayList list= new ArrayList();
 			list = dao.some_board_list(Integer.parseInt((String)session.getAttribute("no")));
