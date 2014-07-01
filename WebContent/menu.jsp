@@ -25,6 +25,7 @@
 	boolean cc = dao.came(Integer.parseInt(((String)session.getAttribute("no"))));
 	int news = dao.news((String) session.getAttribute("id"));
 	int friend = dao.fiee((String) session.getAttribute("id"));
+	int message = dao.getmessage2((String) session.getAttribute("id"));
 	int img = callme + friend + news;
 %>
 <h3>Navigation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="logout" onclick='location.href="/homepage/logout.me"'/></h3>
@@ -42,7 +43,7 @@
 				<li style="width:70px;height:20px;float: left;"><a href="/homepage/someNsome/main.jsp">Call me : <span class="count-number" style="color:red;background-color:pink"><%=callme %></span> </a></li>
 				<li style="width:60px;height:20px;float: left;"><a href="/homepage/friendList/main.jsp">친구 : <span class="count-number" style="color:red;background-color:pink"><%=friend %></span></a></li>
 				<li><a href="/homepage/mesageget.me" target="_blank" onclick="w=window.open(this.href, 'windowName', 'toolbar=no, scrollbars=yes, resizable=yes, width=500, height=600'); w.focus(); return false;">
-				쪽지 : <span class="count-number" style="color:red;background-color:pink"><%=friend %></span></a></li>
+				쪽지 : <span class="count-number" style="color:red;background-color:pink"><%=message %></span></a></li>
 			</ul>
 			<%} %>
 	</li>

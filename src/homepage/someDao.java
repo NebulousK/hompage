@@ -1369,6 +1369,30 @@ public class someDao {
 			}
 			return list;
 		}
+
+		public int getmessage2(String id){
+			connect();
+			int count = 0;
+			String sql ="";
+			ArrayList<someDto> list = new ArrayList<someDto>();
+			try{
+				sql = "select no, sender, dear, content, day, photo from message where dear=? and day=CURDATE()";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				while(rs.next()){
+					someDto g = new someDto();
+					g.setNo(rs.getInt("no"));
+					list.add(g);
+				}
+				count = list.size();
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return count;
+		}
 		
 		public void insertmessage(String id, someDto g){
 			connect();
