@@ -110,13 +110,13 @@
 										</div>
 										<div class="row half">
 											<div class="12u">
-												<input type="text" name="pw" id="pw" placeholder="새로운 비밀번호 입력 :" 
+												<input type="password" name="pw" id="pw" placeholder="새로운 비밀번호 입력 :" 
 													style="background-color: white; border: solid 1px;height: 50px;width: 500px;font-size: medium;"/>
 											</div>
 										</div>
 										<div class="row half">
 											<div class="12u">
-												<input type="text" name="pw1" id="pw1" placeholder="비밀번호 확인 :" 
+												<input type="password" name="pw1" id="pw1" placeholder="비밀번호 확인 :" 
 													style="background-color: white; border: solid 1px;height: 50px;width: 500px;font-size: medium;"/>
 											</div>
 										</div>

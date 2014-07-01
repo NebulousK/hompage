@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -46,14 +46,9 @@
 	<div class="line">
 		<div class="box  margin-bottom" style="margin-top: 13px;">
 			<div class="margin">
-
-	<%
-		//한글 인코딩때문에..ㅜㅜ어쩔수 없음....
-		String name = new String(request.getParameter("irum").getBytes("8859_1"), "UTF-8");
-	%>
 <c:choose>
 <c:when test="${key eq param.pwkey}">
-	<span style="font-size: xx-large;"><b style="font-weight: bold;"><%=name %></b>님의 아이디는 <b style="font-weight: bold;">${sessionScope.findid }</b>입니다.</span>
+	<span style="font-size: xx-large;"><b style="font-weight: bold;">${param.irum}</b>님의 아이디는 <b style="font-weight: bold;">${sessionScope.findid }</b>입니다.</span>
 </c:when>
 <c:otherwise>
 	<span style="font-size: xx-large;">인증번호가 다릅니다.</span>

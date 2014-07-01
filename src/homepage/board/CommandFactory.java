@@ -36,6 +36,9 @@ public class CommandFactory {
 		else if(command.equals("SENDEMAIL")){
 			return new FindId();
 		}
+		else if(command.equals("UPDATEPW")){
+	         return new UpdatePassword();
+	    }
 		else{
 			return null;
 		}

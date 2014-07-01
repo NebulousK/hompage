@@ -95,51 +95,10 @@
 	</header>
 	<div class="line">
 		<div class="box  margin-bottom" style="margin-top: 13px;">
-			<div class="margin">
-					<div>
-							<div class="12u">
-								<form name="findid" method="post" action="/homepage/findid1.jsp">
-								<table>
-									<div>
-										<div class="row half">
-											<div class="12u">
-												<br/><br/><br/>
-											</div>
-										</div>
-										<div class="row half">
-											<div class="12u">
-												<input type="text" name="irum" id="irum" placeholder="이름 :" 
-													style="background-color: white; border: solid 1px;height: 50px;width: 500px;font-size: medium;"/>
-											</div>
-										</div>
-										<div class="row half">
-											<div class="12u" style="margin-bottom: 0px">
-												<input type="text" name="email" id="email" placeholder="가입시 등록 이메일 :" 
-													style="background-color: white; border: solid 1px;height: 50px;width: 290px;font-size: medium;
-													margin-right: 10px"/>
-													<button class="button" onclick="keysend()" type="button" id="ccccc"
-													style="width:150px;font-size: medium;color: white; height: 50px;width: 190px;margin-right: 0px;"
-													onclick="">인증번호 받기</button>
-											</div>
-										</div>
-										<div class="row half">
-											<div class="12u">
-												<input type="text" name="pwkey" id="pwkey" placeholder="인증번호 :" 
-													style="background-color: white; border: solid 1px;height: 50px;width: 500px;font-size: medium;"/>
-											</div>
-										</div>
-										<div class="row">
-											<div class="12u">
-												<button class="button" type="button" onclick="findId()"  
-													style="width:150px;font-size: medium;color: white; height: 50px;">ID 찾기</button>
-											</div>
-										</div>
-									</div>
-									</table>
-								</form>
-							</div>
-						</div>
-					</div>
+				<div class="margin" align="center">		
+						<img alt="" src="/homepage/images/error.jpg"><br/><br/><br/><br/>
+						<input type="button" style="width:100px" value="홈으로" onclick="location.href='/homepage/index.html'"/>
+				</div>
 			</div>
 		</div>
 	<!-- FOOTER -->

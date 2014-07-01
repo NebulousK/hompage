@@ -62,7 +62,7 @@ $(document).ready(function() {
 				<option value="content" >내용</option>
 				<option value="day" >작성일</option>
 			</select> 
-			<input type="text" name="text1" size="10" value="">&nbsp
+			<input type="text" name="text1" id="text1" size="10" value="">&nbsp
 		</td>
 		<td align="left" width="100" valign="bottom">
 			<input type="button" value="검색" onclick="searchff()"> &nbsp;&nbsp;

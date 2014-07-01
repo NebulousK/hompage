@@ -33,7 +33,7 @@ public class BoardController extends HttpServlet {
 		if(command.equals("SENDEMAIL")){
 			someDao Sdao = new someDao();
 			//get방식 일때 한글 인코딩
-			String name = new String (req.getParameter("name").getBytes("8859_1"), "UTF-8");
+			String name = req.getParameter("name");
 			String email = req.getParameter("email");
 			someDto dto = Sdao.getId(name, email);
 			String id = dto.getId();

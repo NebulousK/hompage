@@ -100,7 +100,7 @@ public class BoardDao {
 		public Vector<someDto> getBoardList2(String id){
 			Vector<someDto> v = new Vector<someDto>();
 			try {
-				String sql = "SELECT a.no, a.id, a.content, a.day, a.hit, a.like, b.photo FROM board a INNER JOIN member b ON a.id = b.id where a.id = ?;";
+				String sql = "SELECT a.no, a.id, a.content, a.day, a.hit, a.like, b.photo FROM board a INNER JOIN member b ON a.id = b.id where a.id = ? order by a.no desc;";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
 				rs = stmt.executeQuery();

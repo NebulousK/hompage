@@ -103,7 +103,7 @@ public class AjaxServlet extends HttpServlet {
         			break;
         		}else{
         			// 응답 메세지 2 : 사용할 수 있는 ID 입니다.
-        			result = "<font color='green'>사용할 수 있는 ID 입니다.</font><input type='hidden' name='cooo2' id='cooo2' value='1'/>";
+        			result = "<font color='green'>사용할 수 있는 ID 입니다.</font><input type='hidden' name='cooo2' id='cooo2' value='0'/>";
         		}
         	}
         	out.println(result);

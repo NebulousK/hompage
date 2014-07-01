@@ -31,6 +31,11 @@
 	function addup(num){
 		$("div#sujung" + num).load("/homepage/someNsome/menu1/update.jsp?no=" + num);
 	}
+	
+	function delup(num){
+		document.getElementById("sujung" + num).innerHTML = " ";
+	}
+
 	function Bdelete(no){
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 			var doc = document.getElementById("del"+no);

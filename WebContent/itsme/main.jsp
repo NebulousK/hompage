@@ -119,6 +119,11 @@ function addup(num){
 	$("div#sujung" + num).load("/homepage/itsme/update.jsp?no=" + num);
 }
 
+function delup(num){
+	document.getElementById("sujung" + num).innerHTML = " ";
+}
+
+
 $(document).ready(function() {
 	//스크롤 이벤트 발생 시
 	$(window).scroll(function() {

@@ -493,7 +493,7 @@
 	<div style="text-align: right; height: 15px">
 		<input type="button" value="수정" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" onclick='saveContent(10)' />
 		<mcjsjs>
-		<input type="button" value="취소" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" id="updateCancel10" /></mcjsjs>
+		<input type="button" value="취소" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" id="updateCancel10" onclick="delup(<%=no%>)"/></mcjsjs>
 	</div>
 </div>
 
