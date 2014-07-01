@@ -25,7 +25,7 @@
 	boolean cc = dao.came(Integer.parseInt(((String)session.getAttribute("no"))));
 	int news = dao.news((String) session.getAttribute("id"));
 	int friend = dao.fiee((String) session.getAttribute("id"));
-	int img = callme + friend + 3;
+	int img = callme + friend + news;
 %>
 <h3>Navigation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="logout" onclick='location.href="/homepage/logout.me"'/></h3>
 <div style="background-color:#e0e0e0">

@@ -1343,13 +1343,15 @@ public class someDao {
 			String sql ="";
 			ArrayList<someDto> list = new ArrayList<someDto>();
 			try{
-				sql = "select no, sender, dear, content, day, photo from message where dear=? or sender=? or dear=? or sender=?";
+				sql = "select no, sender, dear, content, day, photo from message where (dear=? and sender=?) or (dear=? and sender=?)";
 				stmt = con.prepareStatement(sql);
 				stmt.setString(1, id);
-				stmt.setString(2, id);
+				stmt.setString(2, id2);
 				stmt.setString(3, id2);
-				stmt.setString(4, id2);
+				stmt.setString(4, id);
+				System.out.println(stmt);
 				rs = stmt.executeQuery();
+				System.out.println(stmt);
 				while(rs.next()){
 					someDto g = new someDto();
 					g.setNo(rs.getInt("no"));
