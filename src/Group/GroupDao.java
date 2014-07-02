@@ -491,20 +491,21 @@ public class GroupDao {
 				freeCon();
 			}	
 	}
-	public Vector getResearchFriendList(String keyField, String research, String myid){
+	public Vector getResearchFriendList(String keyField, String research, String myid, int no, String area){
 			Vector list=new Vector();
 			String sql="";
 			ResultSet rs2;
 			PreparedStatement stmt2;
 			try{
-				if(keyField==null||keyField.isEmpty()||keyField.equals("null")){
-					sql="select * from member";
-				} else {
+				if(area == null){
 					sql = "select * from member where " +  research +  " like'%" +keyField + "%'";
+				}else{
+					sql = "select * from member where " +  research +  " like'%" +keyField + "%' and addr like '%"+ area +"%'";
 				}
 				stmt=con.prepareStatement(sql);
 				rs=stmt.executeQuery();
 				while(rs.next()){
+					if(!rs.getString("no").equals(no)){
 					MemberDto dto =new MemberDto();
 					String addr[] = rs.getString("addr").split(" ");
 					dto.setNo(rs.getInt("no"));
@@ -531,6 +532,7 @@ public class GroupDao {
 					}
 					}
 					list.add(dto);
+					}
 				}
 			}catch(Exception err){
 				System.out.println("getFriendList:"+err);

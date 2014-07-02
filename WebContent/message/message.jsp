@@ -30,26 +30,16 @@
 					<font style="color: #536FE5;">3</font>
 				</p>
 			</div>
-			<!--//note_title-->
-			<!-- note_section -->
 			<div class="note_section01">
-				<!-- 선택된 메모가 있을때;; -->
-				<!-- tab -->
 				<div class="tab">
 					<ul class="tabs">
 						<li class="tabMenu1"><a href="/zboard/member_memo.php"class="current"><span>받은쪽지 
 							<font style="font-weight: bold; color: #F00;">0</font></span></a></li>
 						<li class="tabMenu2"><a href="/zboard/member_memo.php?memo_type=sent"><span>보낸쪽지</span></a></li>
 					</ul>
-					<!-- //tabs -->
-					<!-- text_info -->
 					<div id="text_info">
-						<!-- panes -->
 						<div class="panes">
-							<!--받은 쪽지-->
-							<!-- tabCon -->
 							<div class="tabCon">
-								<!-- table_accordion -->
 								<div class="table_accordion01">
 									<table summary="">
 										<colgroup>

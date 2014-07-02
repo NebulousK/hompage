@@ -40,11 +40,9 @@ public class friendControl extends HttpServlet{
 		GroupDto dto = new GroupDto();
 		
 		if(action.equals("/find.friend")){
-			String myid=(String)session.getAttribute("id");
-			Vector list=(Vector)dao.getResearchFriendList(null, null, myid);
-			req.setAttribute("dto", list);
 			nextPage = "/friendFind/main.jsp";
 		}
+		
 		else if(action.equals("/findadd.friend")){
 			String myid=req.getParameter("myid");
 			String id=req.getParameter("id");
@@ -58,10 +56,26 @@ public class friendControl extends HttpServlet{
 			String myid=(String)session.getAttribute("id");
 			String keyField=req.getParameter("keyField");
 			String research=req.getParameter("research");
-			list=dao.getResearchFriendList(keyField, research, myid);
+			list=dao.getResearchFriendList(keyField, research, myid, Integer.parseInt((String)session.getAttribute("no")), null);
+			req.setAttribute("keyField", keyField);
+			req.setAttribute("research", research);
 			req.setAttribute("dto", list);
 			nextPage = "/friendFind/main.jsp";
 		}
+		
+		else if(action.equals("/findff.friend")){
+			Vector list=null;
+			String myid=(String)session.getAttribute("id");
+			String keyField=(String) req.getParameter("keyField2");
+			String research=(String) req.getParameter("research2");
+			list=dao.getResearchFriendList(keyField, research, myid, Integer.parseInt((String)session.getAttribute("no")), req.getParameter("area"));
+			req.setAttribute("keyField", keyField);
+			req.setAttribute("research", research);
+			req.setAttribute("area", req.getParameter("area"));
+			req.setAttribute("dto", list);
+			nextPage = "/friendFind/main.jsp";
+		}
+		
 		else if(action.equals("/finda.friend")){
 			String area=req.getParameter("area");
 			String acheck=req.getParameter("acheck");	

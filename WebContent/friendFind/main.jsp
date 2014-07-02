@@ -31,6 +31,11 @@
 		//alert("friendRequest불렀따..");
 		this_form.submit();
 	}
+	function gogo(){
+		if(document.research.keyField.value != ""){
+			document.getElementById("form10").submit();
+		}
+	}
 
 	function goPOPUP2(id) { 
 	 	 window.open('','target_name2','scrollbars=yes,toolbar=yes,resizable=yes,width=500,height=800');
@@ -38,14 +43,22 @@
 	  	 formex2.id.value = id;                      // form에서 넘겨주는 seq값 
 	 	 formex2.target = "target_name2";             // window.open 에서 선언한 target name 
 	 	 formex2.submit(); 
-	} 
-	
-	
+	}
+
+	function loaaad(){
+		<c:if test="${requestScope.area != null }">
+		var check = "${requestScope.area}";
+		for(var i=1; i<15; i++){
+			if(document.form10.area[i].value == check){
+				document.form10.area[i].selected = true;
+		}		
+	}
+		</c:if>
+	}
 </script>
 <link href="bootstrap.css" rel="stylesheet" />
 </head>
-<body class="size-1140">
-
+<body class="size-1140" onload="loaaad()">
 	<!-- TOP NAV WITH LOGO -->
 	<header>
 		<nav style="background-color: #212121;">
@@ -76,7 +89,7 @@
 							<div class="navbar-form" align="center"
 								style="margin-left: 0px; margin-right: 20px">
 								<!-- 모양이 둥근 것  -->
-								<input type="text" name="keyField" value="" style="width: 90%;" class="input-medium search-query" /> &nbsp;&nbsp;
+								<input type="text" name="keyField" value="${requestScope.keyField}" style="width: 90%;" class="input-medium search-query" /> &nbsp;&nbsp;
 								<!-- 전송버튼 모양 적용한것-->
 								&nbsp;&nbsp;<input type="button" name="smt" value="검색" class="btn" onclick="check()"/>
 							</div>
@@ -90,15 +103,31 @@
 					</form>
 						
 					<!--지역 검색 공간  넘겨주는 변수값: area acheck-->				
-					<form action="/homepage/finda.friend" method="post" name="area">
-						<input type="hidden" name="command" value="Friend_FindArea"/>
+					<form action="/homepage/findff.friend" method="post" name="form10" id="form10">
 						<input type="hidden" name="acheck" value="true"/>
+						<input type="hidden" name="keyField2" id="keyField2" value="${requestScope.keyField}" />
+						<input type="hidden" name="research2" id="research2" value="${requestScope.research}" />
 						<div class="navbar-form pull-left">
 						<!--테두리로 묶어주는것  -->
 						<fieldset>
-							<input type="text" name="area" placeholder="부산,대구,인천,대전,광주,울산" />
+							<select id="area" name="area" onchange="gogo()">
+								<option value="시도 선택" selected="selected">시도를 선택하세요</option>
+								<option value="서울">서울 특별시</option>
+								<option value="대전">대전 광역시</option>
+								<option value="대구">대구 광역시</option>
+								<option value="부산">부산 광역시</option>
+								<option value="울산">울산 광역시</option>
+								<option value="인천">인천 광역시</option>
+								<option value="광주">광주 광역시</option>
+								<option value="경남">경상남도</option>
+								<option value="경북">경상북도</option>
+								<option value="전남">전라남도</option>
+								<option value="전북">전라북도</option>
+								<option value="충남">충청남도</option>
+								<option value="충북">충청북도</option>
+								<option value="강원">강원도</option>
+							</select>
 							<!-- 버튼 -->
-							<button type="submit" class="btn">광역시로검색</button>
 						</fieldset>
 						</div>
 					</form>
@@ -160,6 +189,7 @@
 	</div>
 	</div>
 <!-- FOOTER -->
+
 <footer class="box">
 <jsp:include page="../footer.html" />
 </footer>
