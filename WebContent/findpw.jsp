@@ -35,11 +35,11 @@
 	function keysend(){
 		var id = document.getElementById("id").value;
 		var email = document.getElementById("email").value;
-		var params = "id="+id+"&email="+email+"&command=SENDEMAIL1"; 
+		var params = "id="+id+"&email="+email+"&action=/SENDEMAIL1.me"; 
 		alert(params);
 		
 		if(id != "" && email != ""){
-			sendRequest("/homepage/board.action", params, callback, null);		
+			sendRequest("/homepage/SENDEMAIL1.me", params, callback, null);		
 		}
 		else{
 			alert("아이디과 이메일을 입력해주세요");

@@ -35,9 +35,9 @@
 	function keysend(){
 		var name = document.getElementById("irum").value;
 		var email = document.getElementById("email").value;
-		var params = "name="+name+"&email="+email+"&command=SENDEMAIL"; 
+		var params = "name="+name+"&email="+email+"&action=/SENDEMAIL.me"; 
 		if(irum != "" && email != ""){
-			sendRequest("/homepage/board.action", params, callback, null);
+			sendRequest("/homepage/SENDEMAIL.me", params, callback, null);
 			document.getElementById("ccccc").disabled=true;
 		}
 		else{

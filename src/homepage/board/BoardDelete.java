@@ -14,6 +14,6 @@ public class BoardDelete implements ICommand {
 		int no = Integer.parseInt(req.getParameter("no"));
 		BoardDao Bdao = new BoardDao();
 		Bdao.boardDelete(no);
-		return "/board.action?command=MAINSTART";
+		return "/main.board?action=main.board";
 	}	
 }

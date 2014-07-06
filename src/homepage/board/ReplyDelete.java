@@ -18,7 +18,8 @@ public class ReplyDelete implements ICommand{
 	public Object processCommand(HttpServletRequest req,
 			HttpServletResponse resp) throws ServletException, IOException {
 		BoardDao Bdao = new BoardDao();
+		System.out.println(Integer.parseInt(req.getParameter("no")));
 		Bdao.replyDelete(Integer.parseInt(req.getParameter("no")));
-		return "/board.action?command=MAINSTART";
+		return "/main.board?action=main.board";
 	}
 }

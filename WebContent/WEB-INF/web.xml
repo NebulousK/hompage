@@ -71,14 +71,14 @@
   </servlet-mapping>
  
  
- <servlet>
+<!--  <servlet>
      <servlet-name>board</servlet-name>
      <servlet-class>homepage.board.BoardController</servlet-class>
   </servlet>
   <servlet-mapping>
      <servlet-name>board</servlet-name>
      <url-pattern>/board.action</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
  
  <error-page>
     <exception-type>java.lang.Throwable</exception-type>

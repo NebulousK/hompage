@@ -87,8 +87,8 @@
 <c:when test="${key eq param.pwkey}">
 	<div>
 							<div class="12u">
-								<form name="updatepw" method="post" action="/homepage/board.action">
-									<input type="hidden" name="command" value="UPDATEPW" />
+								<form name="updatepw" method="post" action="/homepage/UPDATEPW.me">
+									<input type="hidden" name="action" value="/UPDATEPW.me" />
 								<table>
 									<div>
 										<div class="row half">

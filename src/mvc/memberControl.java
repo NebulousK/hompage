@@ -2,6 +2,7 @@ package mvc;
 
 import homepage.someDao;
 import homepage.someDto;
+import homepage.board.UpdatePassword;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -286,6 +287,57 @@ public class memberControl extends HttpServlet {
 			dao.celendardel(Integer.parseInt((String)req.getParameter("no")));
 			return;
 		}
+		//아이디찾기 메일 발송
+				if(action.equals("/SENDEMAIL.me")){
+					someDao Sdao = new someDao();
+					//get방식 일때 한글 인코딩
+					String name = req.getParameter("name");
+					String email = req.getParameter("email");
+					someDto Sdto = Sdao.getId(name, email);
+					String id = dto.getId();
+					
+					int flag = 0;
+					PrintWriter Pout = resp.getWriter();
+					if(id != null){
+						Gmail gmail = new Gmail();
+						gmail.Gmail1(req, id);
+						flag = 1;
+					}
+					else{
+						flag = 0;
+					}
+					out.print(flag);				
+					return;
+				}
+				
+				//비번찾기 메일 발송
+				else if(action.equals("/SENDEMAIL1.me")){
+					someDao Sdao = new someDao();
+					//get방식 일때 한글 인코딩
+					String id = new String (req.getParameter("id").getBytes("8859_1"), "UTF-8");
+					String email = req.getParameter("email");
+					someDto Sdto = Sdao.getPw(id, email);
+					String name = dto.getName();
+						
+					int flag = 0;
+					PrintWriter Pout = resp.getWriter();
+					if(name != null){
+						Gmail gmail = new Gmail();
+						gmail.Gmail1(req, id);
+						flag = 1;
+					}
+					else{
+						flag = 0;
+					}
+					Pout.print(flag);				
+					return;
+				}
+				//비번 바꾸기
+				else if(action.equals("/UPDATEPW.me")){
+			         UpdatePassword up = new UpdatePassword();
+			         nextPage = (String) up.processCommand(req, resp);
+			    }
+		
 		
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다
 		view.forward(req, resp);// req의 모든정보를얘가 던져주는곳  다음 페이지에서 request.getattribute("a")를 하면 마가나온다	

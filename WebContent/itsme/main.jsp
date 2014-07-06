@@ -26,24 +26,25 @@
 <script src="/homepage/js/editor_loader2.js" type="text/javascript" charset="utf-8"></script>
 <script src="/homepage/js/jaesung.js" type="text/javascript" charset="utf-8"></script>
 <link type="text/css" rel="stylesheet" href="/homepage/css/jaesung.css" /> 
+<script src="/homepage/js/ajax1.js"></script>
 <script>
 //좋아요 ajax
 function like(no, id, index){
-	var params = "no="+ no +"&id="+id+"&command=LIKE";
+	var params = "no="+ no +"&id="+id+"&action=/LIKE.board";
 	$("#inlikeunlike"+index).remove();"<span id=inlikeunlike"+index+"></span>";
 	$("#likeunlike"+index).append("<span id=inlikeunlike"+index+"><a href='javascript:unlike("+no+", \"${sessionScope.id}\", "+index+")' class='default_message' name='unlike' id='unlike'>좋아요 취소</a></span>");
 	var cnt = $("#likecnt"+index).text() * 1 + 1;
 	document.getElementById("likecnt"+index).innerHTML = cnt;
-	sendRequest("/homepage/board.action", params, callback, "GET");
+	sendRequest("/homepage/LIKE.board", params, callback, "GET");
 }
 //좋아요 취소 ajax
 function unlike(no, id, index){
-	var params = "no="+ no +"&id="+id+"&command=UNLIKE";
+	var params = "no="+ no +"&id="+id+"&action=/UNLIKE.board";
 	$("#inlikeunlike"+index).remove();
 	$("#likeunlike"+index).append("<span id=inlikeunlike"+index+"><a href='javascript:like("+no+", \"${sessionScope.id}\", "+index+")' class='default_message' name='like' id='like'>좋아요</a></span>");
 	var cnt = $("#likecnt"+index).text() * 1 - 1;
 	document.getElementById("likecnt"+index).innerHTML = cnt;
-	sendRequest("/homepage/board.action", params, callback, "GET");
+	sendRequest("/homepage/UNLIKE.board", params, callback, "GET");
 }
 //좋아요 callback
 function callback(){
@@ -78,7 +79,7 @@ function replyDelete(Rno, id, index, Bno){
 		document.Raction.no.value = Rno;
 		document.Raction.submit();
 		
-		setTimeout("getreplylist("+Rno+"," +"'"+id+"',"+ index+")", 1000*0.2);
+		setTimeout("getreplylist("+Bno+"," +"'"+id+"',"+ index+")", 1000*0.2);
 		
 	}
 	else{
@@ -93,7 +94,7 @@ function Bdelete(no, index){
 		
 		var params = "no="+no+"&command=DELETE";
 		$("#maindiv"+index).remove();
-		sendRequest("/homepage/board.action", params, callback, "GET");
+		sendRequest("/homepage/DELETE.board", params, callback, "GET");
 	}else{   //취소
 	    return;
 	}
@@ -972,23 +973,16 @@ function image()
 <div id="lastPostsLoader"></div>
 
 
-<!-- like 스크립트를 위한 폼 시작  -->
+<!-- 댓글 아이프레임  -->
 <iframe name="junsong" width="0" height="0" src=""></iframe>
 <iframe name="sakje" width="0" height="0" src=""></iframe>
 
-<form action="/homepage/board.action" method="post" name="Baction1">
-	<input type="hidden" name="command" value="UNLIKE" />
-	<input type="hidden" name="no" />
-	<input type="hidden" name="id" />
-</form>
-<form action="/homepage/board.action" method="post" name="Raction" target="sakje">
-	<input type="hidden" name="command" value="REPLYDELETE" />
+<!-- 댓글삭제 폼  -->
+<form action="/homepage/REPLYDELETE.board" method="post" name="Raction" target="sakje">
+	<input type="hidden" name="action" value="/REPLYDELETE.board" />
 	<input type="hidden" name="no" />
 </form>
-<form action="main.jsp" method="post" name="more">
-	<input type="hidden" name="numperpage"/>
-</form>
-<!-- like 스크립트를 위한 끝  -->
+<!-- 댓글삭제 폼 끝  -->
 
 				</section>
 <!-- -----------------------------=========================================================내용끝 ============================================== -->

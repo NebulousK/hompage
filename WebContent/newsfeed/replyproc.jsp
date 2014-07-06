@@ -12,8 +12,8 @@
 	Vector rlist = Bdao.getReplyList(no);
 %>
 <!-- 댓글쓰는 부분  -->
-	<form method="post" action="/homepage/board.action" target="junsong">
-			<input type="hidden" name="command" id="command" value="REPLYPOST"> 
+	<form method="post" action="/homepage/REPLYPOST.board" target="junsong">
+			<input type="hidden" name="action" id="action" value="/REPLYPOST.board"> 
 			<input type="hidden" name="no" id="reno" value="<%=no%>"/>
 			<input type="hidden" name="id" id="reid" value="<%=id%>"/>
 			<input type="hidden" name="index" id="reindex" value="<%=index %>"/>
@@ -47,7 +47,7 @@
 	//댓글 작성자 아이디 접속 아이디와 비교
 	if(Rdto.getId().equals(id)){
 %>
-										<span onclick="replyDelete(<%=Rdto.getNo()%>, '<%=id %>', <%=index %>)" style="cursor: pointer;">...삭제</span>
+										<span onclick="replyDelete(<%=Rdto.getNo()%>, '<%=id %>', <%=index %>, <%=no %>)" style="cursor: pointer;">...삭제</span>
 <%
 	}
 %>							

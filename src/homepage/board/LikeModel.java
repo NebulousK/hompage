@@ -17,7 +17,7 @@ public class LikeModel implements ICommand{
 		BoardDto Bdto = new BoardDto();
 		BoardDao Bdao = new BoardDao();
 		Bdao.likeUpdate(Integer.parseInt(req.getParameter("no")), req.getParameter("id"));
-		
-		return "/board.action?command=MAINSTART";
+		//System.out.println(Integer.parseInt(req.getParameter("no")));
+		return "/main.board?action=main.board";
 	}
 }

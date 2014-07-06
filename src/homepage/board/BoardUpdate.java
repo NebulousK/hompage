@@ -24,7 +24,7 @@ public class BoardUpdate implements ICommand{
 		Bdto.setContent(req.getParameter("content"));
 		Bdto.setNo(Integer.parseInt(req.getParameter("no")));
 		Bdao.boardUpdate(3, null); 
-		return "/board.action?command=MAINSTART";
+		return "/main.board?action=main.board";
 	}	
 	
 }

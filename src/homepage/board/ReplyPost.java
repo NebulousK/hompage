@@ -26,6 +26,6 @@ public class ReplyPost implements ICommand{
 		Rdto.setNo(Integer.parseInt(req.getParameter("no")));
 		Rdto.setId(req.getParameter("id"));
 		Bdao.insertreply(Rdto);
-		return "/board.action?command=MAINSTART";
+		return "/main.board?action=main.board";
 	}
 }

@@ -4,7 +4,14 @@ package mvc;
 import homepage.someDao;
 import homepage.someDto;
 import homepage.board.BoardDao;
+import homepage.board.BoardDelete;
 import homepage.board.BoardDto;
+import homepage.board.BoardUpdate;
+import homepage.board.LikeModel;
+import homepage.board.ReplyDelete;
+import homepage.board.ReplyPost;
+import homepage.board.UnlikeModel;
+import homepage.board.UpdatePassword;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -119,6 +126,42 @@ public class boardControl extends HttpServlet{
 			dao.insertBoard(dto2); 
 			nextPage = "/main.board"; 
 		}
+		else if(action.equals("/LIKE.board")){
+			LikeModel lm= new LikeModel();
+			nextPage = (String) lm.processCommand(req, resp);
+		}
+		else if(action.equals("/UNLIKE.board")){
+			UnlikeModel um =  new UnlikeModel();
+			nextPage = (String) um.processCommand(req, resp);
+		}
+		else if(action.equals("/DELETE.board")){
+			BoardDelete bd = new BoardDelete();
+			nextPage = (String) bd.processCommand(req, resp);
+		}
+		/*else if(action.equals("/UPDATE.board")){
+			BoardUpdate bu = new BoardUpdate();
+			nextPage = (String) bu.processCommand(req, resp);
+		}*/
+		else if(action.equals("/REPLYPOST.board")){
+			ReplyPost rp = new ReplyPost();
+			nextPage = (String) rp.processCommand(req, resp);
+		}
+		else if(action.equals("/REPLYDELETE.board")){
+			ReplyDelete rd = new ReplyDelete();
+			nextPage = (String) rd.processCommand(req, resp);
+		}
+		/*else if(action.equals("/MAINSTART.board")){
+			MainStart ms = new MainStart();
+			nextPage = (String) ms.processCommand(req, resp);
+		}*/
+		/*else if(action.equals("/SENDEMAIL.board")){
+			FindId fi = new FindId();
+			nextPage = (String) fi.processCommand(req, resp);
+		}
+		else if(action.equals("/UPDATEPW.board")){
+	         UpdatePassword up = new UpdatePassword();
+	         nextPage = (String) up.processCommand(req, resp);
+	    }*/
 		
 		RequestDispatcher view = req.getRequestDispatcher(nextPage);
 		view.forward(req, resp);

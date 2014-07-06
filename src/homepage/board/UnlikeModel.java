@@ -18,6 +18,6 @@ public class UnlikeModel implements ICommand{
 			HttpServletResponse resp) throws ServletException, IOException {
 		BoardDao Bdao = new BoardDao();
 		Bdao.likeCancel(Integer.parseInt(req.getParameter("no")), req.getParameter("id"));
-		return "/board.action?command=MAINSTART";
+		return "/main.board?action=main.board";
 	}	
 }
