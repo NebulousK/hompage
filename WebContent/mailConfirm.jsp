@@ -21,10 +21,10 @@
 	String id1 = dto.getId();
 	String email1 = dto.getEmail();
 	String key1 = dto.getKey();
-	System.out.println(id);
+	/* System.out.println(id);
 	System.out.println(key);
 	System.out.println(key1);
-	System.out.println(email);
+	System.out.println(email); */
 	if(key.equals(key1)){
 		Sdao.updateMemberState(id);
 %>

@@ -294,7 +294,8 @@ public class memberControl extends HttpServlet {
 					String name = req.getParameter("name");
 					String email = req.getParameter("email");
 					someDto Sdto = Sdao.getId(name, email);
-					String id = dto.getId();
+					String id = Sdto.getId();
+					System.out.println(id);
 					
 					int flag = 0;
 					PrintWriter Pout = resp.getWriter();
@@ -314,10 +315,10 @@ public class memberControl extends HttpServlet {
 				else if(action.equals("/SENDEMAIL1.me")){
 					someDao Sdao = new someDao();
 					//get방식 일때 한글 인코딩
-					String id = new String (req.getParameter("id").getBytes("8859_1"), "UTF-8");
+					String id = req.getParameter("id");
 					String email = req.getParameter("email");
 					someDto Sdto = Sdao.getPw(id, email);
-					String name = dto.getName();
+					String name = Sdto.getName();
 						
 					int flag = 0;
 					PrintWriter Pout = resp.getWriter();

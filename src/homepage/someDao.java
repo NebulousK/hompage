@@ -1517,7 +1517,7 @@ public class someDao {
 					stmt.setString(1, name);
 					stmt.setString(2, email);
 					rs = stmt.executeQuery();
-					System.out.println(stmt);
+					//System.out.println(stmt);
 						
 					while(rs.next()){
 						dto.setId(rs.getString("id"));
@@ -1525,7 +1525,7 @@ public class someDao {
 						dto.setBirthday(rs.getString("birthday"));
 						dto.setEmail(rs.getString("e-mail"));
 					}
-						System.out.println(dto.getId());
+						//System.out.println(dto.getId());
 					} catch (Exception err) {
 						System.out.println(err);
 					} finally {
@@ -1534,7 +1534,7 @@ public class someDao {
 					return dto;
 				}
 				
-				//비번 찾기
+		//비번 찾기
 		public someDto getPw(String id, String email) {
 				connect();
 				String sql = "select * from member where id= ? and `e-mail`= ?";
@@ -1544,7 +1544,7 @@ public class someDao {
 						stmt.setString(1, id);
 						stmt.setString(2, email);
 						rs = stmt.executeQuery();
-						System.out.println(stmt);
+						//System.out.println(stmt);
 						
 						while(rs.next()){
 							dto.setId(rs.getString("id"));
@@ -1552,14 +1552,14 @@ public class someDao {
 							dto.setEmail(rs.getString("e-mail"));
 						}
 					} catch (Exception err) {
-						System.out.println(err);
+						//System.out.println(err);
 					} finally {
 						discon();
 					}
 					return dto;
 				}
 				
-				//비번바꾸기
+		//비번바꾸기
 		public void updatePw(String id, String pw, String email){
 				connect();
 				String sql = "update member set password = ? where id= ? and `e-mail`= ?";

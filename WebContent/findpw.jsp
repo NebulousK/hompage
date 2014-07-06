@@ -36,7 +36,7 @@
 		var id = document.getElementById("id").value;
 		var email = document.getElementById("email").value;
 		var params = "id="+id+"&email="+email+"&action=/SENDEMAIL1.me"; 
-		alert(params);
+		//alert(params);
 		
 		if(id != "" && email != ""){
 			sendRequest("/homepage/SENDEMAIL1.me", params, callback, null);		
