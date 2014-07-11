@@ -67,7 +67,7 @@ public class someControl extends HttpServlet{
 				out.println("location.href = '/homepage/main.jsp';");
 				out.println("</script>");
 				return;
-			}
+			}	
 			else if(action.equals("dashup")){
 				dao.dashup(dto);
 				out.println("<script>");
@@ -107,6 +107,11 @@ public class someControl extends HttpServlet{
 			list = dao.some_board_list(Integer.parseInt((String)session.getAttribute("no")));
 			req.setAttribute("list", list);
 			nextPage = "/someNsome/menu1/main.jsp";
+		}
+		
+
+		else if(action.equals("/mlubstory.some")){
+			
 		}
 		
 		else if(action.equals("/luvstoryinsert.some")){

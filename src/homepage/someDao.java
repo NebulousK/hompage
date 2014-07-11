@@ -717,6 +717,26 @@ public class someDao {
 		}
 		return g;
 	}
+	/*public void msome_board_list() {
+		connect();
+		String sql;
+		StringBuffer tempList = new StringBuffer();
+		try {
+			sql = "select * from some_some";
+			int i=0;
+			if(rs.next()){
+				if(i != 0){
+					tempList.append(",");
+				}
+				tempList.append()
+				
+			}
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+	}*/
 	
 	public void upsomeboard(int no, String content){
 		connect();
