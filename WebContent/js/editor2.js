@@ -22670,13 +22670,13 @@ window.txEval = function (source, target) {
             return y
         },
         getSaveHtml: function (e) {
-            return '<img src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
+            return '<img src="' + e.imageurl + '" style="max-width:100%;clear:none;float:none;"/>'
         },
         getDispHtml: function (e) {
-            return '<img id="' + e.dispElId + '" src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
+            return '<img id="' + e.dispElId + '" src="' + e.imageurl + '" style="max-width:100%;clear:none;float:none;"/>'
         }, //이넘 고치면 됨
         getDispText: function (e) {
-            return '<img src="' + e.imageurl + '" style="max-width:450px;clear:none;float:none;"/>'
+            return '<img src="' + e.imageurl + '" style="max-width:100%;clear:none;float:none;"/>'
         },
         getRegLoad: function (e) {
             return new RegExp('<(?:img|IMG)[^>]*src="?' + e.imageurl.getRegExp() + '"?[^>]*/?>', "gim")
