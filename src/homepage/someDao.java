@@ -717,26 +717,48 @@ public class someDao {
 		}
 		return g;
 	}
-	/*public void msome_board_list() {
+	
+	
+	public String msome_board_list(int no) {
 		connect();
 		String sql;
+		String returnStr="";
+		String boardList = "'board_list':''";
+		String err2="'err':''";
 		StringBuffer tempList = new StringBuffer();
 		try {
-			sql = "select * from some_some";
+			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			int id1 = rs.getInt("man_ID");
+			int id2 = rs.getInt("woman_ID");
+			sql = "select a.id, a.no, a.content, a.day, a.hit, a.like, b.photo from some_board a, member b where b.no = a.id_no and (a.id_no = ? or a.id_no = ?) order by a.no desc";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id1);
+			stmt.setInt(2, id2);
+			rs = stmt.executeQuery();
 			int i=0;
-			if(rs.next()){
+			while(rs.next()){
 				if(i != 0){
 					tempList.append(",");
 				}
-				tempList.append()
-				
+				tempList.append("{'pic':'").append(rs.getInt("photo"))
+                .append("','name':'").append(rs.getString("id"))
+                .append("','date':'").append(rs.getString("day"))
+                .append("','content':'").append(rs.getString("content")).append("'}");
+				i++;
 			}
+			boardList = "'board_list':[" + tempList.toString() + "]";
 		} catch (Exception err) {
 			System.out.println(err);
 		} finally {
 			discon();
 		}
-	}*/
+		return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
+	}
 	
 	public void upsomeboard(int no, String content){
 		connect();
@@ -781,6 +803,7 @@ public class someDao {
 		} finally {
 			discon();
 		}
+		
 	}
 	
 	public void someplusdel(String name){

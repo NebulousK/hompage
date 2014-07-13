@@ -111,7 +111,10 @@ public class someControl extends HttpServlet{
 		
 
 		else if(action.equals("/mlubstory.some")){
-			
+			int no = Integer.parseInt(req.getParameter("no"));
+			String tempList = dao.msome_board_list(no);
+			out.println(tempList.replace('\'','\"').trim());
+			return;
 		}
 		
 		else if(action.equals("/luvstoryinsert.some")){
