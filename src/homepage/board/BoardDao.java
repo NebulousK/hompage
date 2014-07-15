@@ -124,6 +124,62 @@ public class BoardDao {
 			}
 			return v;
 		}
+		
+		public String mboardlist(String id, int num) {
+			String sql;
+			ArrayList<someDto> g = new ArrayList<someDto>();
+			String returnStr="";
+			String boardList = "'board_list':''";
+			String err2="'err':''";
+			StringBuffer tempList = new StringBuffer();
+			try {
+				sql ="select a.no, a.id, a.content, a.day, a.hit, a.like, b.photo from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id = ? order by no desc";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id);
+				stmt.setString(3, id);
+				stmt.setString(4, id);
+				stmt.setString(5, id);
+				rs = stmt.executeQuery();
+				int i=0;
+				while(rs.next()){
+					someDto dto = new someDto();
+					dto.setId(rs.getString("id"));
+					dto.setNo(rs.getInt("no"));
+					dto.setContent(rs.getString("content"));
+					dto.setDay(rs.getString("day"));
+					dto.setPhoto(rs.getString("photo"));
+					g.add(dto);
+				}
+				if(num+5 < g.size()){
+					for(int j=num; j < num + 5; j++){
+						someDto rs = g.get(j);
+						if(i != 0){tempList.append(",");}
+						tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
+						.append("','name':'").append(rs.getId())
+						.append("','date':'").append(rs.getDay())
+						.append("','content':'").append(rs.getContent().replace("\"","$%^")).append("'}");
+						i++;
+					}
+				}else{
+					for(int j=num; j < g.size(); j++){
+						someDto rs = g.get(j);
+						if(i != 0){tempList.append(",");}
+						tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
+						.append("','name':'").append(rs.getId())
+						.append("','date':'").append(rs.getDay())
+						.append("','content':'").append(rs.getContent().replace("\"","$%^")).append("'}");
+						i++;
+					}
+				}
+				boardList = "'someboard_list':[" + tempList.toString() + "]";
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				freeCon();
+			}
+			return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
+		}
 	
 	//like 증가
 	public void likeUpdate(int no, String id){

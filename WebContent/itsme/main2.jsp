@@ -127,7 +127,7 @@ $(document).ready(function() {
         if (scrollHeight == documentHeight) { 
 		 			cnt++;
 		 			$('div#lastPostsLoader').html('<img src="/homepage/images/cc.png">');
-				$.post("/homepage/re.board?num="+cnt,
+				$.get("/homepage/re.board?num="+cnt,
 						function(data){
 							if (data != "") {$("div#start:last").after(data); }
 							$('div#lastPostsLoader').empty();

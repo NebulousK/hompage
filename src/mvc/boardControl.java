@@ -163,6 +163,14 @@ public class boardControl extends HttpServlet{
 	         nextPage = (String) up.processCommand(req, resp);
 	    }*/
 		
+		else if(action.equals("/mboard.board")){
+			String id = req.getParameter("id");
+			int num = Integer.parseInt(req.getParameter("num"));
+			String tempList = dao.mboardlist(id, num);
+			out.println(tempList.replace('\'','\"').replace("$%^", "\'").trim());//
+			return;
+		}
+		
 		RequestDispatcher view = req.getRequestDispatcher(nextPage);
 		view.forward(req, resp);
 	}
