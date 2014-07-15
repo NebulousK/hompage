@@ -719,9 +719,10 @@ public class someDao {
 	}
 	
 	
-	public String msome_board_list(int no) {
+	public String msome_board_list(int no, int num) {
 		connect();
 		String sql;
+		ArrayList<someDto> g = new ArrayList<someDto>();
 		String returnStr="";
 		String boardList = "'board_list':''";
 		String err2="'err':''";
@@ -742,16 +743,36 @@ public class someDao {
 			rs = stmt.executeQuery();
 			int i=0;
 			while(rs.next()){
-				if(i != 0){
-					tempList.append(",");
-				}
-				tempList.append("{'pic':'").append(rs.getInt("photo"))
-                .append("','name':'").append(rs.getString("id"))
-                .append("','date':'").append(rs.getString("day"))
-                .append("','content':'").append(rs.getString("content")).append("'}");
-				i++;
+				someDto dto = new someDto();
+				dto.setId(rs.getString("id"));
+				dto.setNo(rs.getInt("no"));
+				dto.setContent(rs.getString("content"));
+				dto.setDay(rs.getString("day"));
+				dto.setPhoto(rs.getString("photo"));
+				g.add(dto);
 			}
-			boardList = "'board_list':[" + tempList.toString() + "]";
+			if(num+5 < g.size()){
+				for(int j=num; j < num + 5; j++){
+					someDto rs = g.get(j);
+					if(i != 0){tempList.append(",");}
+					tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
+					.append("','name':'").append(rs.getId())
+					.append("','date':'").append(rs.getDay())
+					.append("','content':'").append(rs.getContent().replace("\"","?")).append("'}");
+					i++;
+				}
+			}else{
+				for(int j=num; j < g.size(); j++){
+					someDto rs = g.get(j);
+					if(i != 0){tempList.append(",");}
+					tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
+					.append("','name':'").append(rs.getId())
+					.append("','date':'").append(rs.getDay())
+					.append("','content':'").append(rs.getContent().replace("\"","?")).append("'}");
+					i++;
+				}
+			}
+			boardList = "'someboard_list':[" + tempList.toString() + "]";
 		} catch (Exception err) {
 			System.out.println(err);
 		} finally {
@@ -883,6 +904,47 @@ public class someDao {
 		}
 		return g;
 	}
+	
+	public String mphoto(int no){
+		connect();
+		String sql;
+		String returnStr="";
+		String boardList = "'photo_list':''";
+		String err2="'err':''";
+		StringBuffer tempList = new StringBuffer();
+		try {
+			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setInt(2, no);
+			rs = stmt.executeQuery();
+			rs.next();
+			int id1 = rs.getInt("man_ID");
+			int id2 = rs.getInt("woman_ID");
+			/*System.out.println(stmt);*/
+			sql = "select * from `someboard_plus` where no in (select no from some_board where `id_no` = ? or `id_no` = ?)";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, id1);
+			stmt.setInt(2, id2);
+			rs = stmt.executeQuery();
+		/*	System.out.println(stmt);*/
+			int i=0;
+			while (rs.next()) {
+				if(i != 0){tempList.append(",");}
+				tempList.append("{'html':'").append("<img src=?/homepage/profile/"+ rs.getString("filename") + "? style=?width: 100%; height: 100%;margin-top: 7px; margin-bottom: 7px?/>").append("'}");
+				i++;
+			}
+			boardList = "'photo_list':[" + tempList.toString() + "]";
+			/*boardList = "[" + tempList.toString() + "]";*/
+		} catch (Exception err) {
+			System.out.println(err);
+		} finally {
+			discon();
+		}
+		return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
+		/*return returnStr = boardList;*/
+	}
+	
 	
 	public String sha1(String s) {
 	    try {

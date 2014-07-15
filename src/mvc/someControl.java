@@ -112,8 +112,9 @@ public class someControl extends HttpServlet{
 
 		else if(action.equals("/mlubstory.some")){
 			int no = Integer.parseInt(req.getParameter("no"));
-			String tempList = dao.msome_board_list(no);
-			out.println(tempList.replace('\'','\"').trim());
+			int num = Integer.parseInt(req.getParameter("num"));
+			String tempList = dao.msome_board_list(no, num);
+			out.println(tempList.replace('\'','\"').replace("?", "\'").trim());
 			return;
 		}
 		
@@ -156,6 +157,15 @@ public class someControl extends HttpServlet{
 			req.setAttribute("g", g);
 			nextPage = "/someNsome/menu2/photo.jsp";
 		}
+		
+		
+		else if(action.equals("/mluvphoto.some")){
+			int no = Integer.parseInt(req.getParameter("no"));
+			String tempList = dao.mphoto(no);
+			out.println(tempList.replace('\'','\"').replace("?", "\'").trim());
+			return;
+		}
+		
 	
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다
 		view.forward(req, resp);// req의 모든정보를얘가 던져주는곳  다음 페이지에서 request.getattribute("a")를 하면 마가나온다	
