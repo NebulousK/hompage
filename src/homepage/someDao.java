@@ -34,6 +34,8 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 import org.apache.regexp.RE;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -426,6 +428,225 @@ public class someDao {
 		return re;
 	}
 	
+	public String midealtype(int no, String sex) {
+		connect();
+		ArrayList<someDto> g = new ArrayList<someDto>();
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> map2 = new HashMap<Integer, Integer>();
+		String sql = "";
+		someDto re = new someDto();
+		int age = 0, height = 0;
+		String hobby = null, fashions = null, blood = null, style = null, weight = null, fashion = null, fashion2 = null, fashion3 = null;
+		String returnStr="";
+		String err="'err':''";
+		String psnDetail = "'psn_detail':''";
+		StringBuffer tempData = new StringBuffer();
+		try {
+			sql = "select * from `join` where userid = ? and date = CURDATE()";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				sql = "SELECT a.no ,a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, Integer.parseInt(rs.getString("itemid")));
+				rs = stmt.executeQuery();
+				rs.next();
+				re.setNo(rs.getInt("a.no"));
+				re.setName(rs.getString("a.name"));
+				re.setAge(Integer.parseInt(rs.getString("a.age")));
+				re.setBlood(rs.getString("b.blood"));
+				re.setHeight(Integer.parseInt(rs.getString("b.height")));
+				re.setWeight(Integer.parseInt(rs.getString("b.weight")));
+				String c[] = rs.getString("a.addr").split(" ");
+				re.setAddr(c[1]);
+				re.setStyle(rs.getString("b.style"));
+				re.setFashion(rs.getString("b.fashion"));
+				re.setHobby(rs.getString("b.hobby"));
+				re.setPhoto(rs.getString("a.photo"));
+				tempData.append("{")
+                .append("'name':'").append(rs.getString("name")).append("',")
+                .append("'age':'").append(rs.getString("age")).append("',")
+                .append("'blood':'").append(rs.getString("blood")).append("',")
+                .append("'height':'").append(rs.getString("height")).append("',")
+                .append("'weight':'").append(rs.getString("weight")).append("',")
+                .append("'addr':'").append(c[1]).append("',")
+                .append("'style':'").append(rs.getString("style")).append("',")
+                .append("'fashion':'").append(rs.getString("fashion")).append("',")
+                .append("'hobby':'").append(rs.getString("hobby")).append("',")
+                .append("'pic':'").append(rs.getString("photo")).append("'")
+                .append("}");	
+			psnDetail = "'psn_detail':" + tempData.toString() + "";
+			returnStr = "{'data':{" + psnDetail + "," + err + "}}";
+			}else {
+				sql = "select * from idealtype where no = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				rs = stmt.executeQuery();
+				rs.next();
+				age = Integer.parseInt(rs.getString("age"));
+				height = Integer.parseInt(rs.getString("height"));
+				hobby = rs.getString("hobby");
+				blood = rs.getString("blood");
+				style = rs.getString("style");
+				weight = rs.getString("weight");
+				fashions = rs.getString("fashion");
+				String arr[] = fashions.split(",");
+				fashion = arr[0];
+				if (!arr[1].equals(null)) {fashion2 = arr[1];}
+				if (!arr[2].equals(null)) {fashion3 = arr[2];}
+				sql = "SELECT a.no ,a.age, b.height, b.hobby, b.blood,b.style, b.weight, b.fashion FROM member a, m_profile b WHERE a.sex = ? AND a.no = b.no AND a.age <= ?  AND a.no not in (select itemid from `join` where userid = ?) and a.no not in (select `man_ID` from `some_some` where state = ?) and a.no not in (select `woman_ID` from `some_some` where state = ?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, sex);
+				stmt.setInt(2, rs.getInt("age"));
+				stmt.setInt(3, no);
+				stmt.setInt(4, 1);
+				stmt.setInt(5, 1);
+				rs = stmt.executeQuery();
+				while (rs.next()) {
+					someDto dto = new someDto();
+					dto.setNo(Integer.parseInt(rs.getString("a.no")));
+					dto.setAge(Integer.parseInt(rs.getString("a.age")));
+					dto.setHeight(Integer.parseInt(rs.getString("b.height")));
+					dto.setHobby(rs.getString("b.hobby"));
+					dto.setBlood(rs.getString("b.blood"));
+					dto.setStyle(rs.getString("b.style"));
+					dto.setWeight(rs.getInt("b.weight"));
+					fashions = rs.getString("b.Fashion");
+					String arr1[] = fashions.split(",");
+					dto.setFashion(arr1[0]);
+					if (!arr1[1].equals(null)) {dto.setFashion2(arr1[1]);}
+					if (!arr1[2].equals(null)) {dto.setFashion3(arr1[2]);}
+					g.add(dto);
+				}
+				for (int i = 0; i < g.size(); i++) {
+					someDto dto = g.get(i);
+					int result = 0;
+					if (height >= dto.getHeight()) {
+						int r = height - dto.getHeight();
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					} else if (height <= dto.getHeight()) {
+						int r = dto.getHeight() - height;
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					}
+					if (Integer.parseInt(weight) >= dto.getWeight()) {
+						int r = Integer.parseInt(weight) - dto.getWeight();
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					} else if (Integer.parseInt(weight) <= dto.getWeight()) {
+						int r = dto.getWeight() - Integer.parseInt(weight);
+						if (r > 10) {result += 0;} 
+						else if (r <= 3) {result += 10;} 
+						else if (r <= 5) {result += 7;} 
+						else if (r <= 10) {result += 4;}
+					}
+					if (hobby.equals(dto.getHobby())) {result += 10;}
+					if (blood.equals(dto.getBlood())) {result += 10;} 
+					else if (!blood.equals(dto.getBlood())) {result += 5;}
+					if (style.equals(dto.getStyle())) {result += 10;}
+					if (fashion.equals(dto.getFashion())) {result += 10;}
+					if (fashion.equals(dto.getFashion2())) {result += 10;}
+					if (fashion.equals(dto.getFashion3())) {result += 10;}
+					if (fashion2.equals(dto.getFashion())) {result += 10;}
+					if (fashion2.equals(dto.getFashion2())) {result += 10;}
+					if (fashion2.equals(dto.getFashion3())) {result += 10;}
+					if (fashion3.equals(dto.getFashion())) {result += 10;}
+					if (fashion3.equals(dto.getFashion2())) {result += 10;}
+					if (fashion3.equals(dto.getFashion3())) {result += 10;}
+					map.put(dto.getNo(), result);
+				}
+				sql = "select * from rating ORDER BY userID ASC";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\test.csv"));
+				while (rs.next()) {
+					bw.write(rs.getInt("userID") + "," + rs.getInt("itemID") + "," + rs.getInt("value") + "\n");
+				}
+				bw.close();
+				DataModel model = new FileDataModel(new File("c:\\test.csv"));
+				UserSimilarity similarity = new PearsonCorrelationSimilarity(model);
+				// 피어슨 상관 관계??
+				UserNeighborhood neighborhood = new NearestNUserNeighborhood(2, similarity, model);
+				// NearestNUserNeighborhood(int n, double minSimilarity,
+				// UserSimilarity userSimilarity, DataModel dataModel)
+				Recommender recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
+				List<RecommendedItem> recommendations = recommender.recommend(no, 3);
+				// recommend(long userID, int howMany)
+				for (RecommendedItem recommendation : recommendations) {
+						map2.put((int) recommendation.getItemID(), (int) (recommendation.getValue() * 10));
+				}
+				Set<Entry<Integer, Integer>> set2 = map2.entrySet();
+				Iterator<Entry<Integer, Integer>> it2 = set2.iterator();
+				while (it2.hasNext()) {
+					Map.Entry<Integer, Integer> e = (Map.Entry<Integer, Integer>) it2.next();
+					if (map.get(e.getKey()) != null) {
+						map.put(e.getKey(), map.get(e.getKey()) + e.getValue());
+					}
+				}
+				ValueComparator<Integer, Integer> comparator = new ValueComparator<Integer, Integer>(map);
+				TreeMap<Integer, Integer> reverse = new TreeMap<Integer, Integer>(new ReverseComparator<Integer>(comparator));
+				reverse.putAll(map);
+				 /*System.out.println(reverse); 
+				 System.out.println(reverse.firstKey()); 
+				 System.out.println(reverse.get(reverse.firstKey())); */
+				sql = "SELECT a.name, a.age, b.blood, b.height, b.weight, a.addr , b.style, b.fashion, b.hobby , a.photo  FROM member a, m_profile b WHERE a.no = ? AND a.no = b.no";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, reverse.firstKey());
+				rs = stmt.executeQuery();
+				rs.next();
+				re.setNo(reverse.firstKey());
+				re.setName(rs.getString("a.name"));
+				re.setAge(Integer.parseInt(rs.getString("a.age")));
+				re.setBlood(rs.getString("b.blood"));
+				re.setHeight(Integer.parseInt(rs.getString("b.height")));
+				re.setWeight(Integer.parseInt(rs.getString("b.weight")));
+				String c[] = rs.getString("a.addr").split(" ");
+				re.setAddr(c[1]);
+				re.setStyle(rs.getString("b.style"));
+				re.setFashion(rs.getString("b.fashion"));
+				re.setHobby(rs.getString("b.hobby"));
+				re.setPhoto(rs.getString("a.photo"));
+				tempData.append("{")
+	                .append("'name':'").append(rs.getString("name")).append("',")
+	                .append("'age':'").append(rs.getString("age")).append("',")
+	                .append("'blood':'").append(rs.getString("blood")).append("',")
+	                .append("'height':'").append(rs.getString("height")).append("',")
+	                .append("'weight':'").append(rs.getString("weight")).append("',")
+	                .append("'addr':'").append(c[1]).append("',")
+	                .append("'style':'").append(rs.getString("style")).append("',")
+	                .append("'fashion':'").append(rs.getString("fashion")).append("',")
+	                .append("'hobby':'").append(rs.getString("hobby")).append("',")
+	                .append("'pic':'").append(rs.getString("photo")).append("'")
+	                .append("}");	
+				psnDetail = "'psn_detail':" + tempData.toString() + "";
+				returnStr = "{'data':{" + psnDetail + "," + err + "}}";
+				sql = "insert into `join`(userid, itemid, date ) values(?,?,now())";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.setInt(2, reverse.firstKey());
+				stmt.executeUpdate();
+				sql = "insert into rating(userid, itemid, value) values(?,?,0)";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, no);
+				stmt.setInt(2, reverse.firstKey());
+				stmt.executeUpdate();
+			}
+		} catch (Exception err2) {
+			System.out.println(err2);
+		} finally {
+			discon();
+		}
+		return returnStr;
+	}
+	
 	public void dash(someDto g){
 		connect();
 		String sql ="";		
@@ -537,6 +758,39 @@ public class someDao {
 			discon();
 		}
 		return v;
+	}
+	
+	public String mcallme(int no){
+		connect();
+		String sql ="";
+		String returnStr="";
+		String err="'err':''";
+		String callmeList = "'callme_list':''";
+		StringBuffer tempList = new StringBuffer();
+		try{
+			sql = "select a.name, a.age, a.photo,b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment , c.userID, c.itemID , c.state from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.state = 0 and c.itemID = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			int i=0;
+			while(rs.next()){
+				if(i != 0){
+					tempList.append(",");
+			    }
+					String c[] = rs.getString("a.addr").split(" ");
+			        tempList.append("{'photo':'").append(rs.getString("a.photo"))
+			                .append("','name':'").append(rs.getString("a.name"))
+			                .append("','addr':'").append(c[1]).append("'}");
+			        i++;
+			}
+			callmeList = "'callme_list':[" + tempList.toString() + "]";
+			returnStr = "{'data':{" + callmeList + "," + err + "}}";
+		}catch(Exception err2){
+			System.out.println("callme" + err2);
+		}finally{
+			discon();
+		}
+		return returnStr;
 	}
 	
 	public int callme(int userID, int itemID, int state, String sex){
@@ -905,13 +1159,10 @@ public class someDao {
 		return g;
 	}
 	
-	public String mphoto(int no){
+	public JSONArray mphoto(int no){
 		connect();
 		String sql;
-		String returnStr="";
-		String boardList = "'photo_list':''";
-		String err2="'err':''";
-		StringBuffer tempList = new StringBuffer();
+		JSONArray result = new JSONArray();
 		try {
 			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
 			stmt = con.prepareStatement(sql);
@@ -928,21 +1179,21 @@ public class someDao {
 			stmt.setInt(2, id2);
 			rs = stmt.executeQuery();
 		/*	System.out.println(stmt);*/
-			int i=0;
 			while (rs.next()) {
-				if(i != 0){tempList.append(",");}
-				tempList.append("{'html':'").append("<img src=?/homepage/profile/"+ rs.getString("filename") + "? style=?width: 100%; height: 100%;margin-top: 7px; margin-bottom: 7px?/>").append("'}");
-				i++;
+				JSONObject obj = new JSONObject();
+				obj.put("name","http://192.168.10.31"+ rs.getString("fileurl"));
+			    obj.put("size",rs.getString("filesize"));
+			    obj.put("date",rs.getString("filetype"));
+			    obj.put("path", "http://192.168.10.31"+ rs.getString("fileurl"));
+			    obj.put("thumb", "http://192.168.10.31"+ rs.getString("fileurl"));
+			    result.add(obj);
 			}
-			boardList = "'photo_list':[" + tempList.toString() + "]";
-			/*boardList = "[" + tempList.toString() + "]";*/
 		} catch (Exception err) {
 			System.out.println(err);
 		} finally {
 			discon();
 		}
-		return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
-		/*return returnStr = boardList;*/
+		return result;
 	}
 	
 	

@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
+
 public class someControl extends HttpServlet{
 	/**
 	 * 
@@ -54,6 +59,21 @@ public class someControl extends HttpServlet{
 		 	nextPage = "/someNsome/main2.jsp";
 		}
 		
+		else if(action.equals("/mdash.some")){
+			String sex;
+			if(req.getParameter("sex").equals("man")){
+				sex = "woman";
+			}else{
+				sex = "man";
+			}
+			String result = dao.midealtype(Integer.parseInt((String)req.getParameter("no")), sex);
+		 	//String check[] = dao.dashch(Integer.parseInt((String)session.getAttribute("no")), dto.getNo()).split(",");
+		 	//req.setAttribute("dto", dto);
+		 	//req.setAttribute("check", check);
+			out.println(result.replace('\'','\"').trim());
+			return;
+		}
+		
 		else if(action.equals("/dashup.some")){
 			String cmd = req.getParameter("action");
 			dto.setUserID(Integer.parseInt((String) req.getParameter("userID")));
@@ -64,7 +84,7 @@ public class someControl extends HttpServlet{
 				dao.dash(dto);	
 				out.println("<script>");
 				out.println("alert('대쉬 하였습니다. 좋은 결과가 있길 바래요!!');");
-				out.println("location.href = '/homepage/main.jsp';");
+				out.println("location.href = '/homepage/dash.some';");
 				out.println("</script>");
 				return;
 			}	
@@ -72,7 +92,7 @@ public class someControl extends HttpServlet{
 				dao.dashup(dto);
 				out.println("<script>");
 				out.println("alert('대쉬를 수정 하였습니다. 좋은 결과가 있길 바래요!!');");
-				out.println("location.href = '/homepage/main.jsp';");
+				out.println("location.href = '/homepage/dash.some';");
 				out.println("</script>");
 				return;
 			}
@@ -82,6 +102,12 @@ public class someControl extends HttpServlet{
 			Vector<someDto> g = dao.callme(Integer.parseInt((String)session.getAttribute("no")));
 			req.setAttribute("g", g);
 			nextPage = "/someNsome/main.jsp";
+		}
+		
+		else if(action.equals("/mcall.some")){
+			String g = dao.mcallme(Integer.parseInt((String)req.getParameter("no")));
+			out.println(g.replace('\'','\"').trim());
+			return;
 		}
 		
 		else if(action.equals("/callup.some")){
@@ -101,6 +127,9 @@ public class someControl extends HttpServlet{
 				return;
 			}
 		}
+		
+		
+		
 		
 		else if(action.equals("/luvstory.some")){
 			ArrayList list= new ArrayList();
@@ -161,8 +190,9 @@ public class someControl extends HttpServlet{
 		
 		else if(action.equals("/mluvphoto.some")){
 			int no = Integer.parseInt(req.getParameter("no"));
-			String tempList = dao.mphoto(no);
-			out.println(tempList.replace('\'','\"').replace("?", "\'").trim());
+			JSONArray tempList = dao.mphoto(no);
+			//JSONObject = {} JSONArray=[]
+		    out.println("{\"files\":" + tempList + "}");
 			return;
 		}
 		
