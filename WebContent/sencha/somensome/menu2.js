@@ -19,16 +19,16 @@ callme.init = function(){
     CallmeList = new Ext.List({
         id:'CallmeList',
         store:CallmeStore,
-        height:400,
+        height:'100%',
         blockRefresh:true,
         onItemDisclosure: {
-            handler: function(record, btn, index) {  
-                main.MainPanel.layout.setActiveItem(detail.panel_detail); 
-                detail.panel_detail.setUserId(record.get('name'));
-                detail.panel_detail.getUserInfo();
+            handler: function(record, btn, index) {
+            	main.MainPanel.layout.setActiveItem(mcall.panel_mcall);
+            	mcall.panel_mcall.setUserId(record.get('name'));
+            	mcall.panel_mcall.getUserInfo();
             }
         },
-        itemTpl:'<div><div style="float: left"><img src="http://192.168.10.31/homepage/profile/{photo}" width="50px" height="50px"/></div><div style="float: left"><div style="float: left"><strong>이름 : {name}</strong></div><div style="clear: both; height:2px"></div><div style="float: left"> 사는곳 : {addr} </div></div></div>',
+        itemTpl:'<div><div style="float: left"><img src="'+ common_url +'/profile/{photo}" width="50px" height="50px"/></div><div style="float: left"><div style="float: left"><strong>이름 : {name}</strong></div><div style="clear: both; height:2px"></div><div style="float: left"> 사는곳 : {addr} </div></div></div>',
     });        
 
     function setCallmeList(Jv_data) {
@@ -47,7 +47,7 @@ callme.init = function(){
         getCallmeList:function()
         {
             Ext.Ajax.request({
-                url: common_url + '/mcall.some?no=569',
+                url: common_url + '/mcall.some?no=570',
                 success: function(response, opts) {
                     console.log(response.responseText);
                     var JsonData = JSON.parse(response.responseText);

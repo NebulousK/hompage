@@ -793,6 +793,51 @@ public class someDao {
 		return returnStr;
 	}
 	
+	public String mcallme_detail(int no, String name){
+		connect();
+		String sql ="";
+		String returnStr="";
+		String err="'err':''";
+		String callmeList = "'callme_list':''";
+		StringBuffer tempList = new StringBuffer();
+		try{
+			sql = "select a.name, a.age, a.photo,b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment , c.userID, c.itemID , c.state from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.state = 0 and c.itemID = ? and a.name=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, no);
+			stmt.setString(2, name);
+			rs = stmt.executeQuery();
+			int i=0;
+			while(rs.next()){
+				if(i != 0){
+					tempList.append(",");
+			    }
+					String c[] = rs.getString("a.addr").split(" ");
+					tempList.append("{")
+	                .append("'name':'").append(rs.getString("name")).append("',")
+	                .append("'age':'").append(rs.getString("age")).append("',")
+	                .append("'blood':'").append(rs.getString("blood")).append("',")
+	                .append("'height':'").append(rs.getString("height")).append("',")
+	                .append("'weight':'").append(rs.getString("weight")).append("',")
+	                .append("'addr':'").append(c[1]).append("',")
+	                .append("'style':'").append(rs.getString("style")).append("',")
+	                .append("'fashion':'").append(rs.getString("fashion")).append("',")
+	                .append("'hobby':'").append(rs.getString("hobby")).append("',")
+	                .append("'comment':'").append(rs.getString("coment")).append("',")
+	                .append("'pic':'").append(rs.getString("photo")).append("'")
+	                .append("}");	
+			        i++;
+			}
+			callmeList = "'callme':" + tempList.toString() + "";
+			returnStr = "{'data':{" + callmeList + "," + err + "}}";
+		}catch(Exception err2){
+			System.out.println("callme" + err2);
+		}finally{
+			discon();
+		}
+		return returnStr;
+	}
+	
+	
 	public int callme(int userID, int itemID, int state, String sex){
 		connect();
 		String sql ="";

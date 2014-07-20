@@ -110,6 +110,12 @@ public class someControl extends HttpServlet{
 			return;
 		}
 		
+		else if(action.equals("/mcall_detail.some")){
+			String g = dao.mcallme_detail(Integer.parseInt((String)req.getParameter("no")),req.getParameter("name"));
+			out.println(g.replace('\'','\"').trim());
+			return;
+		}
+		
 		else if(action.equals("/callup.some")){
 			String sex = (String) session.getAttribute("sex");
 			int select = dao.callme(Integer.parseInt((String)req.getParameter("userID")), Integer.parseInt((String)req.getParameter("itemID")), Integer.parseInt((String)req.getParameter("state")), sex);

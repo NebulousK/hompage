@@ -45,8 +45,8 @@ menu.panel_menu = new Ext.form.FormPanel({
                 textAlign:'center',
                 text:'<div align="center"><img src= "'+ local_img + 'compose.png">Dash</div>',
                 handler: function(){
-                	main.MainPanel.layout.setActiveItem(detail.panel_detail);
-                	detail.panel_detail.getUserInfo();
+                	main.MainPanel.layout.setActiveItem(dash.panel_dash);
+                	dash.panel_dash.getUserInfo();
                 }                               
             },{ 
                 xtype:'spacer',

@@ -1,23 +1,27 @@
-﻿Ext.ns("dash");
-Ext.ns("dash.panel_dash");
+﻿Ext.ns("mcall");
+Ext.ns("mcall.panel_mcall");
 
-dash.panel_dash = new Ext.form.FormPanel({
+mcall.panel_mcall = new Ext.form.FormPanel({
 	fullscreen: true,
     useCurrentLocation: true,               
     scroll:'vertical',
     cardSwitchAnimation:"cube",
     width: '100%',
+    setUserId:function(user_id)
+    {
+        this.input_user_id = user_id;
+    },
     getUserInfo:function()
     {
         Ext.Ajax.request({
-            url: common_url + '/mdash.some?no=532&sex=man',
+            url: common_url + '/mcall_detail.some?no=570&name=' +  encodeURIComponent(this.input_user_id),
             success: function(response, opts) {
                 console.log(response.responseText);
                 var JsonData = JSON.parse(response.responseText);
                 console.log(JsonData);
                 if(JsonData.data.err == "")
                 {
-                    dash.panel_dash.setPersonFields(JsonData.data.psn_detail);
+                    dash.panel_dash.setPersonFields(JsonData.data.callme);
                 }
                 else
                 {
@@ -40,9 +44,8 @@ dash.panel_dash = new Ext.form.FormPanel({
         Ext.getCmp("panel_dash.style").setValue(psndash.style);
         Ext.getCmp("panel_dash.fashion").setValue(psndash.fashion);
         Ext.getCmp("panel_dash.hobby").setValue(psndash.hobby);
-        Ext.getCmp("panel_dash.comment").setValue(psndash.comment);
-        Ext.getCmp("panel_dash.user_pic").update(psnPic);
-        
+        Ext.getCmp("panel_dash.comment").setValue(psndash.coment);
+        Ext.getCmp("panel_dash.user_pic").update(psnPic);    
     },
     layout: {
         type: 'vbox',
@@ -153,20 +156,42 @@ dash.panel_dash = new Ext.form.FormPanel({
              useClearIcon:false   
            }, 
            {
-               xtype:'textareafield',
+        	   xtype:'textfield',
                id:'panel_dash.comment',
-               placeHolder:'작업멘트를 날리세요',
-               width : '100%',
-               useClearIcon:false,
+               label:'멘트',
+               disabled : true,
+               disabledCls: 'af-item-disabled',
+               autoCapitalisze:true,
+               useClearIcon:false   
            },
            {
-                xtype:'button',
-                ui: 'decline-round',                
-                name:'panel_dash.button_close',
-                width:'100%',
-                handler:function(){                                     
-                   main.MainPanel.layout.setActiveItem(list.panel_list); 
-           },
-           	text:'대쉬!!!!'
-            }]                                  
+        	  layout: {
+                   align: 'center',
+                   type: 'hbox',
+                   pack: 'center'},  
+                   flex: 2, 
+                   //style: 'margin: .5em;',
+           items:[{
+                      xtype:'button',
+                      ui: 'decline-round',
+                      width: '45%',
+                      textAlign:'center',
+                      text: '수락',    
+                      handler:function(){                                     
+                           main.MainPanel.layout.setActiveItem(list.panel_list); 
+                      },
+                  },{ 
+                      xtype:'spacer',
+                      width:'5%',
+                  },{
+                      xtype:'button',
+                      width: '45%',
+                      ui: 'decline-round',
+                      textAlign:'center',
+                      text:'거절',
+                      handler:function(){                                     
+                          main.MainPanel.layout.setActiveItem(list.panel_list); 
+                      },
+                  }]
+           	}]                          
 });     
