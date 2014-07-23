@@ -8,8 +8,7 @@ scrollList.init = function() {
     	fields: ['pic', 'name', 'date', 'content']
     });
     
-    var orgData= [];
-	// √ﬂ∞°«“ µ•¿Ã≈∏ º≠πˆøÕ¿« ≈ÎΩ≈Ω√ Ajax∑Œ ∞Ëº” πﬁæ∆ø√ µ•¿Ã≈∏∏¶ ¿”Ω√∑Œ ∏∏µÎ.                   
+    var orgData= [];              
     var addData= [];
     
     var store =   new Ext.data.Store({
@@ -59,7 +58,7 @@ scrollList.init = function() {
     
     scrollList.panel = new Ext.Panel({
         fullscreen: true,
-        html:'<BR><font size="2">æ∆∑°∑Œ µÂ∑°±◊ «œ∏È ±€¿ª ¥ı ∫“∑Ø ø…¥œ¥Ÿ.',
+        html:'<BR><font size="2">ÏïÑÎûòÎ°ú ÎÇ¥Î¶¨Î©¥ Í∏ÄÏù¥ Í≥ÑÏÜç ÎÇòÏò¥.',
         getsomeboardList:function()
         {
             Ext.Ajax.request({

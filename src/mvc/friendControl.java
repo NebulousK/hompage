@@ -35,6 +35,8 @@ public class friendControl extends HttpServlet{
 		String action = url.substring(path.length());
 		String nextPage = "";
 		resp.setContentType("text/html;charset=utf-8"); // 어떤 타입으로 출력할것인지 명시하였다.
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 		PrintWriter out=resp.getWriter(); //
 		GroupDao dao = new GroupDao();
 		GroupDto dto = new GroupDto();
@@ -93,6 +95,22 @@ public class friendControl extends HttpServlet{
 			req.setAttribute("dto", rList);
 			req.setAttribute("g", list);
 			nextPage = "/friendList/main.jsp";
+		}
+		
+		else if(action.equals("/mfind.friend")){
+			String find = req.getParameter("find");
+			String no = req.getParameter("no");
+			String name = req.getParameter("name");
+			String result = dao.mfind(find, no, name);
+			out.println(result.replace('\'','\"').trim());
+			return;
+		}
+		
+		else if(action.equals("/mfindd.friend")){
+			String no = req.getParameter("no");
+			String result = dao.mfindd(no);
+			out.println(result.replace('\'','\"').trim());
+			return;
 		}
 		
 		else if(action.equals("/ListAdd.friend")){

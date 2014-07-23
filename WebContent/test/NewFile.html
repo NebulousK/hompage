@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+window.close();
+
+self.close();
+
+window.opener = window.location.href; self.close();
+
+window.open('about:blank', '_self').close();
+
+</script>
+</body>
+</html>

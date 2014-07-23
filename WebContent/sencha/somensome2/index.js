@@ -34,9 +34,7 @@ main.initMainPanel = function()
             items: [
                 { 
                     cls:'Login',
-                    //iconMask: true,
                     text: '<div align="center"><img src= "'+ local_img + 'compose.png">love</div>', 
-                    //text: 'Login' ,
                     handler: function(btn,event){
                     	scrollList.init();
                     	scrollList.panel.getsomeboardList();
@@ -52,10 +50,10 @@ main.initMainPanel = function()
                 },
                 {   
                     cls:'Camera',
-                    text: '<div align="center"><img src= "'+ local_img + 'power_on.png">Calendar</div>',
+                    text: '<div align="center"><img src= "'+ local_img + 'info.png">Calendar</div>',
                     handler: function(btn,event){
-                        list.init();
-                        callCamera(list.panel_list);    
+                    	cel.init();
+                    	main.MainPanel.layout.setActiveItem(cel.panel);   
                     }
 				
                 }]

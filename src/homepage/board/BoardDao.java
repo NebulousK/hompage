@@ -17,6 +17,9 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -130,8 +133,8 @@ public class BoardDao {
 			ArrayList<someDto> g = new ArrayList<someDto>();
 			String returnStr="";
 			String boardList = "'board_list':''";
-			String err2="'err':''";
-			StringBuffer tempList = new StringBuffer();
+			String err2 = "\"err\":\"\"";
+			JSONArray result = new JSONArray();
 			try {
 				sql ="select a.no, a.id, a.content, a.day, a.hit, a.like, b.photo from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id = ? order by no desc";
 				stmt = con.prepareStatement(sql);
@@ -141,7 +144,6 @@ public class BoardDao {
 				stmt.setString(4, id);
 				stmt.setString(5, id);
 				rs = stmt.executeQuery();
-				int i=0;
 				while(rs.next()){
 					someDto dto = new someDto();
 					dto.setId(rs.getString("id"));
@@ -154,31 +156,31 @@ public class BoardDao {
 				if(num+5 < g.size()){
 					for(int j=num; j < num + 5; j++){
 						someDto rs = g.get(j);
-						if(i != 0){tempList.append(",");}
-						tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
-						.append("','name':'").append(rs.getId())
-						.append("','date':'").append(rs.getDay())
-						.append("','content':'").append(rs.getContent().replace("\"","$%^")).append("'}");
-						i++;
+						JSONObject obj = new JSONObject();
+						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+					    obj.put("name",rs.getId());
+					    obj.put("date",rs.getDay());
+					    obj.put("content", rs.getContent().replace("\"", "\'"));
+					    result.add(obj);
 					}
 				}else{
 					for(int j=num; j < g.size(); j++){
 						someDto rs = g.get(j);
-						if(i != 0){tempList.append(",");}
-						tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
-						.append("','name':'").append(rs.getId())
-						.append("','date':'").append(rs.getDay())
-						.append("','content':'").append(rs.getContent().replace("\"","$%^")).append("'}");
-						i++;
+						JSONObject obj = new JSONObject();
+						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+					    obj.put("name",rs.getId());
+					    obj.put("date",rs.getDay());
+					    obj.put("content", rs.getContent().replace("\"", "\'"));
+					    result.add(obj);
 					}
 				}
-				boardList = "'someboard_list':[" + tempList.toString() + "]";
+				boardList = "\"someboard_list\":" + result.toString() ;
 			} catch (Exception err) {
 				System.out.println(err);
 			} finally {
 				freeCon();
 			}
-			return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
+			return returnStr = "{\"data\":{" + boardList + ","+ err2 + "}}";
 		}
 	
 	//like 증가

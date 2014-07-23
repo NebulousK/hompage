@@ -1024,8 +1024,8 @@ public class someDao {
 		ArrayList<someDto> g = new ArrayList<someDto>();
 		String returnStr="";
 		String boardList = "'board_list':''";
-		String err2="'err':''";
-		StringBuffer tempList = new StringBuffer();
+		String err2 = "\"err\":\"\"";
+		JSONArray result = new JSONArray();
 		try {
 			sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
 			stmt = con.prepareStatement(sql);
@@ -1053,31 +1053,32 @@ public class someDao {
 			if(num+5 < g.size()){
 				for(int j=num; j < num + 5; j++){
 					someDto rs = g.get(j);
-					if(i != 0){tempList.append(",");}
-					tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
-					.append("','name':'").append(rs.getId())
-					.append("','date':'").append(rs.getDay())
-					.append("','content':'").append(rs.getContent().replace("\"","?")).append("'}");
-					i++;
+					JSONObject obj = new JSONObject();
+					obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+				    obj.put("name",rs.getId());
+				    obj.put("date",rs.getDay());
+				    obj.put("content", rs.getContent().replace("\"", "\'"));
+				    result.add(obj);
 				}
 			}else{
 				for(int j=num; j < g.size(); j++){
 					someDto rs = g.get(j);
-					if(i != 0){tempList.append(",");}
-					tempList.append("{'pic':'").append("http://192.168.10.31/homepage/profile/" + rs.getPhoto())
-					.append("','name':'").append(rs.getId())
-					.append("','date':'").append(rs.getDay())
-					.append("','content':'").append(rs.getContent().replace("\"","?")).append("'}");
-					i++;
+					JSONObject obj = new JSONObject();
+					obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+				    obj.put("name",rs.getId());
+				    obj.put("date",rs.getDay());
+				    obj.put("content", rs.getContent().replace("\"", "\'"));
+				    result.add(obj);
 				}
 			}
-			boardList = "'someboard_list':[" + tempList.toString() + "]";
+			boardList = "\"someboard_list\":" + result.toString() ;
 		} catch (Exception err) {
 			System.out.println(err);
+			err2 = err.toString();
 		} finally {
 			discon();
 		}
-		return returnStr = "{'data':{" + boardList + "," + err2 + "}}";
+		return returnStr = "{\"data\":{" + boardList + ","+ err2 + "}}";
 	}
 	
 	public void upsomeboard(int no, String content){

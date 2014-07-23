@@ -40,6 +40,8 @@ public class boardControl extends HttpServlet{
 		String action = url.substring(path.length());
 		String nextPage = "";
 		resp.setContentType("text/html;charset=utf-8"); // 어떤 타입으로 출력할것인지 명시하였다.
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 		PrintWriter out=resp.getWriter(); //
 		BoardDao dao = new BoardDao();
 		someDao dao2 = new someDao();
@@ -120,7 +122,6 @@ public class boardControl extends HttpServlet{
 		else if(action.equals("/post.board")){
 			String content = req.getParameter("content");
 			String id = req.getParameter("id");
-			//System.out.println(content);
 			dto2.setId(id);
 			dto2.setContent(content);
 			dao.insertBoard(dto2); 

@@ -34,20 +34,19 @@ main.initMainPanel = function()
             items: [
                 { 
                     cls:'Login',
-                    //iconMask: true,
-                    text: '<div align="center"><img src= "'+ local_img + 'compose.png">Dash</div>', 
-                    //text: 'Login' ,
+                    text: '<div align="center"><img src= "'+ local_img + 'dash.png">Dash</div>', 
                     handler: function(btn,event){
-                    	scrollList.init();
-                    	scrollList.panel.getsomeboardList();
-                        main.MainPanel.layout.setActiveItem(scrollList.panel); 
+                    	main.MainPanel.layout.setActiveItem(dash.panel_dash);
+                    	dash.panel_dash.getUserInfo();
 					}               
                 },               
                 {   
                     cls:'Search',
-                    text: '<div align="center"><img src= "'+ local_img + 'photo1.png">Call me</div>',
+                    text: '<div align="center"><img src= "'+ local_img + 'callme.png">Call me</div>',
                     handler: function(btn,event){
-                    	 document.location = "somensome2_1.html"; 
+                    	callme.init();
+                    	callme.panel_callme.getCallmeList();
+                        main.MainPanel.layout.setActiveItem(callme.panel_callme);
                     }
                 }]
         }], 

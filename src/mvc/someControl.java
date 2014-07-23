@@ -41,6 +41,8 @@ public class someControl extends HttpServlet{
 		String action = url.substring(path.length());
 		String nextPage = "";
 		resp.setContentType("text/html;charset=utf-8"); // 어떤 타입으로 출력할것인지 명시하였다.
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 		PrintWriter out=resp.getWriter(); //
 		someDao dao = new someDao();
 		someDto dto = new someDto();
@@ -67,9 +69,6 @@ public class someControl extends HttpServlet{
 				sex = "man";
 			}
 			String result = dao.midealtype(Integer.parseInt((String)req.getParameter("no")), sex);
-		 	//String check[] = dao.dashch(Integer.parseInt((String)session.getAttribute("no")), dto.getNo()).split(",");
-		 	//req.setAttribute("dto", dto);
-		 	//req.setAttribute("check", check);
 			out.println(result.replace('\'','\"').trim());
 			return;
 		}
@@ -149,7 +148,7 @@ public class someControl extends HttpServlet{
 			int no = Integer.parseInt(req.getParameter("no"));
 			int num = Integer.parseInt(req.getParameter("num"));
 			String tempList = dao.msome_board_list(no, num);
-			out.println(tempList.replace('\'','\"').replace("?", "\'").trim());
+			out.println(tempList);
 			return;
 		}
 		

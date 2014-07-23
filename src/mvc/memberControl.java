@@ -40,6 +40,8 @@ public class memberControl extends HttpServlet {
 		String action = url.substring(path.length());
 		String nextPage = "";
 		resp.setContentType("text/html;charset=utf-8"); // 어떤 타입으로 출력할것인지 명시하였다.
+		resp.setHeader("Access-Control-Allow-Origin", "*");
+		resp.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 		PrintWriter out=resp.getWriter(); //
 		someDao dao = new someDao();
 		someDto dto = new someDto();
@@ -273,9 +275,15 @@ public class memberControl extends HttpServlet {
 		}
 		
 		else if(action.equals("/cel.me")){
-			ArrayList g = dao.celendar((int)session.getAttribute("some"));
+			ArrayList g = dao.celendar((int)req.getAttribute("some"));
 			req.setAttribute("g", g);
 			nextPage = "/someNsome/menu3/main.jsp";
+		}
+		
+		else if(action.equals("/mcel.me")){
+			ArrayList g = dao.celendar((int)session.getAttribute("some"));
+			req.setAttribute("g", g);
+			nextPage = "/someNsome/menu3/mmain.jsp";
 		}
 		
 		else if(action.equals("/celin.me")){

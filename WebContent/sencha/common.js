@@ -1,4 +1,4 @@
-var common_url = "http://localhost:8080/homepage";/*http://localhost:8080/homepage*//*http://localhost:8080/books*/
+var common_url = "http://192.168.10.31:8080/homepage";/*http://localhost:8089/homepage*//*http://localhost:8080/books*/
 var local_img = "./img/";
 var android_img = "./img/";
 var iphone_img = "";

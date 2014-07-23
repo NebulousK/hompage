@@ -541,4 +541,90 @@ public class GroupDao {
 			}
 			return list;
 	}
+	
+	public String mfind(String keyField, String no, String name){
+		String sql="";
+		String sql2="";
+		PreparedStatement pstmt;
+		ResultSet rs2;
+		String returnStr="";
+		String err="'err':''";
+		String psnList = "'psn_list':''";
+	    StringBuffer tempList = new StringBuffer();
+		try{
+			sql = "select * from member where name like'%" +keyField + "%'";
+			stmt=con.prepareStatement(sql);
+			rs=stmt.executeQuery();
+			int i = 0;
+			while(rs.next()){
+				if(!rs.getString("no").equals(no)){
+					sql2 = "select * from freind where userid1=? and userid2=?";
+					pstmt = con.prepareStatement(sql2);
+					pstmt.setString(1, name);
+					pstmt.setString(2, rs.getString("name"));
+					rs2 = pstmt.executeQuery();
+					if(rs2.next()){
+						if(rs2.getString("friends") != "true"){
+							if(i != 0){
+					            	tempList.append(",");
+					        	}
+							String addr[] = rs.getString("addr").split(" ");
+				        	tempList.append("{'photo':'").append(rs.getString("photo"))
+				                	.append("','name':'").append(rs.getString("name"))
+				                	.append("','addr':'").append(addr[1]).append("'}");
+				        	i++;
+						}
+					}else{
+						if(i != 0){
+			            	tempList.append(",");
+			        	}
+						String addr[] = rs.getString("addr").split(" ");
+						tempList.append("{'photo':'").append(rs.getString("photo"))
+								.append("','name':'").append(rs.getString("name"))
+								.append("','no':'").append(rs.getString("no"))
+								.append("','addr':'").append(addr[1]).append("'}");
+						i++;						
+					}
+				}
+			}
+			psnList = "'friend_list':[" + tempList.toString() + "]";
+			returnStr = "{'data':{" + psnList + "," + err + "}}";
+		}catch(Exception err2){
+			System.out.println("getFriendList:"+err2);
+		}finally{
+			freeCon();
+		}
+		return returnStr;
+	}
+	
+	public String mfindd(String no){
+		String sql="";
+		String returnStr="";
+		String err="'err':''";
+		String psnDetail = "'psn_detail':''";
+		StringBuffer tempData = new StringBuffer();
+		try{
+			sql = "select * from member where no=?";
+			stmt=con.prepareStatement(sql);
+			stmt.setString(1, no);
+			rs=stmt.executeQuery();
+			while(rs.next()){
+				tempData.append("{")
+                .append("'id':'").append(rs.getString("id")).append("',")
+                .append("'name':'").append(rs.getString("name")).append("',")
+                .append("'age':'").append(rs.getString("age")).append("',")
+                .append("'email':'").append(rs.getString("e-mail")).append("',")
+                .append("'photo':'").append(rs.getString("photo")).append("',")
+                .append("'birthday':'").append(rs.getString("birthday")).append("'")
+                .append("}");
+			}
+			 psnDetail = "'psn_detail':" + tempData.toString() + "";
+			 returnStr = "{'data':{" + psnDetail + "," + err + "}}";
+		}catch(Exception err2){
+			System.out.println("getFriendList:"+err2);
+		}finally{
+			freeCon();
+		}
+		return returnStr;
+	}
 }

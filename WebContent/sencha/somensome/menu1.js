@@ -31,18 +31,17 @@ dash.panel_dash = new Ext.form.FormPanel({
         var psnPic =  '<table width="100%"><tr><td><center>' + 
                       '<img src="' + common_url + 
                       '/profile/' +  psndash.pic +  '" height="100%"></td></tr></table>';
-        Ext.getCmp("panel_dash.name").setValue(psndash.name);
-        Ext.getCmp("panel_dash.age").setValue(psndash.age);
-        Ext.getCmp("panel_dash.blood").setValue(psndash.blood);
-        Ext.getCmp("panel_dash.height").setValue(psndash.height);
-        Ext.getCmp("panel_dash.weight").setValue(psndash.weight);
-        Ext.getCmp("panel_dash.addr").setValue(psndash.addr);
-        Ext.getCmp("panel_dash.style").setValue(psndash.style);
-        Ext.getCmp("panel_dash.fashion").setValue(psndash.fashion);
-        Ext.getCmp("panel_dash.hobby").setValue(psndash.hobby);
-        Ext.getCmp("panel_dash.comment").setValue(psndash.comment);
-        Ext.getCmp("panel_dash.user_pic").update(psnPic);
-        
+        Ext.getCmp("dash.name").setValue(psndash.name);
+        Ext.getCmp("dash.age").setValue(psndash.age);
+        Ext.getCmp("dash.blood").setValue(psndash.blood);
+        Ext.getCmp("dash.height").setValue(psndash.height);
+        Ext.getCmp("dash.weight").setValue(psndash.weight);
+        Ext.getCmp("dash.addr").setValue(psndash.addr);
+        Ext.getCmp("dash.style").setValue(psndash.style);
+        Ext.getCmp("dash.fashion").setValue(psndash.fashion);
+        Ext.getCmp("dash.hobby").setValue(psndash.hobby);
+        Ext.getCmp("dash.comment").setValue(psndash.comment);
+        Ext.getCmp("dash.user_pic").update(psnPic);
     },
     layout: {
         type: 'vbox',
@@ -54,7 +53,6 @@ dash.panel_dash = new Ext.form.FormPanel({
     [{
         xtype: 'fieldset',
         title: '오늘의 추천 이성',
-        //instructions: '직원명을 입력하시고 조회버튼을 클릭하십시요',
         pack: 'center',
         defaults: {
             required: true,
@@ -64,7 +62,7 @@ dash.panel_dash = new Ext.form.FormPanel({
         items:[
             {
                 xtype:'panel',
-                id:'panel_dash.user_pic',
+                id:'dash.user_pic',
                 xtype: 'fieldset',
                 html:'',            
             }]
@@ -72,7 +70,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             {
                 xtype:'textfield',
                 label:'이름 ',
-                id:'panel_dash.name', 
+                id:'dash.name', 
                 disabled : true,
                 disabledCls: 'af-item-disabled',
                 autoCapitalisze:true,
@@ -81,7 +79,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             },{
                 xtype:'textfield',
                 label:'나이 ',
-                id:'panel_dash.age',
+                id:'dash.age',
                 disabled : true,
                 disabledCls: 'af-item-disabled',
                 autoCapitalisze:true,
@@ -90,7 +88,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             },            
             {
                 xtype:'textfield',
-                id:'panel_dash.blood',
+                id:'dash.blood',
                 label:'혈액형',
                 disabled : true,
                 disabledCls: 'af-item-disabled',
@@ -100,7 +98,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             },    
             {
                 xtype:'textfield',
-                id:'panel_dash.height',
+                id:'dash.height',
                 label:'키',
                 disabled : true,
                 disabledCls: 'af-item-disabled',
@@ -109,7 +107,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             },           
             {
            	 xtype:'textfield',
-                id:'panel_dash.weight',
+                id:'dash.weight',
                 label:'몸무게',
                 disabled : true,
                 disabledCls: 'af-item-disabled',
@@ -118,7 +116,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             }, 
             {
            	 xtype:'textfield',
-               id:'panel_dash.addr',
+               id:'dash.addr',
                label:'지역',
                disabled : true,
                disabledCls: 'af-item-disabled',
@@ -127,7 +125,7 @@ dash.panel_dash = new Ext.form.FormPanel({
             }, 
             {
          	 xtype:'textfield',
-              id:'panel_dash.style',
+              id:'dash.style',
               label:'성격',
               disabled : true,
               disabledCls: 'af-item-disabled',
@@ -136,7 +134,7 @@ dash.panel_dash = new Ext.form.FormPanel({
            }, 
            {
          	 xtype:'textfield',
-              id:'panel_dash.fashion',
+              id:'dash.fashion',
               label:'스타일',
               disabled : true,
               disabledCls: 'af-item-disabled',
@@ -145,7 +143,7 @@ dash.panel_dash = new Ext.form.FormPanel({
            }, 
            {
         	 xtype:'textfield',
-             id:'panel_dash.hobby',
+             id:'dash.hobby',
              label:'취미',
              disabled : true,
              disabledCls: 'af-item-disabled',
@@ -154,7 +152,7 @@ dash.panel_dash = new Ext.form.FormPanel({
            }, 
            {
                xtype:'textareafield',
-               id:'panel_dash.comment',
+               id:'dash.comment',
                placeHolder:'작업멘트를 날리세요',
                width : '100%',
                useClearIcon:false,
@@ -162,11 +160,11 @@ dash.panel_dash = new Ext.form.FormPanel({
            {
                 xtype:'button',
                 ui: 'decline-round',                
-                name:'panel_dash.button_close',
+                name:'dash.button_close',
                 width:'100%',
+               	text:'대쉬!!!!',
                 handler:function(){                                     
                    main.MainPanel.layout.setActiveItem(list.panel_list); 
            },
-           	text:'대쉬!!!!'
-            }]                                  
+     }]                                  
 });     

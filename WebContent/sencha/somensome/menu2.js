@@ -26,6 +26,7 @@ callme.init = function(){
             	main.MainPanel.layout.setActiveItem(mcall.panel_mcall);
             	mcall.panel_mcall.setUserId(record.get('name'));
             	mcall.panel_mcall.getUserInfo();
+            	//mcall.panel_mcall.setPersonFields();
             }
         },
         itemTpl:'<div><div style="float: left"><img src="'+ common_url +'/profile/{photo}" width="50px" height="50px"/></div><div style="float: left"><div style="float: left"><strong>이름 : {name}</strong></div><div style="clear: both; height:2px"></div><div style="float: left"> 사는곳 : {addr} </div></div></div>',
@@ -74,3 +75,4 @@ callme.init = function(){
         }]
     });
 };   
+

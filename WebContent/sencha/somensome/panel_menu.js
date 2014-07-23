@@ -43,7 +43,7 @@ menu.panel_menu = new Ext.form.FormPanel({
                 cls:'x-btn-text-icon',
                 width: '30%',
                 textAlign:'center',
-                text:'<div align="center"><img src= "'+ local_img + 'compose.png">Dash</div>',
+                text:'<div align="center"><img src= "'+ local_img + 'dash.png">Dash</div>',
                 handler: function(){
                 	main.MainPanel.layout.setActiveItem(dash.panel_dash);
                 	dash.panel_dash.getUserInfo();
@@ -55,7 +55,7 @@ menu.panel_menu = new Ext.form.FormPanel({
                 xtype:'button',
                 width: '30%',
                 textAlign:'center',
-                text:'<div align="center"><img src= "'+ local_img + 'photo1.png">Call me</div>',
+                text:'<div align="center"><img src= "'+ local_img + 'callme.png">Call me</div>',
                 handler: function(){
                 	callme.init();
                 	callme.panel_callme.getCallmeList();

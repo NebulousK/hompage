@@ -1577,7 +1577,7 @@ input,textarea {
 
 .x-toolbar-light .x-button,.x-toolbar-light .x-button.x-button-back:after,.x-toolbar-light .x-button.x-button-forward:after,.x-toolbar .x-toolbar-light .x-button,.x-toolbar .x-toolbar-light .x-button.x-button-back:after,.x-toolbar .x-toolbar-light .x-button.x-button-forward:after,.x-toolbar-light .x-field-select .x-input-text,.x-toolbar-light .x-field-select .x-input-text.x-button-back:after,.x-toolbar-light .x-field-select .x-input-text.x-button-forward:after,.x-toolbar .x-toolbar-light .x-field-select .x-input-text,.x-toolbar .x-toolbar-light .x-field-select .x-input-text.x-button-back:after,.x-toolbar .x-toolbar-light .x-field-select .x-input-text.x-button-forward:after,.x-toolbar-light .x-field-select:before,.x-toolbar-light .x-field-select:before.x-button-back:after,.x-toolbar-light .x-field-select:before.x-button-forward:after,.x-toolbar .x-toolbar-light .x-field-select:before,.x-toolbar .x-toolbar-light .x-field-select:before.x-button-back:after,.x-toolbar .x-toolbar-light .x-field-select:before.x-button-forward:after
 	{
-	background-color: #24364c;
+	background-color: #FB5D5C;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a81af),
 		color-stop(2%, #304864), color-stop(100%, #192533));
 	background-image: linear-gradient(#5a81af, #304864 2%, #192533)

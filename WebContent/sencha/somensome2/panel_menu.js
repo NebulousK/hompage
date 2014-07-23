@@ -75,9 +75,8 @@ menu.panel_menu = new Ext.form.FormPanel({
                 textAlign:'center',
                 text:'<div align="center"><img src= "'+ local_img + 'info.png">일정 관리</div>',
                 handler: function(){
-                    gesipan.init();
-                    gesipan.panel_gesipan.getgesipanList();
-                    main.MainPanel.layout.setActiveItem(gesipan.panel_gesipan);
+                	cel.init();
+                	main.MainPanel.layout.setActiveItem(cel.panel);  
                 }
             }]
         }]
