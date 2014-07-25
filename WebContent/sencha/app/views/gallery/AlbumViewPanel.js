@@ -48,9 +48,7 @@ Gallery.views.AlbumViewPanel = Ext.extend(Ext.Panel, {
             tpl: this.xtpl,
             itemSelector: 'div.node'
         });
-        
         this.items = [this.dataView];
-    
         Gallery.views.AlbumViewPanel.superclass.initComponent.apply(this, arguments);
     }
 });

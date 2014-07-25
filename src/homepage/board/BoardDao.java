@@ -585,4 +585,46 @@ public class BoardDao {
 		}
 		return g;
 	}
+	
+	//어플 글쓰기
+		public void mobileInsertBoard(BoardDto Bdto){
+			try {
+				//board 테이블에 값 넣기	<p style="text-align: center;"><img src="/homepage/upload/으리.jpg" style="max-width:450px;clear:none;float:none;"/></p>
+				String content0 = Bdto.getContent().replace("\n", "<br/>");
+				if(Bdto.getFilename() != null){
+					content0 = content0 + "<p style='text-align: center;'><img src='"+Bdto.getFileurl()+"' style='max-width:450px;clear:none;float:none;'/></p>";
+				}
+				String sql = "insert into board (id, content, day) values(?, ?, now())";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, Bdto.getId());
+				stmt.setString(2, content0);
+				stmt.executeUpdate();
+				
+				//방금 넣은 게시글 번호 가져오기
+				sql = "select no from board order by no desc";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				/*System.out.println(stmt);*/
+				int number = 0;
+				if(rs.next()){
+					number = rs.getInt("no");
+				}
+				
+				//board_image 테이블에 값넣기
+				sql = "INSERT INTO `board_image`(no, filename, desination, filesize, filetype, fileurl) VALUES(?,?,?,?,?,?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, number);
+				stmt.setString(2, Bdto.getFilename());
+				stmt.setString(3, Bdto.getDesination());
+				stmt.setString(4, Bdto.getFilesize());
+				stmt.setString(5, Bdto.getFiletype());
+				stmt.setString(6, Bdto.getFileurl());
+				stmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				freeCon();
+			}
+		}
 }

@@ -16,7 +16,6 @@ Ext.regController("Album", {
                     itemswipe: function(list, index) {
                         var imgdata = albumView.dataView.store.data.items;
                         albumView.update(
-                            //'<div style="background:url(' + imgdata[index].data.path + ') no-repeat;'+ 'width:320px;height:640px;"></div>'
                             '<div style="background:url(' + imgdata[index].data.path + ') no-repeat;'+ 'width:100%;height:100%;"></div>'
                         );
                     },
@@ -24,15 +23,9 @@ Ext.regController("Album", {
                 }
             }
         });
-        albumView.dataView.store.proxy.url = 'http://localhost:8089/homepage/mluvphoto.some?no=532';
-        
-       /* albumView.query('#homeButton')[0].on({
-            tap: this.index,
-            scope: this
-        });*/
-        
+        albumView.dataView.store.proxy.url = 'http://localhost:8089/homepage/mluvphoto.some?'+ common_no;
         albumView.query('#albumToolbar')[0].setTitle("SomeNsomE");            
-            
+        
         Gallery.viewport.setActiveItem(albumView, {
             type: 'slide',
             direction: slide
@@ -53,7 +46,6 @@ Ext.regController("Album", {
                     itemswipe: function(list, index) {
                         var imgdata = albumView.dataView.store.data.items;
                         albumView.update(
-                            /*'<div style="background:url(' + imgdata[index].data.path + ') no-repeat;'+ 'width:320px;height:640px;"></div>'*/
                         	'<div style="background:url(' + imgdata[index].data.path + ') no-repeat;'+ 'width:100%;height:100%;"></div>'
                         );
                     },
@@ -61,13 +53,7 @@ Ext.regController("Album", {
                 }
             }
         });
-        albumView.dataView.store.proxy.url = 'http://localhost:8089/homepage/mluvphoto.some?no=532';
-       // albumView.dataView.store.proxy.url = 'get-file.php?path=public/img/Building';
-        
-        /*albumView.query('#homeButton')[0].on({
-            tap: this.index,
-            scope: this
-        });*/
+        albumView.dataView.store.proxy.url = 'http://localhost:8089/homepage/mluvphoto.some?no='+ common_no;
         
         albumView.query('#albumToolbar')[0].setTitle("SomeNsomE");            
             
@@ -90,7 +76,6 @@ Ext.regController("Album", {
         for(i=0; i<imgdata.length; i++) {
             albumCarousel.carousel.add({
                 html: '<div class="img"><img src="'+imgdata[i].data.path+'" width="100%" height="100%"></img></div>'
-                //'<div class="img" style="background: url('+imgdata[i].data.path+');"></div>'
             });
         }
         

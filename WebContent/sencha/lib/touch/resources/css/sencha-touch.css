@@ -1491,11 +1491,16 @@ input,textarea {
 }
 
 .x-toolbar-dark {
-	background-color: #24364c;
+	background-color: #FB5D5C;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #FFA2A2),
+		color-stop(2%, #FF7E7E), color-stop(100%, #FF3636));
+	background-image: linear-gradient(#FFA2A2, #FF7E7E 2%, #FF3636);
+	border-color: black
+	/* background-color: #24364c;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a81af),
 		color-stop(2%, #304864), color-stop(100%, #192533));
 	background-image: linear-gradient(#5a81af, #304864 2%, #192533);
-	border-color: black
+	border-color: black */
 }
 
 .x-toolbar-dark .x-toolbar-title {
@@ -1522,7 +1527,7 @@ input,textarea {
 	background-color: #141e29;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #466890),
 		color-stop(2%, #1f2f41), color-stop(100%, #080c11));
-	background-image: linear-gradient(#466890, #1f2f41 2%, #080c11)
+	background-image: linear-gradient(#466890, #1f2f41 2%, #080c11) 
 }
 
 .x-toolbar-dark .x-button img.x-icon-mask,.x-toolbar .x-toolbar-dark .x-button img.x-icon-mask,.x-toolbar-dark .x-field-select .x-input-text img.x-icon-mask,.x-toolbar .x-toolbar-dark .x-field-select .x-input-text img.x-icon-mask,.x-toolbar-dark .x-field-select:before img.x-icon-mask,.x-toolbar .x-toolbar-dark .x-field-select:before img.x-icon-mask
@@ -1577,7 +1582,7 @@ input,textarea {
 
 .x-toolbar-light .x-button,.x-toolbar-light .x-button.x-button-back:after,.x-toolbar-light .x-button.x-button-forward:after,.x-toolbar .x-toolbar-light .x-button,.x-toolbar .x-toolbar-light .x-button.x-button-back:after,.x-toolbar .x-toolbar-light .x-button.x-button-forward:after,.x-toolbar-light .x-field-select .x-input-text,.x-toolbar-light .x-field-select .x-input-text.x-button-back:after,.x-toolbar-light .x-field-select .x-input-text.x-button-forward:after,.x-toolbar .x-toolbar-light .x-field-select .x-input-text,.x-toolbar .x-toolbar-light .x-field-select .x-input-text.x-button-back:after,.x-toolbar .x-toolbar-light .x-field-select .x-input-text.x-button-forward:after,.x-toolbar-light .x-field-select:before,.x-toolbar-light .x-field-select:before.x-button-back:after,.x-toolbar-light .x-field-select:before.x-button-forward:after,.x-toolbar .x-toolbar-light .x-field-select:before,.x-toolbar .x-toolbar-light .x-field-select:before.x-button-back:after,.x-toolbar .x-toolbar-light .x-field-select:before.x-button-forward:after
 	{
-	background-color: #FB5D5C;
+	background-color: #24364c;
 	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a81af),
 		color-stop(2%, #304864), color-stop(100%, #192533));
 	background-image: linear-gradient(#5a81af, #304864 2%, #192533)

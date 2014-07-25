@@ -230,7 +230,13 @@ public class someDao {
 					set += rs.getInt("no") + ",";
 					set += rs.getString("sex") + ",";
 					set += rs.getString("photo") + ",";
-					set += rs.getString("name");
+					set += rs.getString("name") + ",";
+					int b = some_some2(rs.getInt("no"));
+					if(b != 0){
+						set += b;
+					}else{
+						set += 0;
+					}
 				}
 			}
 		} catch (Exception err) {
@@ -2108,6 +2114,118 @@ public class someDao {
 			return false;
 		}
 		
+		//모바일회원가입 이메일 중복검사
+		public String emailcheck(String email1, String email2){
+	    
+			String email=email1+"@"+email2;
+			String result="";
+			ArrayList<String> ids = new ArrayList<String>();
+	    	try{
+	    		connect();
+	        	
+				String sql = "select `e-mail` from member";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {	
+					ids.add(rs.getString("e-mail"));
+				}
+	        	
+	        
+	        	// id 중복 처리
+	        	String gotId = email;
+	        	
+	        	for(String id : ids){
+	        		if(id.equals(gotId)){
+	        			// 응답 메세지 1 : 이미 등록된 email 입니다.
+	        			result = "1";
+	        			break;
+	        		}else{
+	        			// 응답 메세지 2 : 사용할 수 있는 email 입니다.
+	        			result = "2";
+	        		}
+	        	}
+	        	
+	        }catch(Exception err){
+	        	System.out.println(err);
+	        }finally{
+	        	pool.freeConnection(con, stmt, rs);
+	        }
+	    	
+	    	return result;
+	    }
+	    
+	    //모바일회원가입 아이디 중복검사
+	    public String idcheck(String inputId){
+	    	    	
+	    	ArrayList<String> ids = new ArrayList<String>();
+	    	String result = null;
+	    	try{
+	    		connect();
+				
+				String sql = "select id from member";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				while (rs.next()) {	
+					ids.add(rs.getString("id"));
+				}
+	        	
+	        	// id 중복 처리
+	        	String gotId = inputId;
+	        	for(String id : ids){
+	        		if(id.equals(gotId)){
+	        			// 응답 메세지 1 : 이미 등록된 ID 입니다.
+	        			result = "1";
+	        			break;
+	        		}else{
+	        			// 응답 메세지 2 : 사용할 수 있는 ID 입니다.
+	        			result = "2";
+	        		}
+	        	}
+	        	//out.println(result);
+	        }catch(Exception err){
+	        	System.out.println(err);
+	        }finally{
+	        	pool.freeConnection(con, stmt, rs);
+	        }
+	    	return result;
+	    }
+	  //모바일용 회원가입 테스트 
+		public void member_joinTest(String id,String password, String check_password,String name,String sex,String birthday,String num1, String num2,String addr,String tel,String tel2,String tel3,String fileName,int age,String email1,String email2) {
+			connect();
+			String confirmstate="false";
+			setMax(5 * 1024 * 1024);
+			setEncType("UTF-8");
+			String sql = "INSERT INTO member(id, password, name, sex, birthday, addr, tel, photo, age, `e-mail`, confirmstate) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+			try {
+				System.out.println("member_joinTest"+id+ password+check_password+name+ sex+ birthday+  num1+num2+addr+tel+tel2+ tel3+ fileName+ age+ email1+ email2);
+				stmt = con.prepareStatement(sql);
+				//File f = multi.getFile("imgInp");
+				
+				String password1 = sha1(password);
+				
+				
+				stmt.setString(1, id);
+				stmt.setString(2, password1);
+				stmt.setString(3, name);
+				stmt.setString(4, sex);
+				stmt.setString(5, birthday);
+				stmt.setString(6, num1+ "-" + num2 + " " + addr);
+				stmt.setString(7, tel + "-" + tel2 + "-" +tel3);
+				stmt.setString(8, fileName);
+				stmt.setInt(9, age);
+				stmt.setString(10, email1+"@"+email2);
+				stmt.setString(11, confirmstate);
+				// System.out.println(stmt);
+				stmt.executeUpdate();
+			} catch (Exception err) {
+				System.out.println(err);
+			} finally {
+				discon();
+			}
+			
+		}
+
+									
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;
