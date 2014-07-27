@@ -14,7 +14,7 @@ mcall.panel_mcall = new Ext.form.FormPanel({
     getUserInfo:function()
     {
         Ext.Ajax.request({
-            url: common_url + '/mcall_detail.some?no=570&name=' +  encodeURIComponent(this.input_user_id),
+            url: common_url + '/mcall_detail.some?no='+ common_no +'&name=' +  encodeURIComponent(this.input_user_id),
             success: function(response, opts) {
                 console.log(response.responseText);
                 var JsonData = JSON.parse(response.responseText);
@@ -56,7 +56,7 @@ mcall.panel_mcall = new Ext.form.FormPanel({
     items:
     [{
         xtype: 'fieldset',
-        title: '오늘의 추천 이성',
+        title: '나에게 대쉬한 이성',
         pack: 'center',
         defaults: {
             required: true,

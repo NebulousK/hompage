@@ -1233,11 +1233,11 @@ public class someDao {
 		/*	System.out.println(stmt);*/
 			while (rs.next()) {
 				JSONObject obj = new JSONObject();
-				obj.put("name","http://192.168.10.31"+ rs.getString("fileurl"));
+				obj.put("name","http://192.168.219.129:8080"+ rs.getString("fileurl"));
 			    obj.put("size",rs.getString("filesize"));
 			    obj.put("date",rs.getString("filetype"));
-			    obj.put("path", "http://192.168.10.31"+ rs.getString("fileurl"));
-			    obj.put("thumb", "http://192.168.10.31"+ rs.getString("fileurl"));
+			    obj.put("path", "http://192.168.219.129:8080"+ rs.getString("fileurl"));
+			    obj.put("thumb", "http://192.168.219.129:8080"+ rs.getString("fileurl"));
 			    result.add(obj);
 			}
 		} catch (Exception err) {
@@ -1757,9 +1757,9 @@ public class someDao {
 				stmt.setString(2, id2);
 				stmt.setString(3, id2);
 				stmt.setString(4, id);
-				System.out.println(stmt);
+				//System.out.println(stmt);
 				rs = stmt.executeQuery();
-				System.out.println(stmt);
+				//System.out.println(stmt);
 				while(rs.next()){
 					someDto g = new someDto();
 					g.setNo(rs.getInt("no"));

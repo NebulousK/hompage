@@ -22,7 +22,7 @@ scrollList.init = function() {
 		name:'someboard_list',
 		blockRefresh:true,
 		height:400,
-		itemTpl: '<tpl for="."><div><table border="1" width="100%" ><tr><td rowspan="2" width="25%"><img src="{pic}" height=70></td><td> {name}</td><tr><td>{date}</td></tr></tr><td colspan="2"><B>{content}</B></td></tr></table> </div></tpl>',			
+		itemTpl: '<tpl for="."><div><table border="1" width="100%" ><tr><td rowspan="2" width="25%"><img src="{pic}" style="max-width:100%"></td><td> {name}</td><tr><td>{date}</td></tr></tr><td colspan="2"><B>{content}</B></td></tr></table> </div></tpl>',			
         store:store,
 	});
 	 
@@ -37,7 +37,7 @@ scrollList.init = function() {
     
     function getsomeboardList2(){
     	Ext.Ajax.request({
-            url: common_url +'/mlubstory.some?no=532&num='+ i,
+            url: common_url +'/mlubstory.some?no='+ common_no +'&num='+ i,
             success: function(response, opts) {
                 //console.log(response.responseText);
                 var JsonData = JSON.parse(response.responseText);
@@ -62,7 +62,7 @@ scrollList.init = function() {
         getsomeboardList:function()
         {
             Ext.Ajax.request({
-                url: common_url +'/mlubstory.some?no=532&num='+ 0,
+                url: common_url +'/mlubstory.some?no='+ common_no +'&num='+ 0,
                 success: function(response, opts) {
                     console.log(response.responseText);
                     var JsonData = JSON.parse(response.responseText);

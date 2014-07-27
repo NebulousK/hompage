@@ -15,17 +15,7 @@ Gallery.views.AlbumListPanel = Ext.extend(Ext.Panel, {
                 iconCls: 'home',
                 iconMask: true,
                 handler: function() {
-                    /*new Ext.Panel({
-                        floating: true,
-                        centered: true,
-                        modal: true, 
-                        html: '<div class="helpbox">' + 
-                                '<div style="margin: 0;">Sencha Gallery</div>' +
-                                '<div><a href="#">to post</a> &nbsp;<a href="#">source</a></div>' + 
-                                '<div class="credit">Stock Photos By <a href="http://freephotosbank.com">FreePhotosBank</a></div>' +
-                               '</div>'
-                    }).showBy(this);*/
-                	document.location = "somensome2_1.html";
+                	document.location = "somensome2_1.html?no=" + common_no;
                 }
             }]
         }];

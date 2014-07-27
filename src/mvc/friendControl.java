@@ -97,6 +97,13 @@ public class friendControl extends HttpServlet{
 			nextPage = "/friendList/main.jsp";
 		}
 		
+		else if(action.equals("/mList.friend")){
+			String myid= req.getParameter("id");
+			String result = dao.mfriend_List(myid);
+			out.println(result.replace('\'','\"').trim());
+			return;
+		}
+		
 		else if(action.equals("/mfind.friend")){
 			String find = req.getParameter("find");
 			String no = req.getParameter("no");

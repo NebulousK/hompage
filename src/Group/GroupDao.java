@@ -14,6 +14,9 @@ import javax.sql.DataSource;
 import javax.annotation.PreDestroy;
 import javax.naming.InitialContext;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -117,6 +120,40 @@ public class GroupDao {
 			freeCon();
 		}		
 		return fList;
+	}
+	
+	public String mfriend_List(String userid1){
+		
+		String sql="";
+		String returnStr="";
+		String friendList = "'friend_list':''";
+		String err2 = "\"err\":\"\"";
+		JSONArray result = new JSONArray();
+		try{
+			sql="select no, id, photo from member where id in(select userid1 from freind where (userid1=? or userid2=?) and friends='true') or id in(select userid2 from freind where (userid1=? or userid2=?) and friends='true')";
+			stmt=con.prepareStatement(sql);
+			stmt.setString(1,userid1);
+			stmt.setString(2,userid1);
+			stmt.setString(3,userid1);
+			stmt.setString(4,userid1);
+			rs=stmt.executeQuery();
+			while(rs.next()){		
+					MemberDto dto=new MemberDto();
+					dto.setId(rs.getString("id"));
+					dto.setPhoto(rs.getString("photo"));
+					JSONObject obj = new JSONObject();
+					obj.put("photo","http://192.168.10.31/homepage/profile/" + rs.getString("photo"));
+				    obj.put("id",rs.getString("id"));
+				    obj.put("no",rs.getString("no"));
+				    result.add(obj);
+			}
+			friendList = "\"friend_list\":" + result.toString() ;
+		} catch(Exception err) {
+			System.out.println("createGroup:"+err);
+		} finally {
+			freeCon();
+		}		
+		return returnStr = "{\"data\":{" + friendList + ","+ err2 + "}}";
 	}
 	
 	public void accept_Friend(String userid1,String userid2){

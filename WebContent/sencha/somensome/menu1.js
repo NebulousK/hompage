@@ -10,7 +10,7 @@ dash.panel_dash = new Ext.form.FormPanel({
     getUserInfo:function()
     {
         Ext.Ajax.request({
-            url: common_url + '/mdash.some?no=532&sex=man',
+            url: common_url + '/mdash.some?no='+ common_no +'&sex=' + common_sex, //common_url + '/mdash.some?no=532&sex=man',
             success: function(response, opts) {
                 console.log(response.responseText);
                 var JsonData = JSON.parse(response.responseText);
@@ -30,7 +30,7 @@ dash.panel_dash = new Ext.form.FormPanel({
     {
         var psnPic =  '<table width="100%"><tr><td><center>' + 
                       '<img src="' + common_url + 
-                      '/profile/' +  psndash.pic +  '" height="100%"></td></tr></table>';
+                      '/profile/' +  psndash.pic +  '" width="100%"></td></tr></table>';
         Ext.getCmp("dash.name").setValue(psndash.name);
         Ext.getCmp("dash.age").setValue(psndash.age);
         Ext.getCmp("dash.blood").setValue(psndash.blood);

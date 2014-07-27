@@ -1,13 +1,27 @@
-var common_url = "http://192.168.10.31:8080/homepage";/*http://localhost:8089/homepage*//*http://localhost:8080/books*/
+var common_url = "http://192.168.219.129:8080/homepage";//"http://192.168.10.31/homepage";
 var local_img = "./img/";
 var android_img = "./img/";
 var iphone_img = "";
 
+var common_id = "happyhiphop";
+var common_no = "532";
+var common_sex = "man";
+var common_photo = "421.png";
+var common_name = "강선우";
+var common_some = "1";
+
+
+/*var common_id = window.android.id();
+var common_no = window.android.no();
+var common_sex = window.android.sex();
+var common_photo = window.android.photo();
+var common_name = window.android.name();
+var common_some = window.android.some();
+*/
 local_img = android_img;
 
 var user_agent = navigator.userAgent.toLowerCase();
 var mobile_phones = new Array( 'android', 'iphone', 'ipod', 'ipad');
-
 
 for (var i = 0; i < mobile_phones.length; i++)
 {
@@ -19,3 +33,5 @@ for (var i = 0; i < mobile_phones.length; i++)
        	local_img = iphone_img;
     }     
 }
+
+//window.onload=callAndroid;

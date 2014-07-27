@@ -44,7 +44,7 @@ photo.init = function() {
         getphotoList:function()
         {
             Ext.Ajax.request({
-                url: common_url +'/mluvphoto.some?no=532',
+                url: common_url +'/mluvphoto.some?no='+ common_no,
                 success: function(response, opts) {
                     console.log(response.responseText);
                     var JsonData = JSON.parse(response.responseText);

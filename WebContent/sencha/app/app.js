@@ -26,9 +26,8 @@ var Request={
 		}
 	}//end-getParameter
 }
-
+var common_url = "http://192.168.219.129:8080/homepage"; //"http://192.168.10.31/homepage";
 var common_no = Request.getParameter("no");
-alert(common_no);
 
 Gallery = new Ext.Application({
     name: "Gallery",

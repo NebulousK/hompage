@@ -275,13 +275,13 @@ public class memberControl extends HttpServlet {
 		}
 		
 		else if(action.equals("/cel.me")){
-			ArrayList g = dao.celendar((int)req.getAttribute("some"));
+			ArrayList g = dao.celendar((int)session.getAttribute("some"));
 			req.setAttribute("g", g);
 			nextPage = "/someNsome/menu3/main.jsp";
 		}
 		
 		else if(action.equals("/mcel.me")){
-			ArrayList g = dao.celendar((int)session.getAttribute("some"));
+			ArrayList g = dao.celendar(Integer.parseInt(req.getParameter("some")));
 			req.setAttribute("g", g);
 			nextPage = "/someNsome/menu3/mmain.jsp";
 		}
