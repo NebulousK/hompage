@@ -15,6 +15,7 @@ import homepage.board.UpdatePassword;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import android.push;
 
 public class boardControl extends HttpServlet{
 	@Override
@@ -47,6 +50,7 @@ public class boardControl extends HttpServlet{
 		someDao dao2 = new someDao();
 		someDto dto = new someDto();
 		BoardDto dto2 = new BoardDto();
+		push push = new push();
 		
 		if(action.equals("/main.board")){
 			String id = (String) session.getAttribute("id");
@@ -125,6 +129,8 @@ public class boardControl extends HttpServlet{
 			dto2.setId(id);
 			dto2.setContent(content);
 			dao.insertBoard(dto2); 
+			ArrayList<String> a = dao.insertPush(id);
+			push.sendMessage(a,"새로운 글이 올라왔어요!!");
 			nextPage = "/main.board"; 
 		}
 		else if(action.equals("/LIKE.board")){
@@ -168,7 +174,7 @@ public class boardControl extends HttpServlet{
 			String id = req.getParameter("id");
 			int num = Integer.parseInt(req.getParameter("num"));
 			String tempList = dao.mboardlist(id, num);
-			out.println(tempList.replace('\'','\"').replace("$%^", "\'").trim());//
+			out.println(tempList.replace('\'','\"').replace("$%^", "\'").trim());
 			return;
 		}
 		

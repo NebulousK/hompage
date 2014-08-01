@@ -64,7 +64,40 @@ public class BoardDao {
 		finally{
 			freeCon();
 		}
-		
+	}
+	
+	public ArrayList<String> insertPush(String id){
+		ArrayList<String> v = new ArrayList<String>();
+		String sql2;
+		PreparedStatement stmt2;
+		ResultSet rs2;
+		try {
+			String sql = "select DISTINCT a.id from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, id);
+			stmt.setString(3, id);
+			stmt.setString(4, id);
+			stmt.setString(5, id);
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				if(!rs.getString("a.id").equals(id)){
+					sql2 = "select regID from push where ID = ?";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, rs.getString("a.id"));
+					rs2 = stmt2.executeQuery();
+					if(rs2.next()){
+						v.add(rs2.getString("regID"));
+					}
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("pust : " + e);
+		}
+		finally{
+			freeCon();
+		}
+		return v;
 	}
 	
 	//글목록 불러오기
@@ -131,6 +164,7 @@ public class BoardDao {
 		public String mboardlist(String id, int num) {
 			String sql;
 			ArrayList<someDto> g = new ArrayList<someDto>();
+			ArrayList likeId = new ArrayList();
 			String returnStr="";
 			String boardList = "'board_list':''";
 			String err2 = "\"err\":\"\"";
@@ -151,26 +185,54 @@ public class BoardDao {
 					dto.setContent(rs.getString("content"));
 					dto.setDay(rs.getString("day"));
 					dto.setPhoto(rs.getString("photo"));
+					dto.setLike(rs.getInt("like"));
 					g.add(dto);
 				}
 				if(num+5 < g.size()){
 					for(int j=num; j < num + 5; j++){
 						someDto rs = g.get(j);
+						Vector vlike = board_likeSelect(rs.getNo());
+						int flag = 0;//1이면 좋아요 누른 상태 0이면 좋아요 안누른 상태
+						for(int i = 0; i <vlike.size(); i++){							
+							if(id.equals(vlike.get(i))){
+								flag = 1;
+								break;
+							}
+							else{
+								flag = 0;
+							}
+						}
 						JSONObject obj = new JSONObject();
 						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+						obj.put("connectId", id);
 					    obj.put("name",rs.getId());
 					    obj.put("date",rs.getDay());
-					    obj.put("content", rs.getContent().replace("\"", "\'"));
+					    obj.put("no",rs.getNo());
+					    obj.put("like",rs.getLike());
+					    obj.put("flag",flag);
+					    obj.put("content", rs.getContent().replace("\"", "$%^"));
 					    result.add(obj);
 					}
 				}else{
 					for(int j=num; j < g.size(); j++){
 						someDto rs = g.get(j);
+						
+						Vector vlike = board_likeSelect(rs.getNo());
+						int flag = 0;//1이면 좋아요 누른 상태 0이면 좋아요 안누른 상태
+						for(int i = 0; i <vlike.size(); i++){							
+							if(id.equals(vlike.get(i))){
+								flag = 1;
+							}
+						}
 						JSONObject obj = new JSONObject();
 						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+						obj.put("connectId", id);
 					    obj.put("name",rs.getId());
 					    obj.put("date",rs.getDay());
-					    obj.put("content", rs.getContent().replace("\"", "\'"));
+					    obj.put("no",rs.getNo());
+					    obj.put("like",rs.getLike());
+					    obj.put("flag",flag);
+					    obj.put("content", rs.getContent().replace("\"", "$%^"));
 					    result.add(obj);
 					}
 				}
@@ -592,7 +654,7 @@ public class BoardDao {
 				//board 테이블에 값 넣기	<p style="text-align: center;"><img src="/homepage/upload/으리.jpg" style="max-width:450px;clear:none;float:none;"/></p>
 				String content0 = Bdto.getContent().replace("\n", "<br/>");
 				if(Bdto.getFilename() != null){
-					content0 = content0 + "<p style='text-align: center;'><img src='"+Bdto.getFileurl()+"' style='max-width:450px;clear:none;float:none;'/></p>";
+					content0 = content0 + "<p style=\"text-align: center;\"><img src=\""+Bdto.getFileurl()+"\" style=\"max-width:100%;clear:none;float:none;\"/></p>";
 				}
 				String sql = "insert into board (id, content, day) values(?, ?, now())";
 				stmt = con.prepareStatement(sql);

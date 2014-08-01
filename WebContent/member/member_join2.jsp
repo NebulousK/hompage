@@ -294,7 +294,7 @@
                   <div class="row">
                      <div class="span12">
                         <div align="center">
-                           <input class="btn-custom" type="button" id="sunttt" value="가입 완료" style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
+                           <input class="btn-custom" type="button" id="subttt" value="가입 완료" style="width: 150px; height: 35px" onclick="fnSe()" />&nbsp;&nbsp;&nbsp; <input
                               class="btn-custom" type="reset" value="취소"
                               style="width: 150px; height: 35px" />
                         </div>

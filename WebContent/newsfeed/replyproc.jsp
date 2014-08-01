@@ -1,9 +1,7 @@
 <%@page import="homepage.board.ReplyDto"%>
 <%@page import="java.util.Vector"%>
 <%@page import="homepage.board.BoardDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 	String id = request.getParameter("id");
@@ -18,19 +16,26 @@
 			<input type="hidden" name="id" id="reid" value="<%=id%>"/>
 			<input type="hidden" name="index" id="reindex" value="<%=index %>"/>
 				<hr/>
-					<div class="_3dp _29k" ">
-						<div>
-							<div class="_6a">
-								<div class="_6a _6b" style="margin-left: 7px" >
-									<h5 class="_5pbw">
-										<div class="fwn fcg">
-										<span class="fwb fcg">
-										<a href="#" style="font-size: 14px;"><%=id%></a>&nbsp;&nbsp;
-										<textarea name="content" cols="" rows="1" class="DOMControl_placeholder uiTextareaAutogrow input autofocus mentionsTextarea textInput" onKeyDown="setLine(this)" style="width: 393px; resize:none;"></textarea>&nbsp;&nbsp;
-										<button value="1" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" type="button" onclick="replypostJS(this.form)" id="replyPost">댓글</button>
-										</span>
+					
+							<div >
+								<div style="margin-left: 7px" >
+									
+										
+										<span class="fwb fcg"><a href="#" style="font-size: 14px;"><%=id%></a></span>&nbsp;&nbsp;
 										<br/><br/>
-										</div></h5>
+										<table width="100%" style="background-color: #E6FFFF;border: none;" >
+											<tr align="center">
+												<td width="85%"><textarea name="content" cols="" rows="1" class="DOMControl_placeholder uiTextareaAutogrow input autofocus mentionsTextarea textInput" onKeyDown="setLine(this)" style="width: 100%; resize:none;"></textarea>&nbsp;&nbsp;</td>
+												<td width="15%"><button value="1" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" type="button" onclick="replypostJS(this.form)" id="replyPost">댓글</button></td>
+											</tr>
+										</table>
+										
+										<!-- 
+										<textarea name="content" cols="" rows="1" class="DOMControl_placeholder uiTextareaAutogrow input autofocus mentionsTextarea textInput" onKeyDown="setLine(this)" style="width: 100%; resize:none;"></textarea>&nbsp;&nbsp;
+										<button value="1" class="_42ft _4jy0 _11b _4jy3 _4jy1 selected" type="button" onclick="replypostJS(this.form)" id="replyPost">댓글</button>
+										 -->
+										<br/>
+										</div>
 										</div>
 			</form>
 <%
@@ -55,7 +60,7 @@
 										<div class="_5pcp" style="margin-top: 5px">
 										<span><%=Rdto.getRegist_day() %></span>
 										</div>
-									</h5>
+									
 									</div>
 <%		
 	}

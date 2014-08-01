@@ -1,3 +1,5 @@
+<%@page import="homepage.someDao"%>
+<%@page import="homepage.someDto"%>
 <%@page import="homepage.board.BoardDto"%>
 <%@page import="homepage.board.BoardDao"%>
 <%@page import="java.net.URLConnection"%>
@@ -23,6 +25,8 @@
 <%
 String id = null;
 String id1 = null;
+String no = null;
+String no1 = null;
 String content = null;
 String content1 = null;
 String filename = null;
@@ -58,7 +62,13 @@ String fileurl = null;
           content1 = content.substring(2);
           System.out.println("content:"+content1);
           out.println("파일에 대한 설명:"+content1+"<br>");
-        }
+        }else if(item!=null && item.getFieldName().equals("id_no")) {
+            no = item.getString("utf-8");
+            no1 = no.substring(2);
+            System.out.println("no:"+no1);
+            out.println("번호:"+no1+"<br>");
+          }
+      
 
      } else { // 폼 필드가 아니고 파일인 경우
     try {
@@ -114,20 +124,21 @@ String fileurl = null;
   }
 
  }
- BoardDto Bdto = new BoardDto();
- Bdto.setId(id1);
- Bdto.setContent(content1);
- Bdto.setFilename(filename);
- Bdto.setDesination(destination);
- Bdto.setFilesize(filesize);
- Bdto.setFiletype(filetype);
- Bdto.setFileurl(fileurl);
+ someDto dto = new someDto();
+ dto.setId(id1);
+ dto.setNo(Integer.parseInt(no1));
+ dto.setContent(content1);
+ dto.setFilename(filename);
+ dto.setDesination(destination);
+ dto.setFilesize(filesize);
+ dto.setFiletype(filetype);
+ dto.setFileurl(fileurl);
  
- BoardDao Bdao = new BoardDao();
- Bdao.mobileInsertBoard(Bdto);
+ someDao dao = new someDao();
+ dao.mobileInsertBoard(dto);
  
  
- //System.out.println(filename);
+System.out.println(filename);
  
 %>
 

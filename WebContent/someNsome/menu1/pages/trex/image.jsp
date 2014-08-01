@@ -24,7 +24,7 @@
 	    }
 		
 		var _mockdata = {
-				'imageurl': '<%="/homepage/upload/" + file[0]%>',
+				'imageurl': '<%="http://192.168.10.31/homepage/upload/" + file[0]%>',
 				'filename': '<%="/homepage/upload/" + file[0]%>',
 				'filesize': '<%=file[1]%>',
 				'imagealign': 'C',

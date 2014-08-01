@@ -251,12 +251,35 @@ public class memberControl extends HttpServlet {
 			nextPage = "/message/viewmessage.jsp";
 		}
 		
+		else if(action.equals("/mmemseage.me")){
+			String id = req.getParameter("id");
+			String id2 = req.getParameter("id2");
+			String result = dao.mgetmessage(id, id2);
+			out.println(result);
+			return;
+		}
+		
 		else if(action.equals("/memseagesend.me")){
 			dto.setDear(req.getParameter("dear"));
 			dto.setContent(req.getParameter("content"));
 			dto.setPhoto((String) session.getAttribute("photo"));
 			dao.insertmessage((String)session.getAttribute("id"),dto);
 		}///homepage/mesagedel.me
+		 
+		else if(action.equals("/mmemseagesend.me")){
+			dto.setDear(req.getParameter("dear"));
+			dto.setContent(req.getParameter("content"));
+			dto.setPhoto(req.getParameter("photo"));
+			dao.insertmessage(req.getParameter("id"),dto);
+		}
+		
+		else if(action.equals("/mmemseagesend.me")){
+			dto.setDear(req.getParameter("dear"));
+			dto.setContent(req.getParameter("content"));
+			dto.setPhoto(req.getParameter("photo"));
+			dao.insertmessage(req.getParameter("id"),dto);
+		}///homepage/mesagedel.me
+		
 		
 		else if(action.equals("/mesagedel.me")){
 			dao.delmessage(Integer.parseInt((String)req.getParameter("number")));

@@ -40,7 +40,9 @@ dash.panel_dash = new Ext.form.FormPanel({
         Ext.getCmp("dash.style").setValue(psndash.style);
         Ext.getCmp("dash.fashion").setValue(psndash.fashion);
         Ext.getCmp("dash.hobby").setValue(psndash.hobby);
-        Ext.getCmp("dash.comment").setValue(psndash.comment);
+        Ext.getCmp("dash.comment").setValue(psndash.coment);
+        Ext.getCmp("dash.no").setValue(psndash.no);
+        Ext.getCmp("dash.value").setValue(psndash.value);
         Ext.getCmp("dash.user_pic").update(psnPic);
     },
     layout: {
@@ -66,6 +68,16 @@ dash.panel_dash = new Ext.form.FormPanel({
                 xtype: 'fieldset',
                 html:'',            
             }]
+            },
+            {
+                xtype:'textfield',
+                label:'no',
+                id:'dash.no', 
+                disabled : true,
+                disabledCls: 'af-item-disabled',
+                autoCapitalisze:true,
+                useClearIcon:false,
+                //hidden:true            
             },
             {
                 xtype:'textfield',
@@ -140,7 +152,7 @@ dash.panel_dash = new Ext.form.FormPanel({
               disabledCls: 'af-item-disabled',
               autoCapitalisze:true,
               useClearIcon:false   
-           }, 
+           },
            {
         	 xtype:'textfield',
              id:'dash.hobby',
@@ -149,7 +161,18 @@ dash.panel_dash = new Ext.form.FormPanel({
              disabledCls: 'af-item-disabled',
              autoCapitalisze:true,
              useClearIcon:false   
-           }, 
+           },
+           {
+               xtype: 'sliderfield',
+               id:'dash.value',
+               value:2,
+               maxValue: 5,
+               minValue: 0,
+               label: '이상형 점수',
+               autoCapitalisze:true,  
+               useClearIcon:false,
+               height: '10%'
+           },
            {
                xtype:'textareafield',
                id:'dash.comment',
@@ -163,8 +186,14 @@ dash.panel_dash = new Ext.form.FormPanel({
                 name:'dash.button_close',
                 width:'100%',
                	text:'대쉬!!!!',
-                handler:function(){                                     
-                   main.MainPanel.layout.setActiveItem(list.panel_list); 
+                handler:function(){   
+                	var txt = Ext.getCmp('dash.comment').getValue();
+                	Ext.Ajax.request({
+                        url: common_url + '/mdashup.some?userID=' + common_no + '&itemID='  +  Ext.getCmp("dash.no").getValue() + '&value=' + Ext.getCmp("dash.value").getValue() + '&coment=' + txt,
+                        success: function(response, opts) {
+                            alert("대쉬 하였습니다. 좋은 결과가 있길 바래요!!");   
+                        }
+                    });  
            },
      }]                                  
 });     

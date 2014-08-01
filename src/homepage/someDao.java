@@ -1,5 +1,7 @@
 package homepage;
 
+import homepage.board.BoardDto;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -470,18 +472,44 @@ public class someDao {
 				re.setFashion(rs.getString("b.fashion"));
 				re.setHobby(rs.getString("b.hobby"));
 				re.setPhoto(rs.getString("a.photo"));
-				tempData.append("{")
-                .append("'name':'").append(rs.getString("name")).append("',")
-                .append("'age':'").append(rs.getString("age")).append("',")
-                .append("'blood':'").append(rs.getString("blood")).append("',")
-                .append("'height':'").append(rs.getString("height")).append("',")
-                .append("'weight':'").append(rs.getString("weight")).append("',")
-                .append("'addr':'").append(c[1]).append("',")
-                .append("'style':'").append(rs.getString("style")).append("',")
-                .append("'fashion':'").append(rs.getString("fashion")).append("',")
-                .append("'hobby':'").append(rs.getString("hobby")).append("',")
-                .append("'pic':'").append(rs.getString("photo")).append("'")
-                .append("}");	
+				PreparedStatement stmt2;
+				ResultSet rs2;
+				String sql2 = "select a.userID, a.itemID, a.coment, b.value from dash a , rating b where a.userID = ? and a.itemID = ? and a.userID=b.userID and a.itemID=b.itemID";
+				stmt2 = con.prepareStatement(sql2);
+				stmt2.setInt(1, no);
+				stmt2.setInt(2, rs.getInt("a.no"));
+				rs2 = stmt2.executeQuery();
+				if(rs2.next()){
+					tempData.append("{")
+					.append("'no':'").append(rs.getString("no")).append("',")
+	                .append("'name':'").append(rs.getString("name")).append("',")
+	                .append("'age':'").append(rs.getString("age")).append("',")
+	                .append("'blood':'").append(rs.getString("blood")).append("',")
+	                .append("'height':'").append(rs.getString("height")).append("',")
+	                .append("'weight':'").append(rs.getString("weight")).append("',")
+	                .append("'addr':'").append(c[1]).append("',")
+	                .append("'style':'").append(rs.getString("style")).append("',")
+	                .append("'fashion':'").append(rs.getString("fashion")).append("',")
+	                .append("'coment':'").append(rs2.getString("coment").replace("\n","<br>")).append("',")
+	                .append("'value':'").append(rs2.getString("value")).append("',")
+	                .append("'hobby':'").append(rs.getString("hobby")).append("',")
+	                .append("'pic':'").append(rs.getString("photo")).append("'")
+	                .append("}");
+				}else{
+					tempData.append("{")
+					.append("'no':'").append(rs.getString("no")).append("',")
+	                .append("'name':'").append(rs.getString("name")).append("',")
+	                .append("'age':'").append(rs.getString("age")).append("',")
+	                .append("'blood':'").append(rs.getString("blood")).append("',")
+	                .append("'height':'").append(rs.getString("height")).append("',")
+	                .append("'weight':'").append(rs.getString("weight")).append("',")
+	                .append("'addr':'").append(c[1]).append("',")
+	                .append("'style':'").append(rs.getString("style")).append("',")
+	                .append("'fashion':'").append(rs.getString("fashion")).append("',")
+	                .append("'hobby':'").append(rs.getString("hobby")).append("',")
+	                .append("'pic':'").append(rs.getString("photo")).append("'")
+	                .append("}");
+				}		
 			psnDetail = "'psn_detail':" + tempData.toString() + "";
 			returnStr = "{'data':{" + psnDetail + "," + err + "}}";
 			}else {
@@ -646,7 +674,7 @@ public class someDao {
 				stmt.executeUpdate();
 			}
 		} catch (Exception err2) {
-			System.out.println(err2);
+			System.out.println("aaa" + err2);
 		} finally {
 			discon();
 		}
@@ -665,12 +693,54 @@ public class someDao {
 			stmt.setInt(4, g.getUserID());
 			stmt.setInt(5, g.getItemID());
 			stmt.executeUpdate();
+			//System.out.println(stmt);
 			sql = "insert into dash(userID, itemID, coment, date) values(?,?,?,now())";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, g.getUserID());
 			stmt.setInt(2, g.getItemID());
 			stmt.setString(3, g.getComent());
 			stmt.executeUpdate();
+			//System.out.println(stmt);
+		}catch(Exception err){
+			System.out.println(err);
+		}finally{
+			discon();
+		}
+	}
+	
+	public void mdash(someDto g){
+		connect();
+		String sql ="";		
+		PreparedStatement stmt2;
+		try{
+			sql = "update rating set userID=?, itemID=?, value=? where userid=? and itemid=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			stmt.setFloat(3, g.getValue());
+			stmt.setInt(4, g.getUserID());
+			stmt.setInt(5, g.getItemID());
+			stmt.executeUpdate();
+			sql = "select * from dash where userid=? and itemid=?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, g.getUserID());
+			stmt.setInt(2, g.getItemID());
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				sql = "update dash set coment=? where userid=? and itemid=?";
+				stmt2 = con.prepareStatement(sql);
+				stmt2.setString(1, g.getComent());
+				stmt2.setInt(2, g.getUserID());
+				stmt2.setInt(3, g.getItemID());
+				stmt2.executeUpdate();
+			}else{
+				sql = "insert into dash(userID, itemID, coment, date) values(?,?,?,now())";
+				stmt2 = con.prepareStatement(sql);
+				stmt2.setInt(1, g.getUserID());
+				stmt2.setInt(2, g.getItemID());
+				stmt2.setString(3, g.getComent());
+				stmt2.executeUpdate();
+			}
 		}catch(Exception err){
 			System.out.println(err);
 		}finally{
@@ -694,7 +764,7 @@ public class someDao {
 				result = "no,no";
 			}
 		}catch(Exception err){
-			System.out.println(err);
+			System.out.println("dashch:" + err);
 		}finally{
 			discon();
 		}
@@ -807,7 +877,7 @@ public class someDao {
 		String callmeList = "'callme_list':''";
 		StringBuffer tempList = new StringBuffer();
 		try{
-			sql = "select a.name, a.age, a.photo,b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment , c.userID, c.itemID , c.state from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.state = 0 and c.itemID = ? and a.name=?";
+			sql = "select a.no, a.name, a.age, a.photo,b.blood, b.height, b.weight, a.addr, b.style, b.fashion, b.hobby, c.coment , c.userID, c.itemID , c.state from member a , m_profile b , dash c where a.no = b.no and a.no = c.userID and c.state = 0 and c.itemID = ? and a.name=?";
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			stmt.setString(2, name);
@@ -819,6 +889,7 @@ public class someDao {
 			    }
 					String c[] = rs.getString("a.addr").split(" ");
 					tempList.append("{")
+					.append("'no':'").append(rs.getString("no")).append("',")
 	                .append("'name':'").append(rs.getString("name")).append("',")
 	                .append("'age':'").append(rs.getString("age")).append("',")
 	                .append("'blood':'").append(rs.getString("blood")).append("',")
@@ -854,9 +925,10 @@ public class someDao {
 			stmt.setInt(2, userID);
 			stmt.setInt(3, itemID);
 			stmt.executeUpdate();
+			//System.out.println(stmt);
 			if(state == 1){
 				sql = "insert into `some_some`(man_ID, woman_ID, state, `start_Day`) values(?,?,?,now())";
-			/*	System.out.println("들어옴");*/
+				//System.out.println("들어옴");
 				if(sex.equals("man")){
 					stmt = con.prepareStatement(sql);
 					stmt.setInt(1, itemID);
@@ -1046,7 +1118,6 @@ public class someDao {
 			stmt.setInt(1, id1);
 			stmt.setInt(2, id2);
 			rs = stmt.executeQuery();
-			int i=0;
 			while(rs.next()){
 				someDto dto = new someDto();
 				dto.setId(rs.getString("id"));
@@ -1778,6 +1849,42 @@ public class someDao {
 			return list;
 		}
 
+		public String mgetmessage(String id, String id2){
+			connect();
+			String sql ="";
+			JSONArray result = new JSONArray();
+			String returnStr="";
+			String messageList = "'board_list':''";
+			String err2 = "\"err\":\"\"";
+			try{
+				sql = "select no, sender, dear, content, day, photo from message where (dear=? and sender=?) or (dear=? and sender=?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, id2);
+				stmt.setString(3, id2);
+				stmt.setString(4, id);
+				//System.out.println(stmt);
+				rs = stmt.executeQuery();
+				//System.out.println(stmt);
+				while(rs.next()){
+					JSONObject obj = new JSONObject();
+					obj.put("no", rs.getString("no"));
+				    obj.put("sender",rs.getString("sender"));
+				    obj.put("dear",rs.getString("dear"));
+				    obj.put("content",  rs.getString("content"));
+				    obj.put("day", rs.getString("day"));
+				    obj.put("photo", rs.getString("photo"));
+				    result.add(obj);
+				}
+				messageList = "\"message_list\":" + result.toString() ;
+			}catch(Exception err){
+				System.out.println(err);
+			}finally{
+				discon();
+			}
+			return returnStr = "{\"data\":{" + messageList + ","+ err2 + "}}";
+		}
+		
 		public int getmessage2(String id){
 			connect();
 			int count = 0;
@@ -2200,10 +2307,7 @@ public class someDao {
 				System.out.println("member_joinTest"+id+ password+check_password+name+ sex+ birthday+  num1+num2+addr+tel+tel2+ tel3+ fileName+ age+ email1+ email2);
 				stmt = con.prepareStatement(sql);
 				//File f = multi.getFile("imgInp");
-				
 				String password1 = sha1(password);
-				
-				
 				stmt.setString(1, id);
 				stmt.setString(2, password1);
 				stmt.setString(3, name);
@@ -2222,7 +2326,47 @@ public class someDao {
 			} finally {
 				discon();
 			}
-			
+		}
+		
+		public void mobileInsertBoard(someDto Bdto){
+			connect();
+			try {
+				String content0 = Bdto.getContent().replace("\n", "<br/>");
+				if(Bdto.getFilename() != null){
+					content0 = content0 + "<p style=\"text-align: center;\"><img src=\""+Bdto.getFileurl()+"\" style=\"max-width:100%;clear:none;float:none;\"/></p>";
+				}
+				String sql = "insert into some_board (id, id_no, content, day) values(?, ?, ?, now())";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, Bdto.getId());
+				stmt.setString(2, Integer.toString(Bdto.getNo()));
+				stmt.setString(3, content0);
+				stmt.executeUpdate();
+				
+				//방금 넣은 게시글 번호 가져오기
+				sql = "select no from some_board order by no desc";
+				stmt = con.prepareStatement(sql);
+				rs = stmt.executeQuery();
+				/*System.out.println(stmt);*/
+				int number = 0;
+				if(rs.next()){
+					number = rs.getInt("no");
+				}
+				
+				//board_image 테이블에 값넣기
+				sql = "INSERT INTO `someboard_plus`(no, filename, desination, filesize, filetype, fileurl) VALUES(?,?,?,?,?,?)";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, number);
+				stmt.setString(2, Bdto.getFilename());
+				stmt.setString(3, Bdto.getDesination());
+				stmt.setString(4, Bdto.getFilesize());
+				stmt.setString(5, Bdto.getFiletype());
+				stmt.setString(6, Bdto.getFileurl());
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				discon();
+			}
 		}
 
 									

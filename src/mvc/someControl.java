@@ -97,6 +97,15 @@ public class someControl extends HttpServlet{
 			}
 		}
 		
+		else if(action.equals("/mdashup.some")){
+			dto.setUserID(Integer.parseInt((String) req.getParameter("userID")));
+			dto.setItemID(Integer.parseInt((String) req.getParameter("itemID")));
+			dto.setValue(Float.parseFloat((String) req.getParameter("value")));
+			dto.setComent(req.getParameter("coment"));
+			dao.mdash(dto);
+			return;
+		}
+		
 		else if(action.equals("/call.some")){
 			Vector<someDto> g = dao.callme(Integer.parseInt((String)session.getAttribute("no")));
 			req.setAttribute("g", g);
@@ -133,9 +142,11 @@ public class someControl extends HttpServlet{
 			}
 		}
 		
-		
-		
-		
+		else if(action.equals("/mcallup.some")){
+			String sex = req.getParameter("sex");
+			dao.callme(Integer.parseInt((String)req.getParameter("userID")), Integer.parseInt((String)req.getParameter("itemID")), Integer.parseInt((String)req.getParameter("state")), sex);
+			return;
+		}
 		else if(action.equals("/luvstory.some")){
 			ArrayList list= new ArrayList();
 			list = dao.some_board_list(Integer.parseInt((String)session.getAttribute("no")));

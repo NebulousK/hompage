@@ -53,6 +53,16 @@ public class friendControl extends HttpServlet{
 			dao.Friend_request(myid,id,bool);
 			nextPage = "/find.friend";
 		}
+		
+		else if(action.equals("/mfindadd.friend")){
+			String myid=req.getParameter("myid");
+			String id=req.getParameter("id");
+			String bool="false";
+			dao.Friend_request(myid,id,bool);
+			return;
+		}
+		
+		
 		else if(action.equals("/findf.friend")){
 			Vector list=null;
 			String myid=(String)session.getAttribute("id");
