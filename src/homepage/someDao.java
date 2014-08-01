@@ -2368,8 +2368,78 @@ public class someDao {
 				discon();
 			}
 		}
+		
+		public ArrayList<String> insertPush(String no){
+			ArrayList<String> v = new ArrayList<String>();
+			String sql, sql2;
+			PreparedStatement stmt2;
+			ResultSet rs2;
+			try {
+				sql = "select man_ID, woman_ID from some_some where man_ID = ? or woman_ID = ? and state = 1";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, no);
+				stmt.setString(2, no);
+				rs = stmt.executeQuery();
+				System.out.println(stmt);
+				rs.next();
+				String id1 = rs.getString("man_ID");
+				String id2 = rs.getString("woman_ID");
+				if(no.equals(id1)){
+					sql = "select id from member where no =?";
+					stmt = con.prepareStatement(sql);
+					stmt.setString(1, id2);
+					rs = stmt.executeQuery();
+					rs.next();
+					sql2 = "select regID from push where ID = ?";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, rs.getString("id"));
+					rs2 = stmt2.executeQuery();
+					if(rs2.next()){
+						v.add(rs2.getString("regID"));
+					}
+				}else{
+					sql = "select id from member where no =?";
+					stmt = con.prepareStatement(sql);
+					stmt.setString(1, id1);
+					rs = stmt.executeQuery();
+					rs.next();
+					sql2 = "select regID from push where ID = ?";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, rs.getString("id"));
+					rs2 = stmt2.executeQuery();
+					if(rs2.next()){
+						v.add(rs2.getString("regID"));
+					}
 
-									
+				}
+			} catch (SQLException e) {
+				System.out.println("pust : " + e);
+			}
+			finally{
+				discon();
+			}
+			return v;
+		}
+
+		public ArrayList<String> messageinsertPush(String dear){
+			ArrayList<String> v = new ArrayList<String>();
+			String sql;
+			try {
+				sql = "select regID from push where ID = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, dear);
+				rs = stmt.executeQuery();
+				if(rs.next()){
+					v.add(rs.getString("regID"));
+				}
+			} catch (SQLException e) {
+				System.out.println("pust : " + e);
+			}
+			finally{
+				discon();
+			}
+			return v;
+		}							
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;

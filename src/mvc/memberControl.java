@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import android.push;
+
 import com.oreilly.servlet.MultipartRequest;
 
 import mail.Gmail;
@@ -264,6 +266,11 @@ public class memberControl extends HttpServlet {
 			dto.setContent(req.getParameter("content"));
 			dto.setPhoto((String) session.getAttribute("photo"));
 			dao.insertmessage((String)session.getAttribute("id"),dto);
+			ArrayList lis = dao.messageinsertPush(req.getParameter("dear"));
+			if(lis.size()>0){
+				push push = new push();
+				push.sendMessage(lis, (String)session.getAttribute("id") + " : " + req.getParameter("content"));
+			}
 		}///homepage/mesagedel.me
 		 
 		else if(action.equals("/mmemseagesend.me")){
@@ -271,15 +278,13 @@ public class memberControl extends HttpServlet {
 			dto.setContent(req.getParameter("content"));
 			dto.setPhoto(req.getParameter("photo"));
 			dao.insertmessage(req.getParameter("id"),dto);
+			ArrayList lis = dao.messageinsertPush(req.getParameter("dear"));
+			if(lis.size() > 0){
+				push push = new push();
+				push.sendMessage(lis, req.getParameter("id") + " : " + req.getParameter("content"));
+			}
+			return;
 		}
-		
-		else if(action.equals("/mmemseagesend.me")){
-			dto.setDear(req.getParameter("dear"));
-			dto.setContent(req.getParameter("content"));
-			dto.setPhoto(req.getParameter("photo"));
-			dao.insertmessage(req.getParameter("id"),dto);
-		}///homepage/mesagedel.me
-		
 		
 		else if(action.equals("/mesagedel.me")){
 			dao.delmessage(Integer.parseInt((String)req.getParameter("number")));

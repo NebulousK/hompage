@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="android.push"%>
 <%@page import="homepage.someDao"%>
 <%@page import="homepage.someDto"%>
 <%@page import="homepage.board.BoardDto"%>
@@ -136,7 +138,11 @@ String fileurl = null;
  
  someDao dao = new someDao();
  dao.mobileInsertBoard(dto);
- 
+ ArrayList<String> a = dao.insertPush(no1);
+ if(a.size()>0){
+ 	push push = new push();
+ 	push.sendMessage(a,"♡새로운 글이 올라왔어요♡");
+ }
  
 System.out.println(filename);
  

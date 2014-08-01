@@ -53,7 +53,6 @@ public class BoardDao {
 	public void insertBoard(BoardDto Bdto){
 		try {
 			String sql = "insert into board (id, content, day) values(?, ?, now())";
-			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, Bdto.getId());
 			stmt.setString(2, Bdto.getContent());

@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import android.push;
+
 import com.google.gson.Gson;
 
 public class someControl extends HttpServlet{
@@ -168,6 +170,11 @@ public class someControl extends HttpServlet{
 			dto.setNo(Integer.parseInt((String) req.getParameter("no")));
 			dto.setContent(req.getParameter("content"));
 			dao.some_board(dto);
+			ArrayList<String> a = dao.insertPush(req.getParameter("no"));
+			if(a.size() > 0){
+				push push = new push();
+				push.sendMessage(a,"♡ 새로운 글이 올라왔어요 ♡");
+			}
 			nextPage = "/luvstory.some";
 		}
 			

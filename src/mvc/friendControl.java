@@ -60,8 +60,7 @@ public class friendControl extends HttpServlet{
 			String bool="false";
 			dao.Friend_request(myid,id,bool);
 			return;
-		}
-		
+		}		
 		
 		else if(action.equals("/findf.friend")){
 			Vector list=null;
@@ -143,7 +142,6 @@ public class friendControl extends HttpServlet{
 			dao.list_Friend_Delete(myid,userid2);
 			nextPage = "/List.friend";
 		}
-		
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다
 		view.forward(req, resp);// req의 모든정보를얘가 던져주는곳  다음 페이지에서 request.getattribute("a")를 하면 마가나온다	
 	}
