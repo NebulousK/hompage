@@ -81,7 +81,7 @@ Ext.setup({
     icon: 'icon.png',
     glossOnIcon: false,
     onReady : function() {
-    	var i=5;  	
+    	var i = 5;  	
         Ext.regModel('someboard', {
         	fields: ['pic', 'name', 'date', 'content','no']
         });
@@ -136,7 +136,7 @@ Ext.setup({
         
         function getsomeboardList2(){
         	Ext.Ajax.request({
-                url: common_url +'/mboard.board?id='+common_url+'&num='+ i,
+                url: common_url +'/mboard.board?id='+ common_id +'&num='+ i,
                 contentType : "application/x-www-form-urlencoded; charset=UTF-8",
                 success: function(response, opts) {
                     console.log(response.responseText);

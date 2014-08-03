@@ -2439,7 +2439,37 @@ public class someDao {
 				discon();
 			}
 			return v;
-		}							
+		}	
+		
+		public void pushreg(String id, String regID){
+			connect();
+			String sql ="";
+			String sql2 ="";
+			PreparedStatement stmt2;
+			try {
+				sql = "select * from push where ID = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setString(1, id);
+				rs = stmt.executeQuery();
+				if(rs.next()){
+					sql2 = "UPDATE `push` SET `regID`= ?  WHERE ID = ?";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, regID);
+					stmt2.setString(2, id);
+					stmt2.executeUpdate();
+				}else{
+					sql2 = "INSERT INTO `push`(`ID`, `regID`) VALUES (?,?)";
+					stmt2 = con.prepareStatement(sql2);
+					stmt2.setString(1, id);
+					stmt2.setString(2, regID);
+					stmt2.executeUpdate();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally{
+				discon();
+			}
+		}
 	private static class ValueComparator<K extends Comparable<K>, V extends Comparable<V>>
 			implements Comparator<K> {
 		private Map<K, V> map;

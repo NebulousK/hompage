@@ -13,7 +13,7 @@ import com.google.android.gcm.server.Sender;
 public class push {
 	public void sendMessage(ArrayList<String> aList, String masseage) throws IOException {
 		Sender sender = new Sender("AIzaSyBedluAUpTDzU3zPw9qjkp-otWKcBWHXVQ");
-		String regId = "APA91bFAXYGRWRzNFXPCYxd3QJH7bnk-3bOTHQHBGF55LIwhvvbJNeA40yU9rwMbBjohIgc150iG9dFO0nYfw4ynQ5ZV0rvnebqZwSOcJSgmggDwqkTOM66-bstwxaHD5XAEwIRaiHYAm5VKIiH0WJELIorkBMU9iA";
+		String regId = "APA91bGiT2MCn8p1g1XmvDqROZltbsybEFTpYZTmdToJO_OUrIfNi96o8Mav_4QIfjwJAF1AIgl9lb5bnu8_GRspeaiy6WKO9siD8KVW_018xqQEUPYLc4Pw52YA0mAruVSJNA9narb0v4iFLoWmdGRL6JwfsfP-ZA";
 		String msg = URLEncoder.encode(masseage, "euc-kr");
 		System.out.println(msg);
 		Message message = new Message.Builder().addData("msg", msg).build();

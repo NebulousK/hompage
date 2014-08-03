@@ -218,6 +218,12 @@ public class someControl extends HttpServlet{
 		    out.println("{\"files\":" + tempList + "}");
 			return;
 		}
+		else if(action.equals("/pushreg.some")){
+			String id = req.getParameter("id");
+			String regID = req.getParameter("regID");
+			dao.pushreg(id, regID);
+			return;
+		}
 		
 	
 		RequestDispatcher view =req.getRequestDispatcher(nextPage);//어느페이지인지 정해준다

@@ -26,6 +26,25 @@ message.init = function(){
         });         
     };
     
+    var getmessageList3 = function()
+    {
+        Ext.Ajax.request({
+            url: common_url + '/mmemseage.me?id='+ common_id + '&id2=' + dear,
+            success: function(response, opts) {
+                console.log(response.responseText);
+                var JsonData = JSON.parse(response.responseText);
+                console.log(JsonData);
+                if(JsonData.data.err == ""){
+                	setmessage3(JsonData.data.message_list);
+                	setTimeout(function() {getmessageList3();}, 2000);
+                }
+                else{
+                    alert(JsonData.data.err);
+                }                
+            }
+        });         
+    };
+    
     var messageStore = new Ext.data.Store({
         model :'message',               
         data:[
@@ -39,10 +58,10 @@ message.init = function(){
    
     var messageList = new Ext.XTemplate(//'+ common_id +'
     		'<tpl for=".">',
-    		'<tpl if="sender==\'happyhiphop\'">',
+    		'<tpl if="sender==\''+ common_id +'\'">',
     	    '<div id="memo_area" class="me">',
     	    '</tpl>',
-    	    '<tpl if="sender==\'iyou\'">',
+    	    '<tpl if="dear==\''+ common_id +'\'">',
     	    '<div id="memo_area" class="you">',
     	    '</tpl>',
     		'<div class="nick_area">',
@@ -79,16 +98,27 @@ message.init = function(){
     });
     
     function setmessage2(Jv_data) {
-    	/*messageStore.removeAll();
-    	messageStore.add(Jv_data);*/
-    	//var aa = dataview.scroller.initialRegion.top;
+    	messageStore.removeAll();
+    	messageStore.add(Jv_data);
+    	var aa = dataview.el.dom.scrollHeight - dataview.scroller.size.height;
+    	dataview.scroller.moveTo(0, -aa);
     	//dataview.scroller.setOffset({x: 0, y: -aa}, false);
-    	alert(dataview.scroller.initialRegion.top);
-    	alert(dataview.scroller.initialRegion.bottom);
+    	//alert(dataview.scroller.getOffset());
+    	//alert(dataview.el.dom.scrollHeight);
+    	//alert(dataview.scroller.size.height);
+    	//alert(dataview.scroller.initialRegion.bottom);
     };
+    
+    function setmessage3(Jv_data) {
+    	messageStore.removeAll();
+    	messageStore.add(Jv_data);
+    };
+    
+    setTimeout(function() {getmessageList3();}, 2000);
+    
     message.panel_message = new Ext.Panel({
         useCurrentLocation: true,
-        //fullscreen: true,
+        fullscreen: true,
         height:'100%',
         cardSwitchAnimation:"cube",
         setUserId:function(user_id)
@@ -106,6 +136,8 @@ message.init = function(){
                     console.log(JsonData);
                     if(JsonData.data.err == ""){
                     	setmessage(JsonData.data.message_list);
+                    	var aa = dataview.el.dom.scrollHeight - dataview.scroller.size.height;
+                    	dataview.scroller.moveTo(0, -aa);
                     }
                     else{
                         alert(JsonData.data.err);
