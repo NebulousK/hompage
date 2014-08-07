@@ -17,9 +17,6 @@
 <script type="text/javascript" src="/homepage/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/homepage/js/modernizr.js"></script>
 <script type="text/javascript" src="/homepage/js/responsee.js"></script>
-<jsp:useBean id="friendDao" class="Group.GroupDao"></jsp:useBean>
-<jsp:useBean id="memberDto" class="Member.MemberDto"></jsp:useBean>
-<jsp:setProperty property="*" name="memberDto"/>
 <script>
 function go_addFriend(this_form){
 	this_form.submit();

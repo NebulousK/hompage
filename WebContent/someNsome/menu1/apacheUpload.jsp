@@ -89,12 +89,12 @@ String fileurl = null;
        File savedFile = new File(realpath+filename); 
        
        destination = realpath+filename;//file destination
-       fileurl = "http://192.168.10.31/homepage/upload/"+filename;//fileurl
+       fileurl = "http://54.178.192.82/homepage/upload/"+filename;//fileurl
        //System.out.println(url);
        if (savedFile.exists()) { // 파일이 중복되면
         for (int i2 = 0; true; i2++) { // a(0).gif, a(1).gif
          savedFile = new File(realpath, "(" + i2 + ")" + filename);// (0)a.gif,(1)a.gif         
-         fileurl = "http://192.168.10.31/homepage/upload/"+"(" + i2 + ")"+filename;
+         fileurl = "http://54.178.192.82/homepage/upload/"+"(" + i2 + ")"+filename;
          filename = "(" + i2 + ")" + filename;
          	if (!savedFile.exists())
          		 break;

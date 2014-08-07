@@ -68,8 +68,8 @@ public class BoardDao {
 	public ArrayList<String> insertPush(String id){
 		ArrayList<String> v = new ArrayList<String>();
 		String sql2;
-		PreparedStatement stmt2;
-		ResultSet rs2;
+		PreparedStatement stmt2 = null;
+		ResultSet rs2 = null;
 		try {
 			String sql = "select DISTINCT a.id from board a  INNER JOIN member b ON a.id = b.id where a.id IN (select userid2 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id IN (select userid1 from freind where (userid1=? or userid2=?) and  friends = 'true') or a.id = ?";
 			stmt = con.prepareStatement(sql);
@@ -91,10 +91,16 @@ public class BoardDao {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("pust : " + e);
-		}
+			System.out.println("push : " + e);
+		} 
 		finally{
 			freeCon();
+			try {
+				if(stmt2 != null){stmt2.close();}
+				if(rs2 !=null){rs2.close();}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 		}
 		return v;
 	}
@@ -202,7 +208,7 @@ public class BoardDao {
 							}
 						}
 						JSONObject obj = new JSONObject();
-						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+						obj.put("pic","http://54.178.192.82/homepage/profile/" + rs.getPhoto());
 						obj.put("connectId", id);
 					    obj.put("name",rs.getId());
 					    obj.put("date",rs.getDay());
@@ -224,7 +230,7 @@ public class BoardDao {
 							}
 						}
 						JSONObject obj = new JSONObject();
-						obj.put("pic","http://192.168.10.31/homepage/profile/" + rs.getPhoto());
+						obj.put("pic","http://54.178.192.82/homepage/profile/" + rs.getPhoto());
 						obj.put("connectId", id);
 					    obj.put("name",rs.getId());
 					    obj.put("date",rs.getDay());
@@ -324,19 +330,15 @@ public class BoardDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, no);
 			rs = stmt.executeQuery();
-			
 			while(rs.next()){
 				vlike.add(rs.getString("id"));
-				//System.out.println(rs.getString(3));
-			}
-			
+			}	
 		} catch (SQLException e) {
 			System.out.println("board_likeSelect() : " + e);
 		}
 		finally{
 			freeCon();
 		}
-		
 		return vlike;
 	}
 	
@@ -467,7 +469,7 @@ public class BoardDao {
 	
 	
 	
-	public void setPath(HttpServletRequest servlet, String path) {
+	  public void setPath(HttpServletRequest servlet, String path) {
 	      this.path = servlet.getServletContext().getRealPath(path);
 	   }
 

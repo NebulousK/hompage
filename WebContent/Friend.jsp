@@ -84,21 +84,7 @@ function goPOPUP(id) {
   	%>
   <TR>
    	<TD align="center"> 
-  	<!-- 	<b>구룹 목록</b>  
-     -->	<hr/>
-    	<%
-    		Vector groupList=dao.getGruop(myid);
-    		for(int i=0;i<groupList.size();i++){
-    			GroupDto dto=(GroupDto)groupList.get(i);
-    	%>	
-    		<a href="javascript:Pop_Show_Friend()"><font><%=dto.getGroup()%></font></a>&nbsp;<br/>
-    		<!-- 친구 뿌려주기 -->
-    		<font size="1"><a href="javascript:Pop_Friend_Add('<%=dto.getGroup()%>','<%=dto.getMyid()%>')">친구추가</a></font>&nbsp;<br/>
-    		<font size="1"><a href="Delete_Group/Delete_Group.jsp?groupNo=<%=dto.getNum()%>&myid=<%=dto.getMyid()%>&group=<%=dto.getGroup()%>">구룹삭제</a></font>
-    		<br/>
-    	<%				
-    		}
-    	%>
+  
     </TD>
   </TR>
  

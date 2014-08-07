@@ -1,10 +1,11 @@
 <%@page import="homepage.board.ReplyDto"%>
 <%@page import="java.util.Vector"%>
 <%@page import="homepage.board.BoardDao"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
 	int no = Integer.parseInt(request.getParameter("no"));
 	String id = request.getParameter("id");
 	int index = Integer.parseInt(request.getParameter("index"));
@@ -12,7 +13,7 @@
 	Vector rlist = Bdao.getReplyList(no);
 %>
 <!-- 댓글쓰는 부분  -->
-<form method="post" action="http://192.168.10.31/homepage/REPLYPOST.board" target="junsong">
+<form method="post" action="http://54.178.192.82/homepage/REPLYPOST.board" target="junsong">
 	<input type="hidden" name="action" id="action" value="/REPLYPOST.board">
 	<input type="hidden" name="no" id="reno" value="<%=no%>" /> <input
 		type="hidden" name="id" id="reid" value="<%=id%>" /> <input
@@ -52,9 +53,9 @@
 	<!-- 프로필 이미지  -->
 	<tr>
 		<td rowspan="2"><img
-			src="/homepage/profile/<%=Rdto.getPhoto() %>" alt="" align="middle"
+			src="http://54.178.192.82/homepage/profile/<%=Rdto.getPhoto() %>" alt="" align="middle"
 			style="width: 40px; height: 40px;margin-right: 10px" /></td>
-		<td><a href="/homepage/how.board?id=<%= Rdto.getId() %>"
+		<td><a href="http://54.178.192.82/homepage/how.board?id=<%= Rdto.getId() %>"
 			style="font-size: 14px;"><%= Rdto.getId() %></a>&nbsp;&nbsp;</td>
 		<td><span><%=Rdto.getContent() %></span>&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>

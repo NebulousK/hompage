@@ -8,19 +8,5 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/alt-rt.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/charsets.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/deploy.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/javaws.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/jce.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/jfr.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/jfxrt.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/jsse.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/management-agent.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/plugin.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/resources.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_51/jre/lib/rt.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 7.0/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

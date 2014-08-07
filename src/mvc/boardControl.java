@@ -130,7 +130,7 @@ public class boardControl extends HttpServlet{
 			dto2.setContent(content);
 			dao.insertBoard(dto2); 
 			ArrayList<String> a = dao.insertPush(id);
-			if(a.size()>0){
+			if(a.size() > 0){
 				push.sendMessage(a,"새로운 글이 올라왔어요!!");
 			}
 			nextPage = "/main.board"; 

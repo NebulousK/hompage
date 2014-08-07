@@ -122,8 +122,7 @@ public class GroupDao {
 		return fList;
 	}
 	
-	public String mfriend_List(String userid1){
-		
+	public String mfriend_List(String userid1){		
 		String sql="";
 		String returnStr="";
 		String friendList = "'friend_list':''";
@@ -142,7 +141,7 @@ public class GroupDao {
 					dto.setId(rs.getString("id"));
 					dto.setPhoto(rs.getString("photo"));
 					JSONObject obj = new JSONObject();
-					obj.put("photo","http://192.168.10.31/homepage/profile/" + rs.getString("photo"));
+					obj.put("photo","http://54.178.192.82/homepage/profile/" + rs.getString("photo"));
 				    obj.put("id",rs.getString("id"));
 				    obj.put("no",rs.getString("no"));
 				    result.add(obj);
@@ -224,7 +223,7 @@ public class GroupDao {
 		}
 	}
 
-	public void createGroup(GroupDto dto) {
+	/*public void createGroup(GroupDto dto) {
 			String sql="";
 		try{
 			sql="insert into `group`(myid,`group`) values(?,?)";
@@ -239,8 +238,8 @@ public class GroupDao {
 			freeCon();
 		}		
 	}
-
-	public Vector getGruop(String myid){
+*/
+	/*public Vector getGruop(String myid){
 		Vector GroupList=new Vector();
 		String sql="";
 			try{
@@ -259,11 +258,9 @@ public class GroupDao {
 				System.out.println("getGruop:"+err);
 			}finally{
 				freeCon();
-				
 			}
-		
 		return GroupList;
-	}
+	}*/
 
 	public Vector getTotalFriend(String myid){
 		Vector CompleteGroupList =new Vector();
@@ -387,7 +384,7 @@ public class GroupDao {
 			freeCon();
 		}
 	}
-	public Vector getCompleteFriend(String myid , String mygroup){
+	/*public Vector getCompleteFriend(String myid , String mygroup){
 		Vector CompleteGroupList =new Vector();
 		String sql="";
 		try{
@@ -410,7 +407,7 @@ public class GroupDao {
 			freeCon();	
 		}	
 		return CompleteGroupList;	
-	}
+	}*/
 	public MemberDto requestfriend(String name){
 		MemberDto mem=new MemberDto();
 		String sql="";

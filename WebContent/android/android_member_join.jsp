@@ -21,9 +21,12 @@
 <body>
 
 <center><table>
+
 <%
+	
 	request.setCharacterEncoding("utf-8");
 	response.setCharacterEncoding("utf-8");
+	
 	String num1=null;
 	String num2=null;
 	String addr=null;
@@ -40,24 +43,43 @@
 	int age=0;
 	String sex=null;
 	String fileName=null;
+
+	
 	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+
+
  if (!isMultipart) {
+
+
  }else {
 	
+
     FileItemFactory factory = new DiskFileItemFactory();
+
     ServletFileUpload upload = new ServletFileUpload(factory);
+
     List items = null;
+
     try {
+
        items = upload.parseRequest(request);
-    } catch (FileUploadException e) {		
+    
+
+    } catch (FileUploadException e) {
+
+		
 		System.out.println("에러 1: "+e);
+
     }
 
 	
     Iterator itr = items.iterator();
+
     while (itr.hasNext()) {
       FileItem item = (FileItem) itr.next();
+	
       if (item.isFormField()) { // 파일이 아닌 폼필드에 입력한 내용을 가져옴.
+    
         if(item!=null && item.getFieldName().equals("login")) {
         	  String name1 = item.getFieldName();
         	  id = item.getString("UTF-8").trim();

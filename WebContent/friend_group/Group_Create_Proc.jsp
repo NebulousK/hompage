@@ -1,9 +1,9 @@
-<%@page import="Group.GroupDto"%>
+<%-- <%@page import="Group.GroupDto"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <jsp:useBean id="groupdto" class="Group.GroupDto"></jsp:useBean>
 <jsp:useBean id="groupdao" class="Group.GroupDao"></jsp:useBean>
-<<jsp:setProperty property="*" name="groupdto"/>
+<jsp:setProperty property="*" name="groupdto"/>
 <%
 	//int num=Integer.parseInt(request.getParameter("num"));
 	String myid=request.getParameter("myid");
@@ -15,4 +15,4 @@
 	
 %>
 
-	
+	 --%>

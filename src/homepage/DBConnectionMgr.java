@@ -9,11 +9,11 @@ public class DBConnectionMgr {
    /* oracle.jdbc.driver.OracleDriver
     jdbc:orcle:thin:@localhost:1521:orcl*/
     private String _driver = "com.mysql.jdbc.Driver",
-    _url = "jdbc:mysql://127.0.0.1:3306/sns?dbname?useUnicode=true&characterEncoding=utf8&&characterSetResults=utf8&autoReconnect=true",
+    _url = "jdbc:mysql://54.178.192.82:3306/sns?dbname?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true",
     _user = "scott", _password = "tiger";
     private boolean _traceOn = false;
     private boolean initialized = false;
-    private int _openConnections = 10;
+    private int _openConnections = 100;
     private static DBConnectionMgr instance = null;
 
     public DBConnectionMgr() {
